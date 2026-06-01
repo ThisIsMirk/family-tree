@@ -26,11 +26,15 @@ python3 -m http.server 8765
 # then open http://localhost:8765/
 ```
 
-It opens at the top of the whole tree so anyone can navigate down to their own branch.
+It opens fully expanded, anchored on a founding ancestor, so you can drag through every branch.
 
 **Features:** pinch/scroll to zoom, drag to pan, tap a dot to expand/collapse, tap a name for details,
 search any name, and **expand-all / fit / back-to-top** buttons.
 
+- The main **bloodline** is highlighted: pink from a founder down to Mariyomma, blue down to Rajab,
+  and their whole descent is drawn darker/bolder.
+- **Married couples** that join the two sheets (e.g. Rajab ⇄ Mariyomma) show a 💑 link — tap the
+  underlined spouse name to jump to them on the other side.
 - **Orange dashed** = a parent link that is a best-guess and still needs verifying (61 of these).
 
 ## Regenerating the data

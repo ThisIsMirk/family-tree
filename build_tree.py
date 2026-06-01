@@ -10,9 +10,9 @@ A node also carries optional spouse / note, and 'star' marks the user's direct l
 """
 import json, re
 
-def P(name, kids=None, spouse=None, note=None, conf="ok", star=False):
-    return {"name": name, "spouse": spouse, "note": note, "conf": conf,
-            "star": star, "kids": kids or []}
+def P(name, kids=None, spouse=None, note=None, conf="ok", star=False, marriage=None, color=None, emph=False):
+    return {"name": name, "spouse": spouse, "note": note, "conf": conf, "star": star,
+            "marriage": marriage, "color": color, "emph": emph, "kids": kids or []}
 
 # ---------------------------------------------------------------------------
 # MOTHER / ALL sheet  (root: Nelliadi Beeran Musaliar)
@@ -44,8 +44,8 @@ mother = P("Nelliadi Beeran Musaliar", [
                 P("Assu", conf="?"),
             ]),
             P("Khadija", note="Kundantavida", star=True, kids=[
-                P("Mariyomma", star=True, spouse="Rajab",
-                  note="m. Rajab (Father sheet). Their children below also appear under 'Rajab' in the Father tree.",
+                P("Mariyomma", star=True, spouse="Rajab", marriage="rajab+mariyomma", color="#e25c9c", emph=True,
+                  note="m. Rajab (Father sheet). Their children are the start of this family.",
                   kids=[
                     P("Fathima", star=True, spouse="N.A. Backer", kids=[
                         P("Feroz"),
@@ -59,7 +59,7 @@ mother = P("Nelliadi Beeran Musaliar", [
                     P("Noorjahan", kids=[P("Shurook"), P("Diyana"), P("Shoroor"), P("Mariyam")]),
                     P("Sabitha", kids=[P("Sana"), P("Mohamed")]),
                   ]),
-                P("Assu", kids=[P("Asif"), P("Haris"), P("Reshmi"), P("Taslima")]),
+                P("Assu", emph=True, kids=[P("Asif"), P("Haris"), P("Reshmi"), P("Taslima")]),
             ]),
             P("Moidu", note="Singapore"),
             P("Mammed", note="Singapore"),
@@ -129,9 +129,9 @@ father = P("Valiya Chekkan & Thithi",
         # the big gen-2 bar is attached under Mariyam as a best guess (green direct line)
         P("Pathumma", star=True, conf="?", kids=[
             P("Sulekha", kids=[P("Bavakka"), P("Ahmed"), P("Pokku")]),
-            P("Rajab", star=True, spouse="Mariyomma",
-              note="m. Mariyomma (Mother sheet). Their 7 children (Fathima, Khadija, K.Abdullah, "
-                   "Safiya, Mumtaz, Noorjahan, Sabitha) are detailed under the Mother tree."),
+            P("Rajab", star=True, spouse="Mariyomma", marriage="rajab+mariyomma", color="#3f74cf",
+              note="m. Mariyomma (Mother sheet). Their children are detailed under Mariyomma — "
+                   "tap the couple icon to jump there."),
             P("Sehad", kids=[P("Soora", kids=[P("Sulfat")])]),
             P("Mariyam", kids=[P("Hamza"), P("Mustafa"), P("A.Backer")]),
             P("Kader Haji", kids=[
@@ -264,6 +264,9 @@ def to_d3(node, sheet):
     if node["spouse"]: attrs["spouse"] = node["spouse"]
     if node["note"]:   attrs["note"]   = node["note"]
     if node["conf"] != "ok": attrs["conf"] = node["conf"]
+    if node.get("marriage"): attrs["marriage"] = node["marriage"]
+    if node.get("color"):    attrs["color"]    = node["color"]
+    if node.get("emph"):     attrs["emph"]     = True
     d = {"name": node["name"], "attrs": attrs}
     kids = [to_d3(k, sheet) for k in node["kids"]]
     if kids: d["children"] = kids

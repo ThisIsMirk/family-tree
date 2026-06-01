@@ -31,7 +31,7 @@ MOTHER / ALL SHEET
         - Mahmoud ⚠️ VERIFY parent
         - Assu ⚠️ VERIFY parent
       - Khadija  (Kundantavida) ★
-        - Mariyomma  (m. Rajab; m. Rajab (Father sheet). Their children below also appear under 'Rajab' in the Father tree.) ★
+        - Mariyomma  (m. Rajab; m. Rajab (Father sheet). Their children are the start of this family.) ★
           - Fathima  (m. N.A. Backer) ★
             - Feroz
             - Sajith ★
@@ -166,7 +166,7 @@ FATHER SHEET
         - Bavakka
         - Ahmed
         - Pokku
-      - Rajab  (m. Mariyomma; m. Mariyomma (Mother sheet). Their 7 children (Fathima, Khadija, K.Abdullah, Safiya, Mumtaz, Noorjahan, Sabitha) are detailed under the Mother tree.) ★
+      - Rajab  (m. Mariyomma; m. Mariyomma (Mother sheet). Their children are detailed under Mariyomma — tap the couple icon to jump there.) ★
       - Sehad
         - Soora
           - Sulfat

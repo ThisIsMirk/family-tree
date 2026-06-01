@@ -357,7 +357,7 @@
       "parentId": "p_khadija_31",
       "sheet": "Mother/All",
       "spouse": "Rajab",
-      "notes": "m. Rajab (Father sheet). Their children below also appear under 'Rajab' in the Father tree.",
+      "notes": "m. Rajab (Father sheet). Their children are the start of this family.",
       "confidence": "ok",
       "directLine": true
     },
@@ -1667,7 +1667,7 @@
       "parentId": "p_pathumma_158",
       "sheet": "Father",
       "spouse": "Mariyomma",
-      "notes": "m. Mariyomma (Mother sheet). Their 7 children (Fathima, Khadija, K.Abdullah, Safiya, Mumtaz, Noorjahan, Sabitha) are detailed under the Mother tree.",
+      "notes": "m. Mariyomma (Mother sheet). Their children are detailed under Mariyomma — tap the couple icon to jump there.",
       "confidence": "ok",
       "directLine": true
     },
