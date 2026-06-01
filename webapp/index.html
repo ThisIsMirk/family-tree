@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#2b2118" />
+<title>Mirza Family Tree</title>
+<style>
+  :root{
+    --bg:#f5efe4; --bg2:#efe7d6; --ink:#2b2118; --muted:#7b6f5c;
+    --line:#c9bda3; --card:#fffdf8;
+    --gold:#b8862f; --gold-soft:#e8d098;
+    --warn:#cf7a2e; --warn-soft:#f3d9bd;
+    --node:#5b6b78; --accent:#3f5d52;
+    --shadow:0 8px 30px rgba(50,38,20,.18);
+    --serif:'Iowan Old Style','Palatino Linotype','Palatino',Georgia,'Times New Roman',serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--ink);
+    font-family:var(--sans);overscroll-behavior:none}
+  #stage{position:fixed;inset:0;touch-action:none;background:
+    radial-gradient(1200px 800px at 70% -10%, #fbf7ee 0%, var(--bg) 55%, var(--bg2) 100%)}
+  svg{width:100%;height:100%;display:block;cursor:grab}
+  svg:active{cursor:grabbing}
+
+  /* ---- top bar ---- */
+  #top{position:fixed;top:0;left:0;right:0;z-index:20;
+    padding:calc(env(safe-area-inset-top, 0px) + 10px) 12px 10px;
+    display:flex;gap:8px;align-items:center;
+    background:linear-gradient(to bottom, rgba(245,239,228,.96), rgba(245,239,228,.78) 70%, rgba(245,239,228,0));
+    backdrop-filter:blur(6px)}
+  #brand{font-family:var(--serif);font-weight:600;font-size:17px;letter-spacing:.2px;
+    white-space:nowrap;color:var(--ink);display:flex;align-items:center;gap:7px}
+  #brand .seal{width:22px;height:22px;border-radius:50%;background:
+    radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold));
+    box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}
+  .search{position:relative;flex:1;min-width:0;max-width:360px}
+  .search input{width:100%;border:1px solid var(--line);background:var(--card);
+    border-radius:999px;padding:10px 36px 10px 36px;font-size:16px;color:var(--ink);
+    outline:none;box-shadow:0 1px 2px rgba(50,38,20,.06)}
+  .search input:focus{border-color:var(--gold)}
+  .search .mag{position:absolute;left:12px;top:50%;transform:translateY(-50%);
+    color:var(--muted);font-size:15px;pointer-events:none}
+  .search .clr{position:absolute;right:8px;top:50%;transform:translateY(-50%);
+    border:none;background:#e7dcc6;color:var(--muted);width:22px;height:22px;border-radius:50%;
+    font-size:14px;line-height:1;cursor:pointer;display:none}
+  #hits{position:absolute;left:0;right:0;top:46px;font-size:12px;color:var(--muted);
+    padding-left:14px}
+
+  /* ---- floating controls ---- */
+  #tools{position:fixed;right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);z-index:20;
+    display:flex;flex-direction:column;gap:10px}
+  .tool{width:46px;height:46px;border-radius:14px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink);box-shadow:var(--shadow);font-size:18px;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none}
+  .tool small{font-size:9px;font-weight:700;letter-spacing:.3px}
+  .tool.line{flex-direction:column;gap:1px;color:var(--gold)}
+
+  /* ---- legend chip ---- */
+  #legend{position:fixed;left:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);z-index:20;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
+    font-size:11.5px;color:var(--muted);padding:8px 10px;max-width:46vw}
+  #legend b{color:var(--ink);font-weight:600}
+  #legend .row{display:flex;align-items:center;gap:6px;margin:2px 0;white-space:nowrap}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .dot.gold{background:var(--gold)}
+  .dot.warn{background:#fff;border:2px dashed var(--warn)}
+  .dot.norm{background:var(--node)}
+
+  /* ---- tree visuals ---- */
+  .link{fill:none;stroke:var(--line);stroke-width:1.4px}
+  .node{transition:transform .34s cubic-bezier(.2,.8,.2,1)}
+  .node circle{stroke-width:1.6px;cursor:pointer}
+  .node .ncol{fill:var(--card);stroke:var(--node)}
+  .node.collapsed .ncol{fill:var(--node)}
+  .node.star circle{stroke:var(--gold)}
+  .node.star.collapsed circle{fill:var(--gold)}
+  .node.warn circle{stroke:var(--warn);stroke-dasharray:3 2}
+  .node.warn.collapsed circle{fill:var(--warn)}
+  .node text{font-family:var(--serif);font-size:13.5px;fill:var(--ink);cursor:pointer;
+    paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round}
+  .node.star text{font-weight:600;fill:#6f4e12}
+  .node.root circle{fill:var(--accent);stroke:var(--accent)}
+  .node.root text{font-weight:700;font-size:15px}
+  .node.match circle{stroke:#1f7a5a;stroke-width:3px}
+  .node.match text{fill:#1f7a5a;font-weight:700}
+  .badge{font-family:var(--sans);font-size:9px;font-weight:700;fill:#fff}
+
+  /* ---- detail bottom sheet ---- */
+  #sheet{position:fixed;left:0;right:0;bottom:0;z-index:30;transform:translateY(110%);
+    transition:transform .26s cubic-bezier(.2,.8,.2,1);
+    background:var(--card);border-radius:20px 20px 0 0;box-shadow:0 -10px 40px rgba(50,38,20,.22);
+    padding:8px 18px calc(env(safe-area-inset-bottom, 0px) + 20px)}
+  #sheet.open{transform:translateY(0)}
+  #sheet .grip{width:40px;height:4px;border-radius:2px;background:#ddd2bb;margin:6px auto 12px}
+  #sheet .nm{font-family:var(--serif);font-size:22px;font-weight:600;line-height:1.15}
+  #sheet .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+  .tag{font-size:11.5px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);
+    color:var(--muted);background:var(--bg)}
+  .tag.gold{color:#6f4e12;border-color:var(--gold-soft);background:#fbf2dc}
+  .tag.warn{color:#8a4a14;border-color:var(--warn-soft);background:#fbecdb}
+  #sheet .note{font-size:13.5px;color:var(--ink);line-height:1.5;margin:8px 0 4px}
+  #sheet .meta{font-size:12.5px;color:var(--muted);margin-top:6px}
+  #sheet .acts{display:flex;gap:10px;margin-top:14px}
+  #sheet .acts button{flex:1;border:1px solid var(--line);background:var(--bg);color:var(--ink);
+    border-radius:12px;padding:11px;font-size:14px;font-weight:600;cursor:pointer}
+  #sheet .acts button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  #sheet .x{position:absolute;right:14px;top:14px;border:none;background:#eee3cd;color:var(--muted);
+    width:30px;height:30px;border-radius:50%;font-size:17px;cursor:pointer}
+
+  #hint{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;
+    text-align:center;color:var(--muted);font-size:13px;pointer-events:none;opacity:.0;
+    transition:opacity .4s}
+  @media (min-width:760px){
+    #brand{font-size:19px}
+    .node text{font-size:13px}
+    #legend{max-width:none}
+  }
+</style>
+</head>
+<body>
+  <div id="stage"><svg></svg></div>
+
+  <div id="top">
+    <div id="brand"><span class="seal"></span><span class="bn">Family Tree</span></div>
+    <div class="search">
+      <span class="mag">⌕</span>
+      <input id="q" type="search" placeholder="Search a name…" autocomplete="off" autocorrect="off" />
+      <button class="clr" id="clr" aria-label="clear">×</button>
+      <div id="hits"></div>
+    </div>
+  </div>
+
+  <div id="legend">
+    <div class="row"><span class="dot gold"></span><b>Your direct line</b></div>
+    <div class="row"><span class="dot warn"></span>Needs verifying</div>
+    <div class="row"><span class="dot norm"></span>Dot = open/close · name = details</div>
+  </div>
+
+  <div id="tools">
+    <div class="tool line" id="t-line" title="Jump to your line"><span>★</span><small>MY LINE</small></div>
+    <div class="tool" id="t-fit" title="Fit to screen">⤢</div>
+    <div class="tool" id="t-collapse" title="Collapse all">⊟</div>
+  </div>
+
+  <div id="sheet">
+    <button class="x" id="sx">×</button>
+    <div class="grip"></div>
+    <div class="nm" id="s-name">—</div>
+    <div class="tags" id="s-tags"></div>
+    <div class="note" id="s-note"></div>
+    <div class="meta" id="s-meta"></div>
+    <div class="acts">
+      <button id="s-toggle">Show children</button>
+      <button class="primary" id="s-center">Center</button>
+    </div>
+  </div>
+
+  <div id="hint">Pinch to zoom · drag to move · tap a name for details</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="tree-data.js"></script>
+  <script>
+  (function(){
+    if(!window.FAMILY_DATA){ document.body.innerHTML='<p style="padding:24px;font-family:sans-serif">Could not load tree-data.js</p>'; return; }
+
+    const svg = d3.select("svg");
+    const gLink = svg.append("g").attr("class","links");
+    const gNode = svg.append("g").attr("class","nodes");
+    const gWrap = svg.append("g"); // placeholder (kept for ordering)
+    // Real container we zoom: wrap links+nodes in one group
+    const container = svg.insert("g",":first-child").attr("class","viewport");
+    container.append(()=>gLink.node());
+    container.append(()=>gNode.node());
+
+    const NODE_H = 26;     // vertical spacing between siblings
+    const LEVEL_W = 184;   // horizontal spacing between generations
+    const tree = d3.tree().nodeSize([NODE_H, LEVEL_W])
+                          .separation((a,b)=> (a.parent===b.parent?1:1.3));
+
+    const root = d3.hierarchy(window.FAMILY_DATA);
+    let nid = 0;
+    root.x0 = 0; root.y0 = 0;
+    root.each(d=>{ d._id = ++nid; d._children = d.children; });
+
+    function attrs(d){ return (d.data && d.data.attrs) || {}; }
+    function collapseAll(d){ if(d._children){ d.children=null; d._children.forEach(collapseAll); } }
+    function expand(d){ if(d._children) d.children = d._children; }
+
+    // Start collapsed, then reveal the path to "you" (Sajith's line) for a clean first view
+    collapseAll(root);
+    expand(root);
+    (root._children||[]).forEach(expand);   // show both sheet-roots at the top
+    const everyone=[]; (function all(d){ everyone.push(d); (d._children||[]).forEach(all); })(root);
+    const stars = everyone.filter(d=>attrs(d).star);
+    const me = everyone.find(d=>/Sajith/i.test(d.data.name) && attrs(d).star) || stars[stars.length-1] || root;
+    me.ancestors().forEach(expand);          // reveal root → … → Sajith
+
+    // ----- zoom -----
+    const zoom = d3.zoom().scaleExtent([0.12, 2.6])
+      .on("zoom", e=> container.attr("transform", e.transform));
+    svg.call(zoom).on("dblclick.zoom", null);
+    function viewSize(){ const r=svg.node().getBoundingClientRect(); return [r.width, r.height]; }
+
+    function centerOn(d, scale, xfrac){
+      const [w,h]=viewSize();
+      const s = scale || Math.max(0.5, Math.min(1.1, d3.zoomTransform(svg.node()).k || 0.8));
+      const fx = (xfrac==null?0.5:xfrac);
+      const t = d3.zoomIdentity.translate(w*fx - d.y*s, h*0.5 - d.x*s).scale(s);
+      svg.call(zoom.transform, t);
+    }
+    function fitNodes(nodes, animate){
+      if(!nodes.length) return;
+      const xs=nodes.map(n=>n.x), ys=nodes.map(n=>n.y);
+      const x0=Math.min(...xs), x1=Math.max(...xs), y0=Math.min(...ys), y1=Math.max(...ys);
+      const [w,h]=viewSize();
+      const tw=(y1-y0)+300, th=(x1-x0)+140;   // +space for labels
+      const s=Math.min(1.5, Math.max(0.12, 0.94*Math.min(w/tw, h/th)));
+      const cx=(y0+y1)/2, cy=(x0+x1)/2;
+      const t=d3.zoomIdentity.translate(w*0.46 - cx*s, h/2 - cy*s).scale(s);
+      svg.call(zoom.transform, t);
+    }
+    function fit(){ fitNodes(root.descendants()); }
+    function focusLine(){ fitNodes(root.descendants().filter(d=>attrs(d).star)); }
+
+    // ----- render -----
+    let selected=null, matches=new Set();
+    function classes(d){
+      let c="node";
+      if(attrs(d).root) c+=" root";
+      if(attrs(d).star) c+=" star";
+      if(attrs(d).conf==="?") c+=" warn";
+      if(d._children && !d.children) c+=" collapsed";
+      if(matches.has(d)) c+=" match";
+      return c;
+    }
+    function label(d){ return d.data.name; }
+
+    function update(source){
+      tree(root);
+      const nodes = root.descendants();
+      const links = root.links();
+
+      // links
+      const link = gLink.selectAll("path.link").data(links, d=>d.target._id);
+      link.enter().append("path").attr("class","link")
+        .merge(link).attr("d", d=>diag(d.source,d.target));
+      link.exit().remove();
+
+      // nodes
+      const node = gNode.selectAll("g.node").data(nodes, d=>d._id);
+      const ent = node.enter().append("g");
+      ent.append("circle").attr("class","ncol").attr("r",5.5)
+          .on("click",(e,d)=>{ e.stopPropagation(); (d.children||d._children)? toggle(d) : openSheet(d); });
+      ent.append("text").attr("dy","0.32em")
+          .on("click",(e,d)=>{ e.stopPropagation(); openSheet(d); });
+
+      const all = ent.merge(node);
+      all.attr("class", classes)
+         .attr("transform", d=>`translate(${d.y},${d.x})`)
+         .style("opacity",1);
+      all.select("circle").attr("r", d=>attrs(d).root?7: (d._children?6:4.5));
+      all.select("text")
+          .attr("x", d=> (d.children||d._children)? -10 : 10)
+          .attr("text-anchor", d=> (d.children||d._children)? "end":"start")
+          .text(label);
+
+      node.exit().remove();
+      nodes.forEach(d=>{ d.x0=d.x; d.y0=d.y; });
+    }
+    function diag(s,t){
+      return `M${s.y},${s.x}C${(s.y+t.y)/2},${s.x} ${(s.y+t.y)/2},${t.x} ${t.y},${t.x}`;
+    }
+
+    // ----- interactions -----
+    function toggle(d){
+      if(d.children){ d._children=d.children; d.children=null; }
+      else if(d._children){ d.children=d._children; }
+      update(d);
+    }
+    function onTap(d){ openSheet(d); }   // tap shows details (and offers expand)
+
+    // detail sheet
+    const sheet=document.getElementById("sheet");
+    function openSheet(d){
+      selected=d; const a=attrs(d);
+      document.getElementById("s-name").textContent=d.data.name;
+      const tags=document.getElementById("s-tags"); tags.innerHTML="";
+      const addTag=(t,cls)=>{ const s=document.createElement("span"); s.className="tag"+(cls?" "+cls:""); s.textContent=t; tags.appendChild(s); };
+      if(a.star) addTag("★ Your direct line","gold");
+      if(a.conf==="?") addTag("⚠ Parent link unverified","warn");
+      if(a.spouse) addTag("married "+a.spouse);
+      if(a.sheet && !a.root) addTag(a.sheet+" sheet");
+      const kids=(d.children?d.children.length:0)+(d._children&&!d.children?d._children.length:0);
+      if(kids) addTag(kids+" child"+(kids>1?"ren":""));
+      document.getElementById("s-note").textContent=a.note||"";
+      const path=d.ancestors().reverse().map(n=>n.data.name).filter(n=>n!=="Mirza Family");
+      document.getElementById("s-meta").textContent= path.length>1? "Lineage: "+path.join("  ›  ") : "";
+      const tBtn=document.getElementById("s-toggle");
+      if(d.children){ tBtn.textContent="Hide children"; tBtn.style.display=kids?"block":"none"; }
+      else if(d._children){ tBtn.textContent="Show "+d._children.length+" children"; tBtn.style.display="block"; }
+      else { tBtn.style.display="none"; }
+      sheet.classList.add("open");
+    }
+    function closeSheet(){ sheet.classList.remove("open"); selected=null; }
+    document.getElementById("sx").onclick=closeSheet;
+    document.getElementById("s-center").onclick=()=>{ if(selected){ closeSheet(); centerOn(selected); } };
+    document.getElementById("s-toggle").onclick=()=>{ if(selected){ toggle(selected); openSheet(selected); centerOn(selected); } };
+    svg.on("click",closeSheet);
+
+    // tools
+    document.getElementById("t-fit").onclick=fit;
+    document.getElementById("t-collapse").onclick=()=>{ (root.children||[]).forEach(c=>{ if(c.children){c._children=c.children;c.children=null;} }); update(root); fit(); };
+    document.getElementById("t-line").onclick=()=>{
+      stars.forEach(s=>{ let a=s; while(a){ expand(a); a=a.parent; } });
+      update(root);
+      focusLine();
+    };
+
+    // search
+    const q=document.getElementById("q"), clr=document.getElementById("clr"), hits=document.getElementById("hits");
+    let timer=null;
+    q.addEventListener("input",()=>{ clearTimeout(timer); timer=setTimeout(runSearch,160); });
+    clr.onclick=()=>{ q.value=""; runSearch(); q.focus(); };
+    function runSearch(){
+      const term=q.value.trim().toLowerCase();
+      clr.style.display=term?"block":"none";
+      matches=new Set();
+      if(!term){ hits.textContent=""; update(root); return; }
+      const found=everyone.filter(d=>!attrs(d).root && d.data.name.toLowerCase().includes(term));
+      found.forEach(d=>{ matches.add(d); let a=d.parent; while(a){ expand(a); a=a.parent; } });
+      update(root);
+      hits.textContent = found.length? found.length+" match"+(found.length>1?"es":"") : "no matches";
+      if(found.length){ centerOn(found[0], 0.95); }
+    }
+
+    // boot
+    update(root);
+    requestAnimationFrame(()=>centerOn(me, 0.82, 0.58));
+    setTimeout(()=>centerOn(me, 0.82, 0.58), 250);   // safety re-center once sized
+    const hint=document.getElementById("hint");
+    hint.style.opacity=1; setTimeout(()=>hint.style.opacity=0, 3200);
+    window.addEventListener("resize", ()=>{ /* keep current transform */ });
+  })();
+  </script>
+</body>
+</html>

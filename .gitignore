@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Editor/OS cruft
+*~
+.idea/
+.vscode/
+
+# Claude Code local (personal) settings
+.claude/settings.local.json
