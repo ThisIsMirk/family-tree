@@ -367,7 +367,7 @@
       "parentId": "p_mariyomma_32",
       "sheet": "Mother/All",
       "spouse": "N.A. Backer",
-      "notes": "Your grandmother. m. N.A. Backer (Father sheet).",
+      "notes": null,
       "confidence": "ok",
       "directLine": true
     },
@@ -387,7 +387,7 @@
       "parentId": "p_fathima_33",
       "sheet": "Mother/All",
       "spouse": null,
-      "notes": "Your father",
+      "notes": null,
       "confidence": "ok",
       "directLine": true
     },

@@ -1,7 +1,8 @@
-# Family Tree
+# Perooli Family Tree
 
-A digitized, interactive version of a hand-drawn family tree (originally an Excel chart from 2005,
-rooted at **Nelliadi Beeran Musaliar**).
+A digitized, interactive version of the hand-drawn **Perooli family** tree (originally an Excel chart
+from 2005). It joins two founding lines — **Nelliadi Beeran Musaliar** and **Valiya Chekkan & Thithi** —
+into one connected tree.
 
 ## What's here
 
@@ -25,10 +26,11 @@ python3 -m http.server 8765
 # then open http://localhost:8765/
 ```
 
-**Features:** pinch/scroll to zoom, drag to pan, tap a dot to expand/collapse, tap a name for details,
-search any name, and a **★ My Line** button that frames the highlighted direct lineage.
+It opens at the top of the whole tree so anyone can navigate down to their own branch.
 
-- **Gold** = the direct ancestral line.
+**Features:** pinch/scroll to zoom, drag to pan, tap a dot to expand/collapse, tap a name for details,
+search any name, and **expand-all / fit / back-to-top** buttons.
+
 - **Orange dashed** = a parent link that is a best-guess and still needs verifying (61 of these).
 
 ## Regenerating the data

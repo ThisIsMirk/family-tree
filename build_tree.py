@@ -47,10 +47,9 @@ mother = P("Nelliadi Beeran Musaliar", [
                 P("Mariyomma", star=True, spouse="Rajab",
                   note="m. Rajab (Father sheet). Their children below also appear under 'Rajab' in the Father tree.",
                   kids=[
-                    P("Fathima", star=True, spouse="N.A. Backer",
-                      note="Your grandmother. m. N.A. Backer (Father sheet).", kids=[
+                    P("Fathima", star=True, spouse="N.A. Backer", kids=[
                         P("Feroz"),
-                        P("Sajith", star=True, note="Your father"),
+                        P("Sajith", star=True),
                         P("Mujeeb", note="Listed as the original file's author"),
                         P("Hafis")]),
                     P("Khadija", kids=[P("Hafsa"), P("Salima"), P("Reshma"), P("Reetha")]),
@@ -265,13 +264,12 @@ def to_d3(node, sheet):
     if node["spouse"]: attrs["spouse"] = node["spouse"]
     if node["note"]:   attrs["note"]   = node["note"]
     if node["conf"] != "ok": attrs["conf"] = node["conf"]
-    if node["star"]:   attrs["star"]   = True
     d = {"name": node["name"], "attrs": attrs}
     kids = [to_d3(k, sheet) for k in node["kids"]]
     if kids: d["children"] = kids
     return d
 
-webapp_root = {"name": "Mirza Family", "attrs": {"root": True}, "children": [
+webapp_root = {"name": "Perooli Family", "attrs": {"root": True}, "children": [
     to_d3(mother, "Mother/All"), to_d3(father, "Father")]}
 os.makedirs("webapp", exist_ok=True)
 with open("webapp/tree-data.js", "w") as fh:

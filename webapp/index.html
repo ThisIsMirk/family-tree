@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
 <meta name="theme-color" content="#2b2118" />
-<title>Mirza Family Tree</title>
+<title>Perooli Family Tree</title>
 <style>
   :root{
     --bg:#f5efe4; --bg2:#efe7d6; --ink:#2b2118; --muted:#7b6f5c;
@@ -30,11 +30,11 @@
     display:flex;gap:8px;align-items:center;
     background:linear-gradient(to bottom, rgba(245,239,228,.96), rgba(245,239,228,.78) 70%, rgba(245,239,228,0));
     backdrop-filter:blur(6px)}
-  #brand{font-family:var(--serif);font-weight:600;font-size:17px;letter-spacing:.2px;
+  #brand{font-family:var(--serif);font-weight:600;font-size:16px;letter-spacing:.2px;
     white-space:nowrap;color:var(--ink);display:flex;align-items:center;gap:7px}
   #brand .seal{width:22px;height:22px;border-radius:50%;background:
     radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold));
-    box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}
+    box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5);flex:none}
   .search{position:relative;flex:1;min-width:0;max-width:360px}
   .search input{width:100%;border:1px solid var(--line);background:var(--card);
     border-radius:999px;padding:10px 36px 10px 36px;font-size:16px;color:var(--ink);
@@ -52,10 +52,8 @@
   #tools{position:fixed;right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);z-index:20;
     display:flex;flex-direction:column;gap:10px}
   .tool{width:46px;height:46px;border-radius:14px;border:1px solid var(--line);
-    background:var(--card);color:var(--ink);box-shadow:var(--shadow);font-size:18px;
+    background:var(--card);color:var(--ink);box-shadow:var(--shadow);font-size:20px;
     display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none}
-  .tool small{font-size:9px;font-weight:700;letter-spacing:.3px}
-  .tool.line{flex-direction:column;gap:1px;color:var(--gold)}
 
   /* ---- legend chip ---- */
   #legend{position:fixed;left:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);z-index:20;
@@ -64,7 +62,6 @@
   #legend b{color:var(--ink);font-weight:600}
   #legend .row{display:flex;align-items:center;gap:6px;margin:2px 0;white-space:nowrap}
   .dot{width:11px;height:11px;border-radius:50%;flex:none}
-  .dot.gold{background:var(--gold)}
   .dot.warn{background:#fff;border:2px dashed var(--warn)}
   .dot.norm{background:var(--node)}
 
@@ -74,18 +71,14 @@
   .node circle{stroke-width:1.6px;cursor:pointer}
   .node .ncol{fill:var(--card);stroke:var(--node)}
   .node.collapsed .ncol{fill:var(--node)}
-  .node.star circle{stroke:var(--gold)}
-  .node.star.collapsed circle{fill:var(--gold)}
   .node.warn circle{stroke:var(--warn);stroke-dasharray:3 2}
   .node.warn.collapsed circle{fill:var(--warn)}
   .node text{font-family:var(--serif);font-size:13.5px;fill:var(--ink);cursor:pointer;
     paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round}
-  .node.star text{font-weight:600;fill:#6f4e12}
   .node.root circle{fill:var(--accent);stroke:var(--accent)}
   .node.root text{font-weight:700;font-size:15px}
   .node.match circle{stroke:#1f7a5a;stroke-width:3px}
   .node.match text{fill:#1f7a5a;font-weight:700}
-  .badge{font-family:var(--sans);font-size:9px;font-weight:700;fill:#fff}
 
   /* ---- detail bottom sheet ---- */
   #sheet{position:fixed;left:0;right:0;bottom:0;z-index:30;transform:translateY(110%);
@@ -98,7 +91,6 @@
   #sheet .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
   .tag{font-size:11.5px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);
     color:var(--muted);background:var(--bg)}
-  .tag.gold{color:#6f4e12;border-color:var(--gold-soft);background:#fbf2dc}
   .tag.warn{color:#8a4a14;border-color:var(--warn-soft);background:#fbecdb}
   #sheet .note{font-size:13.5px;color:var(--ink);line-height:1.5;margin:8px 0 4px}
   #sheet .meta{font-size:12.5px;color:var(--muted);margin-top:6px}
@@ -123,7 +115,7 @@
   <div id="stage"><svg></svg></div>
 
   <div id="top">
-    <div id="brand"><span class="seal"></span><span class="bn">Family Tree</span></div>
+    <div id="brand"><span class="seal"></span><span class="bn">Perooli Family Tree</span></div>
     <div class="search">
       <span class="mag">⌕</span>
       <input id="q" type="search" placeholder="Search a name…" autocomplete="off" autocorrect="off" />
@@ -133,15 +125,14 @@
   </div>
 
   <div id="legend">
-    <div class="row"><span class="dot gold"></span><b>Your direct line</b></div>
     <div class="row"><span class="dot warn"></span>Needs verifying</div>
     <div class="row"><span class="dot norm"></span>Dot = open/close · name = details</div>
   </div>
 
   <div id="tools">
-    <div class="tool line" id="t-line" title="Jump to your line"><span>★</span><small>MY LINE</small></div>
+    <div class="tool" id="t-expand" title="Expand the whole tree">⊞</div>
     <div class="tool" id="t-fit" title="Fit to screen">⤢</div>
-    <div class="tool" id="t-collapse" title="Collapse all">⊟</div>
+    <div class="tool" id="t-collapse" title="Back to the top">⊟</div>
   </div>
 
   <div id="sheet">
@@ -168,8 +159,6 @@
     const svg = d3.select("svg");
     const gLink = svg.append("g").attr("class","links");
     const gNode = svg.append("g").attr("class","nodes");
-    const gWrap = svg.append("g"); // placeholder (kept for ordering)
-    // Real container we zoom: wrap links+nodes in one group
     const container = svg.insert("g",":first-child").attr("class","viewport");
     container.append(()=>gLink.node());
     container.append(()=>gNode.node());
@@ -188,17 +177,18 @@
     function collapseAll(d){ if(d._children){ d.children=null; d._children.forEach(collapseAll); } }
     function expand(d){ if(d._children) d.children = d._children; }
 
-    // Start collapsed, then reveal the path to "you" (Sajith's line) for a clean first view
+    // Everyone, and helpers to open the tree to a given depth or fully
     collapseAll(root);
-    expand(root);
-    (root._children||[]).forEach(expand);   // show both sheet-roots at the top
     const everyone=[]; (function all(d){ everyone.push(d); (d._children||[]).forEach(all); })(root);
-    const stars = everyone.filter(d=>attrs(d).star);
-    const me = everyone.find(d=>/Sajith/i.test(d.data.name) && attrs(d).star) || stars[stars.length-1] || root;
-    me.ancestors().forEach(expand);          // reveal root → … → Sajith
+    function expandToDepth(n){ everyone.forEach(d=>{ if(d.depth < n) expand(d); }); }
+    function expandAll(){ everyone.forEach(expand); }
+    function collapseToTop(){ collapseAll(root); expand(root); (root._children||[]).forEach(expand); }
+
+    // Default view: open the top of the whole tree (founders + first couple of generations)
+    expandToDepth(3);
 
     // ----- zoom -----
-    const zoom = d3.zoom().scaleExtent([0.12, 2.6])
+    const zoom = d3.zoom().scaleExtent([0.08, 2.6])
       .on("zoom", e=> container.attr("transform", e.transform));
     svg.call(zoom).on("dblclick.zoom", null);
     function viewSize(){ const r=svg.node().getBoundingClientRect(); return [r.width, r.height]; }
@@ -210,26 +200,24 @@
       const t = d3.zoomIdentity.translate(w*fx - d.y*s, h*0.5 - d.x*s).scale(s);
       svg.call(zoom.transform, t);
     }
-    function fitNodes(nodes, animate){
+    function fitNodes(nodes){
       if(!nodes.length) return;
       const xs=nodes.map(n=>n.x), ys=nodes.map(n=>n.y);
       const x0=Math.min(...xs), x1=Math.max(...xs), y0=Math.min(...ys), y1=Math.max(...ys);
       const [w,h]=viewSize();
       const tw=(y1-y0)+300, th=(x1-x0)+140;   // +space for labels
-      const s=Math.min(1.5, Math.max(0.12, 0.94*Math.min(w/tw, h/th)));
+      const s=Math.min(1.5, Math.max(0.08, 0.94*Math.min(w/tw, h/th)));
       const cx=(y0+y1)/2, cy=(x0+x1)/2;
       const t=d3.zoomIdentity.translate(w*0.46 - cx*s, h/2 - cy*s).scale(s);
       svg.call(zoom.transform, t);
     }
     function fit(){ fitNodes(root.descendants()); }
-    function focusLine(){ fitNodes(root.descendants().filter(d=>attrs(d).star)); }
 
     // ----- render -----
     let selected=null, matches=new Set();
     function classes(d){
       let c="node";
       if(attrs(d).root) c+=" root";
-      if(attrs(d).star) c+=" star";
       if(attrs(d).conf==="?") c+=" warn";
       if(d._children && !d.children) c+=" collapsed";
       if(matches.has(d)) c+=" match";
@@ -242,13 +230,11 @@
       const nodes = root.descendants();
       const links = root.links();
 
-      // links
       const link = gLink.selectAll("path.link").data(links, d=>d.target._id);
       link.enter().append("path").attr("class","link")
         .merge(link).attr("d", d=>diag(d.source,d.target));
       link.exit().remove();
 
-      // nodes
       const node = gNode.selectAll("g.node").data(nodes, d=>d._id);
       const ent = node.enter().append("g");
       ent.append("circle").attr("class","ncol").attr("r",5.5)
@@ -279,7 +265,6 @@
       else if(d._children){ d.children=d._children; }
       update(d);
     }
-    function onTap(d){ openSheet(d); }   // tap shows details (and offers expand)
 
     // detail sheet
     const sheet=document.getElementById("sheet");
@@ -288,14 +273,13 @@
       document.getElementById("s-name").textContent=d.data.name;
       const tags=document.getElementById("s-tags"); tags.innerHTML="";
       const addTag=(t,cls)=>{ const s=document.createElement("span"); s.className="tag"+(cls?" "+cls:""); s.textContent=t; tags.appendChild(s); };
-      if(a.star) addTag("★ Your direct line","gold");
       if(a.conf==="?") addTag("⚠ Parent link unverified","warn");
       if(a.spouse) addTag("married "+a.spouse);
       if(a.sheet && !a.root) addTag(a.sheet+" sheet");
       const kids=(d.children?d.children.length:0)+(d._children&&!d.children?d._children.length:0);
       if(kids) addTag(kids+" child"+(kids>1?"ren":""));
       document.getElementById("s-note").textContent=a.note||"";
-      const path=d.ancestors().reverse().map(n=>n.data.name).filter(n=>n!=="Mirza Family");
+      const path=d.ancestors().reverse().map(n=>n.data.name).filter(n=>n!=="Perooli Family");
       document.getElementById("s-meta").textContent= path.length>1? "Lineage: "+path.join("  ›  ") : "";
       const tBtn=document.getElementById("s-toggle");
       if(d.children){ tBtn.textContent="Hide children"; tBtn.style.display=kids?"block":"none"; }
@@ -311,12 +295,8 @@
 
     // tools
     document.getElementById("t-fit").onclick=fit;
-    document.getElementById("t-collapse").onclick=()=>{ (root.children||[]).forEach(c=>{ if(c.children){c._children=c.children;c.children=null;} }); update(root); fit(); };
-    document.getElementById("t-line").onclick=()=>{
-      stars.forEach(s=>{ let a=s; while(a){ expand(a); a=a.parent; } });
-      update(root);
-      focusLine();
-    };
+    document.getElementById("t-expand").onclick=()=>{ expandAll(); update(root); fit(); };
+    document.getElementById("t-collapse").onclick=()=>{ collapseToTop(); update(root); fit(); };
 
     // search
     const q=document.getElementById("q"), clr=document.getElementById("clr"), hits=document.getElementById("hits");
@@ -337,11 +317,10 @@
 
     // boot
     update(root);
-    requestAnimationFrame(()=>centerOn(me, 0.82, 0.58));
-    setTimeout(()=>centerOn(me, 0.82, 0.58), 250);   // safety re-center once sized
+    requestAnimationFrame(fit);
+    setTimeout(fit, 250);   // re-fit once the viewport is sized
     const hint=document.getElementById("hint");
     hint.style.opacity=1; setTimeout(()=>hint.style.opacity=0, 3200);
-    window.addEventListener("resize", ()=>{ /* keep current transform */ });
   })();
   </script>
 </body>
