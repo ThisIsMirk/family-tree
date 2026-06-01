@@ -1,8 +1,8 @@
 # Perooli Family Tree
 
 A digitized, interactive version of the hand-drawn **Perooli family** tree (originally an Excel chart
-from 2005). It joins two founding lines — **Nelliadi Beeran Musaliar** and **Valiya Chekkan & Thithi** —
-into one connected tree.
+from 2005). It holds two founding families — **Nelliadi Beeran Musaliar** and **Valiya Chekkan & Thithi** —
+joined only by marriage (Mariyomma & Rajab, and Fathima & N.A. Backer).
 
 ## What's here
 

@@ -18,21 +18,18 @@ def P(name, kids=None, spouse=None, note=None, conf="ok", star=False, marriage=N
 # MOTHER / ALL sheet  (root: Nelliadi Beeran Musaliar)
 # ---------------------------------------------------------------------------
 mother = P("Nelliadi Beeran Musaliar", [
-    P("Valiya Chekkan", spouse="Thithi",
-      note="Same person as the root of the FATHER sheet — see Father tree for his descendants"),
-    P("Cheriya Chekkan"),
-    P("Thykkandi Mariyomma", [
-        # gen-2 sibling bar — parent attachment uncertain
-        P("Mahmoud", conf="?"),
-        P("Kunhamina", conf="?"),
-        P("Ayshomma", conf="?"),
-        P("Assya", note="No Issues", conf="?"),
-        P("Zainaba", note="children noted only as 'Azees & Mahmoud'", conf="?"),
+    P("Valiya Chekkan"),   # NOTE: a different person from the Father sheet's "Valiya Chekkan & Thithi"
+    P("Cheriya Chekkan", [
+        P("Mahmoud"),
+        P("Kunhamina"),
+        P("Ayshomma"),
+        P("Assya", note="No Issues"),
+        P("Zainaba", kids=[P("Azees"), P("Mahmoud")]),
     ]),
-    P("Kunhaissa P.P", [
-        # gen-3 sibling bar attached here as best guess — VERIFY top of maternal tree
-        P("Aamina", conf="?"),
-        P("Aysha", star=True, conf="?", kids=[
+    P("Thykkandi Mariyomma", [
+        # 6 children of Thykkandi Mariyomma (confirmed)
+        P("Aamina"),
+        P("Aysha", star=True, kids=[
             P("Kunupath", note="Kadiri Kandi", kids=[
                 # G_h: attachment to Kunupath is a guess
                 P("Kunhabdullah", note="Kayirikandi", conf="?", kids=[
@@ -47,7 +44,7 @@ mother = P("Nelliadi Beeran Musaliar", [
                 P("Mariyomma", star=True, spouse="Rajab", marriage="rajab+mariyomma", color="#e25c9c", emph=True,
                   note="m. Rajab (Father sheet). Their children are the start of this family.",
                   kids=[
-                    P("Fathima", star=True, spouse="N.A. Backer", kids=[
+                    P("Fathima", star=True, spouse="N.A. Backer", marriage="fathima+nabacker", kids=[
                         P("Feroz"),
                         P("Sajith", star=True),
                         P("Mujeeb", note="Listed as the original file's author"),
@@ -64,70 +61,70 @@ mother = P("Nelliadi Beeran Musaliar", [
             P("Moidu", note="Singapore"),
             P("Mammed", note="Singapore"),
         ]),
-        P("Pathumma", conf="?"),
-        P("Kader", conf="?", kids=[
-            # G_e attached to Kader as best guess
-            P("Kolari Mahmoud", conf="?"),
-            P("Ibrahim", conf="?"),
-            P("Assya", spouse="Thayyulathil", conf="?",
+        P("Pathumma"),
+        P("Kader", kids=[
+            P("Kolari Mahmoud"),
+            P("Ibrahim"),
+            P("Assya- Thayyulathil",
               kids=[P("Ruqia"), P("Jameela"), P("Azees"), P("Sideque")]),
-            P("Kunhaissa", conf="?", kids=[
+            P("Kunhaissa", kids=[
                 P("Mammed Musaliar", kids=[
-                    P("Azeez Musaliar"), P("Kalanthu Musaliar"), P("Ibrahim Kutty"),
+                    P("Azeez Musaliar", kids=[P("Mahmoud Chokli"), P("Shukkoor")]),
+                    P("Kalanthu Musaliar"),
+                    P("Ibrahim Kutty", kids=[P("Aysha"), P("Kulsu Teacher"), P("Faizal")]),
                     P("A.Rahman"),
-                    P("Assyomma", spouse="Farhat", kids=[P("Mahmoud Chokli"), P("Shukkoor")]),
-                    P("Ayshu", kids=[
-                        P("Aysha", conf="?"), P("Kulsu Teacher", conf="?"), P("Faizal", conf="?")]),
+                    P("Assyomma", spouse="Farhat"),
+                    P("Ayshu"),
                 ]),
                 P("Abdu Musaliar", kids=[
-                    P("Kalanthukka"), P("Koyilari Elomma"), P("Moidu"),
-                    P("Kunhaissa", kids=[
-                        P("Kunhi Matha", kids=[
-                            P("Kalanthu Musaliar", kids=[P("Mubarak Ahmed"), P("Mubarak Abd")])]),
-                        P("Beevi", kids=[
-                            P("Kunhamina", kids=[P("Mammed"), P("Ubaidkka"), P("Azees")])]),
-                        P("Assya", kids=[
-                            P("Farhat Moideen Haji",
-                              note="Also appears in the Father sheet under Mohd Musaliar's line",
-                              kids=[
-                                P("Ahmed"), P("Safiya"), P("Salam"),
-                                P("Soora", kids=[P("Basi"), P("Junaid"), P("Sister")]),
-                                P("Aysha"), P("Gafoor"),
-                                P("Zubaida", note="03 Kids"),
-                                P("Rahim Madathil", kids=[P("Hina")]),
-                              ])]),
-                    ]),
-                ]),
+                    P("Kalanthukka"), P("Koyilari Elomma"), P("Moidu"), P("Kunhaissa")]),
                 P("A.Rahman Musaliar", kids=[
                     P("P.V. Mohammed"), P("Ibrahim Kutty"), P("Majeed"),
-                    P("Kunhaissa", spouse="Mubarak"), P("Assya"), P("Ayshu"), P("Fathima")]),
+                    P("Kunhaissa-Mubarak"), P("Assya"), P("Ayshu"), P("Fathima")]),
                 P("Moideen Haji", kids=[
                     P("Delux Mammu"), P("Kunhabdullah"), P("A.Rahman"), P("Aysha"), P("Zainaba")]),
                 P("Ibrahim Musaliar", kids=[
-                    P("Aboobacker"), P("Mammed Musaliar"), P("Abdul Kader"), P("Abdu Rahman"),
+                    P("Aboobacker"), P("Mammed Musaliar"),
+                    P("Abdul Kader", kids=[P("Aamir"), P("Saabir"), P("Malu")]),
+                    P("Abdu Rahman"),
                     P("Abdullah Kutty"), P("Kunhi Moideen"), P("Zainaba"), P("Safiya")]),
                 P("Kunhi Bava", note="No Issues"),
                 P("Kader Musaliar", kids=[
-                    P("A.Rahman", conf="?", kids=[P("Aamir"), P("Saabir"), P("Malu")]),
-                    P("Mammed Musaliar", conf="?",
-                      kids=[P("Thanzi"), P("Thenvi"), P("Thefsi"), P("Thedvi")]),
-                    P("Azeezkka ST"), P("Aysha")]),
+                    P("A.Rahman"),
+                    P("Mammed Musaliar"),
+                    P("Azeezkka ST", kids=[P("Thanzi"), P("Thenvi"), P("Thefsi"), P("Thedvi")]),
+                    P("Aysha")]),
+                # Kunhi Matha, Beevi, Assya are also the main Kunhaissa's children (10 in all)
+                P("Kunhi Matha", kids=[
+                    P("Kalanthu Musaliar", kids=[P("Mubarak Ahmed"), P("Mubarak Abd")])]),
+                P("Beevi", kids=[
+                    P("Kunhamina", kids=[P("Mammed"), P("Ubaidkka"), P("Azees")])]),
+                P("Assya", kids=[
+                    P("Farhat Moideen Haji",
+                      note="Also appears in the Father sheet under Mohd Musaliar's line",
+                      kids=[
+                        P("Ahmed"), P("Safiya"), P("Salam"),
+                        P("Soora", kids=[P("Basi"), P("Junaid"), P("Sister")]),
+                        P("Aysha"), P("Gafoor"),
+                        P("Zubaida", note="03 Kids"),
+                        P("Rahim Madathil", kids=[P("Hina")]),
+                      ])]),
             ]),
         ]),
-        P("Abdu", note="No Issues", conf="?"),
-        P("Thavodi Beeran", note="No Issues", conf="?"),
+        P("Abdu", note="No Issues"),
+        P("Thavodi Beeran", note="No Issues"),
     ]),
+    P("Kunhaissa P.P"),
 ])
 
 # ---------------------------------------------------------------------------
-# FATHER sheet  (root: Valiya Chekkan & Thithi  == Valiya Chekkan from Mother sheet)
+# FATHER sheet  (root: Valiya Chekkan & Thithi — a DIFFERENT Valiya Chekkan, NOT Nelliadi's son)
 # ---------------------------------------------------------------------------
 father = P("Valiya Chekkan & Thithi",
-    note="'Porathut House'. Valiya Chekkan is a son of Nelliadi Beeran Musaliar (Mother sheet).",
+    note="'Porathut House' — a separate founding family, joined to the other side only by marriage.",
     kids=[
-    P("Mariyam", conf="?", kids=[
-        # the big gen-2 bar is attached under Mariyam as a best guess (green direct line)
-        P("Pathumma", star=True, conf="?", kids=[
+    P("Mariyam", kids=[
+        P("Pathumma", star=True, kids=[
             P("Sulekha", kids=[P("Bavakka"), P("Ahmed"), P("Pokku")]),
             P("Rajab", star=True, spouse="Mariyomma", marriage="rajab+mariyomma", color="#3f74cf",
               note="m. Mariyomma (Mother sheet). Their children are detailed under Mariyomma — "
@@ -143,39 +140,45 @@ father = P("Valiya Chekkan & Thithi",
             P("Sooppy", kids=[P("Abdullah"), P("Nissar"), P("Moideen"), P("Assya")]),
             P("Ayshoma", kids=[P("Abdullah"), P("Nissar"), P("Moideen"), P("Assya")], conf="?",
               note="children column shared/ambiguous with Sooppy in the chart"),
-            P("Khadisha", note="green cross-reference box in chart", conf="?"),
             P("C.K.Abdullah", note="Singapore; 07 Children"),
         ]),
-        P("Ummatha", conf="?", kids=[P("Kunhi Moideen", note="Nalan Kutti")]),
-        P("Khadija", conf="?", kids=[P("Aysha"), P("Mohamed"), P("Abdullah")]),
-        P("Abdu", conf="?", kids=[
-            P("Kunhammed", note="Super Med"), P("Pathumma"), P("Mariyomma")]),
-        P("Ibrahim", note="No Issues", conf="?"),
-        P("Assainar", note="No Issues", conf="?"),
-        P("Moideen", note="'Great Batchelor' — No Issues", conf="?"),
-        P("Assya", note="No Issues", conf="?"),
-        P("Pathu", conf="?"),
-        P("Kunhamina", conf="?", kids=[
-            P("Pathumma"),
-            P("Nabissa", spouse="Razak"),
-            P("Assya", spouse="Aseez"),
-            P("Sabiya", spouse="Gafoor"),
-            P("Basheer", kids=[P("Maimun"), P("Pathuma"), P("Ibrahim")]),
-            # lower bar under Kunhamina (fat_bl bottom)
-            P("A.Rahman", conf="?", kids=[P("Noushad"), P("Shamshad")]),
-            P("A.Kader", conf="?", kids=[P("Saleena"), P("Nachi")]),
-            P("Khaled", conf="?", kids=[P("Mohamed")]),
-            P("Nafisa", conf="?", kids=[P("Unais"), P("Sehadi")]),
-            P("Fathima", conf="?", kids=[P("Asif"), P("Haris"), P("Reshmi"), P("Tasli")]),
-            P("Kulsu", conf="?", kids=[P("Tha?"), P("Tajiba"), P("Anas")]),
-            P("Jameela", conf="?", kids=[P("Hijas")]),
+        P("Ummatha", kids=[
+            P("Kunhi Moideen", note="Nalan Kutti"),
+            P("Pathu"),
+            P("Kunhamina", kids=[
+                P("Pathumma"),
+                P("Nabissa", spouse="Razak"),
+                P("Assya", spouse="Aseez"),
+                P("Sabiya", spouse="Gafoor"),
+                P("Basheer", kids=[P("Maimun"), P("Pathuma"), P("Ibrahim")]),
+                P("A.Rahman", conf="?", kids=[P("Noushad"), P("Shamshad")]),
+                P("A.Kader", conf="?", kids=[P("Saleena"), P("Nachi")]),
+                P("Khaled", conf="?", kids=[P("Mohamed")]),
+                P("Nafisa", conf="?", kids=[P("Unais"), P("Sehadi")]),
+                P("Fathima", conf="?", kids=[P("Asif"), P("Haris"), P("Reshmi"), P("Tasli")]),
+                P("Kulsu", conf="?", kids=[P("Tha?"), P("Tajiba"), P("Anas")]),
+                P("Jameela", conf="?", kids=[P("Hijas")]),
+            ]),
+            P("Basheer", kids=[P("Roslan", note="Malaysia")]),
+            P("Pockerkka", kids=[P("Hamza"), P("Rukya"), P("Soora")]),
+            P("Moolur Moidu", kids=[
+                P("Mulur Abdullah"), P("Kalathil Pathumma"), P("Khadija")]),
         ]),
-        P("Basheer", conf="?", kids=[P("Roslan", note="Malaysia")]),
-        P("Pockerkka", conf="?", kids=[P("Hamza"), P("Rukya"), P("Soora")]),
-        P("Moolur Moidu", conf="?", kids=[
-            P("Mulur Abdullah"), P("Kalathil Pathumma"), P("Khadija")]),
+        P("Khadija", kids=[P("Aysha"), P("Mohamed"), P("Abdullah")]),
+        P("Abdu", kids=[
+            P("Kunhammed", note="Super Med"), P("Pathumma"), P("Mariyomma")]),
+        P("Ibrahim", note="No Issues"),
+        P("Assainar", note="No Issues"),
+        P("Moideen", note="'Great Batchelor' — No Issues"),
+        P("Assya", note="No Issues"),
     ]),
-    P("Assya"),
+    P("Assya", kids=[
+        P("Khadisha", note="N.A. Backer's mother", kids=[
+            P("N.A. Backer", spouse="Fathima", marriage="fathima+nabacker",
+              note="m. Fathima (Mother sheet). Their children are shown under Fathima — "
+                   "tap the couple icon to jump there."),
+        ]),
+    ]),
     P("Ummatha", kids=[P("Mammed", note="Malaysia", conf="?")]),
     P("Salma"),
     P("Beeran Musaliar", kids=[
@@ -236,7 +239,7 @@ data = {
     "meta": {
         "source": "family_tree.xls (hand-drawn chart, 2005)",
         "note": "Best-effort reconstruction. Nodes flagged confidence='?' need verification. "
-                "The two sheets connect: Valiya Chekkan (Mother) == root of Father sheet.",
+                "The two sheets are separate families joined only by marriage (Mariyomma x Rajab; Fathima x N.A. Backer).",
         "legend": {"directLine": "user's ancestry (Nelliadi Beeran Musaliar -> ... -> Sajith -> you)",
                    "confidence": "'ok' = clear in chart; '?' = parent link is a guess"},
     },
@@ -244,8 +247,7 @@ data = {
         {"marriage": ["Mariyomma (Mother)", "Rajab (Father)"], "children": "the 7 siblings incl. Fathima"},
         {"marriage": ["Fathima (Mother)", "N.A. Backer (Father)"],
          "children": ["Feroz", "Sajith", "Mujeeb", "Hafis"]},
-        {"samePerson": ["Valiya Chekkan (Mother gen-1)", "Valiya Chekkan & Thithi (Father root)"]},
-        {"samePerson": ["Farhat Moideen Haji (Mother)", "Farhat Moideen Haji (Father)"]},
+        {"samePerson": ["Farhat Moideen Haji (Mother)", "Farhat Moideen Haji (Father)"], "note": "unverified"},
     ],
     "persons": persons,
 }

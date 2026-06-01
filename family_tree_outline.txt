@@ -1,17 +1,18 @@
 MOTHER / ALL SHEET
 ============================================================
 - Nelliadi Beeran Musaliar
-  - Valiya Chekkan  (m. Thithi; Same person as the root of the FATHER sheet — see Father tree for his descendants)
+  - Valiya Chekkan
   - Cheriya Chekkan
+    - Mahmoud
+    - Kunhamina
+    - Ayshomma
+    - Assya  (No Issues)
+    - Zainaba
+      - Azees
+      - Mahmoud
   - Thykkandi Mariyomma
-    - Mahmoud ⚠️ VERIFY parent
-    - Kunhamina ⚠️ VERIFY parent
-    - Ayshomma ⚠️ VERIFY parent
-    - Assya  (No Issues) ⚠️ VERIFY parent
-    - Zainaba  (children noted only as 'Azees & Mahmoud') ⚠️ VERIFY parent
-  - Kunhaissa P.P
-    - Aamina ⚠️ VERIFY parent
-    - Aysha ★ ⚠️ VERIFY parent
+    - Aamina
+    - Aysha ★
       - Kunupath  (Kadiri Kandi)
         - Kunhabdullah  (Kayirikandi) ⚠️ VERIFY parent
           - Nissar
@@ -67,61 +68,38 @@ MOTHER / ALL SHEET
           - Taslima
       - Moidu  (Singapore)
       - Mammed  (Singapore)
-    - Pathumma ⚠️ VERIFY parent
-    - Kader ⚠️ VERIFY parent
-      - Kolari Mahmoud ⚠️ VERIFY parent
-      - Ibrahim ⚠️ VERIFY parent
-      - Assya  (m. Thayyulathil) ⚠️ VERIFY parent
+    - Pathumma
+    - Kader
+      - Kolari Mahmoud
+      - Ibrahim
+      - Assya- Thayyulathil
         - Ruqia
         - Jameela
         - Azees
         - Sideque
-      - Kunhaissa ⚠️ VERIFY parent
+      - Kunhaissa
         - Mammed Musaliar
           - Azeez Musaliar
-          - Kalanthu Musaliar
-          - Ibrahim Kutty
-          - A.Rahman
-          - Assyomma  (m. Farhat)
             - Mahmoud Chokli
             - Shukkoor
+          - Kalanthu Musaliar
+          - Ibrahim Kutty
+            - Aysha
+            - Kulsu Teacher
+            - Faizal
+          - A.Rahman
+          - Assyomma  (m. Farhat)
           - Ayshu
-            - Aysha ⚠️ VERIFY parent
-            - Kulsu Teacher ⚠️ VERIFY parent
-            - Faizal ⚠️ VERIFY parent
         - Abdu Musaliar
           - Kalanthukka
           - Koyilari Elomma
           - Moidu
           - Kunhaissa
-            - Kunhi Matha
-              - Kalanthu Musaliar
-                - Mubarak Ahmed
-                - Mubarak Abd
-            - Beevi
-              - Kunhamina
-                - Mammed
-                - Ubaidkka
-                - Azees
-            - Assya
-              - Farhat Moideen Haji  (Also appears in the Father sheet under Mohd Musaliar's line)
-                - Ahmed
-                - Safiya
-                - Salam
-                - Soora
-                  - Basi
-                  - Junaid
-                  - Sister
-                - Aysha
-                - Gafoor
-                - Zubaida  (03 Kids)
-                - Rahim Madathil
-                  - Hina
         - A.Rahman Musaliar
           - P.V. Mohammed
           - Ibrahim Kutty
           - Majeed
-          - Kunhaissa  (m. Mubarak)
+          - Kunhaissa-Mubarak
           - Assya
           - Ayshu
           - Fathima
@@ -135,6 +113,9 @@ MOTHER / ALL SHEET
           - Aboobacker
           - Mammed Musaliar
           - Abdul Kader
+            - Aamir
+            - Saabir
+            - Malu
           - Abdu Rahman
           - Abdullah Kutty
           - Kunhi Moideen
@@ -142,26 +123,47 @@ MOTHER / ALL SHEET
           - Safiya
         - Kunhi Bava  (No Issues)
         - Kader Musaliar
-          - A.Rahman ⚠️ VERIFY parent
-            - Aamir
-            - Saabir
-            - Malu
-          - Mammed Musaliar ⚠️ VERIFY parent
+          - A.Rahman
+          - Mammed Musaliar
+          - Azeezkka ST
             - Thanzi
             - Thenvi
             - Thefsi
             - Thedvi
-          - Azeezkka ST
           - Aysha
-    - Abdu  (No Issues) ⚠️ VERIFY parent
-    - Thavodi Beeran  (No Issues) ⚠️ VERIFY parent
+        - Kunhi Matha
+          - Kalanthu Musaliar
+            - Mubarak Ahmed
+            - Mubarak Abd
+        - Beevi
+          - Kunhamina
+            - Mammed
+            - Ubaidkka
+            - Azees
+        - Assya
+          - Farhat Moideen Haji  (Also appears in the Father sheet under Mohd Musaliar's line)
+            - Ahmed
+            - Safiya
+            - Salam
+            - Soora
+              - Basi
+              - Junaid
+              - Sister
+            - Aysha
+            - Gafoor
+            - Zubaida  (03 Kids)
+            - Rahim Madathil
+              - Hina
+    - Abdu  (No Issues)
+    - Thavodi Beeran  (No Issues)
+  - Kunhaissa P.P
 
 
 FATHER SHEET
 ============================================================
-- Valiya Chekkan & Thithi  ('Porathut House'. Valiya Chekkan is a son of Nelliadi Beeran Musaliar (Mother sheet).)
-  - Mariyam ⚠️ VERIFY parent
-    - Pathumma ★ ⚠️ VERIFY parent
+- Valiya Chekkan & Thithi  ('Porathut House' — a separate founding family, joined to the other side only by marriage.)
+  - Mariyam
+    - Pathumma ★
       - Sulekha
         - Bavakka
         - Ahmed
@@ -203,65 +205,66 @@ FATHER SHEET
         - Nissar
         - Moideen
         - Assya
-      - Khadisha  (green cross-reference box in chart) ⚠️ VERIFY parent
       - C.K.Abdullah  (Singapore; 07 Children)
-    - Ummatha ⚠️ VERIFY parent
+    - Ummatha
       - Kunhi Moideen  (Nalan Kutti)
-    - Khadija ⚠️ VERIFY parent
+      - Pathu
+      - Kunhamina
+        - Pathumma
+        - Nabissa  (m. Razak)
+        - Assya  (m. Aseez)
+        - Sabiya  (m. Gafoor)
+        - Basheer
+          - Maimun
+          - Pathuma
+          - Ibrahim
+        - A.Rahman ⚠️ VERIFY parent
+          - Noushad
+          - Shamshad
+        - A.Kader ⚠️ VERIFY parent
+          - Saleena
+          - Nachi
+        - Khaled ⚠️ VERIFY parent
+          - Mohamed
+        - Nafisa ⚠️ VERIFY parent
+          - Unais
+          - Sehadi
+        - Fathima ⚠️ VERIFY parent
+          - Asif
+          - Haris
+          - Reshmi
+          - Tasli
+        - Kulsu ⚠️ VERIFY parent
+          - Tha?
+          - Tajiba
+          - Anas
+        - Jameela ⚠️ VERIFY parent
+          - Hijas
+      - Basheer
+        - Roslan  (Malaysia)
+      - Pockerkka
+        - Hamza
+        - Rukya
+        - Soora
+      - Moolur Moidu
+        - Mulur Abdullah
+        - Kalathil Pathumma
+        - Khadija
+    - Khadija
       - Aysha
       - Mohamed
       - Abdullah
-    - Abdu ⚠️ VERIFY parent
+    - Abdu
       - Kunhammed  (Super Med)
       - Pathumma
       - Mariyomma
-    - Ibrahim  (No Issues) ⚠️ VERIFY parent
-    - Assainar  (No Issues) ⚠️ VERIFY parent
-    - Moideen  ('Great Batchelor' — No Issues) ⚠️ VERIFY parent
-    - Assya  (No Issues) ⚠️ VERIFY parent
-    - Pathu ⚠️ VERIFY parent
-    - Kunhamina ⚠️ VERIFY parent
-      - Pathumma
-      - Nabissa  (m. Razak)
-      - Assya  (m. Aseez)
-      - Sabiya  (m. Gafoor)
-      - Basheer
-        - Maimun
-        - Pathuma
-        - Ibrahim
-      - A.Rahman ⚠️ VERIFY parent
-        - Noushad
-        - Shamshad
-      - A.Kader ⚠️ VERIFY parent
-        - Saleena
-        - Nachi
-      - Khaled ⚠️ VERIFY parent
-        - Mohamed
-      - Nafisa ⚠️ VERIFY parent
-        - Unais
-        - Sehadi
-      - Fathima ⚠️ VERIFY parent
-        - Asif
-        - Haris
-        - Reshmi
-        - Tasli
-      - Kulsu ⚠️ VERIFY parent
-        - Tha?
-        - Tajiba
-        - Anas
-      - Jameela ⚠️ VERIFY parent
-        - Hijas
-    - Basheer ⚠️ VERIFY parent
-      - Roslan  (Malaysia)
-    - Pockerkka ⚠️ VERIFY parent
-      - Hamza
-      - Rukya
-      - Soora
-    - Moolur Moidu ⚠️ VERIFY parent
-      - Mulur Abdullah
-      - Kalathil Pathumma
-      - Khadija
+    - Ibrahim  (No Issues)
+    - Assainar  (No Issues)
+    - Moideen  ('Great Batchelor' — No Issues)
+    - Assya  (No Issues)
   - Assya
+    - Khadisha  (N.A. Backer's mother)
+      - N.A. Backer  (m. Fathima; m. Fathima (Mother sheet). Their children are shown under Fathima — tap the couple icon to jump there.)
   - Ummatha
     - Mammed  (Malaysia) ⚠️ VERIFY parent
   - Salma
