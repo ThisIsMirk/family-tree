@@ -135,35 +135,8 @@ father = P("Valiya Chekkan & Thithi",
                 P("Peeshani"), P("Hamza"), P("Zubair"), P("Khaled"), P("Razak"),
                 P("Mammed"), P("Beevi"), P("(etc.)")]),
             P("Aamina", kids=[P("Mammed"), P("Basheer"), P("Aseez"), P("Ramla"), P("Fathima")]),
-            P("Pathuuma", kids=[
-                P("Thayyulyil Moideen"), P("Vengadikal Abdullah"), P("Vengadikal Mammed")]),
-            P("Sooppy", kids=[P("Abdullah"), P("Nissar"), P("Moideen"), P("Assya")]),
-            P("Ayshoma", kids=[P("Abdullah"), P("Nissar"), P("Moideen"), P("Assya")], conf="?",
-              note="children column shared/ambiguous with Sooppy in the chart"),
-            P("C.K.Abdullah", note="Singapore; 07 Children"),
         ]),
-        P("Ummatha", kids=[
-            P("Kunhi Moideen", note="Nalan Kutti"),
-            P("Pathu"),
-            P("Kunhamina", kids=[
-                P("Pathumma"),
-                P("Nabissa", spouse="Razak"),
-                P("Assya", spouse="Aseez"),
-                P("Sabiya", spouse="Gafoor"),
-                P("Basheer", kids=[P("Maimun"), P("Pathuma"), P("Ibrahim")]),
-                P("A.Rahman", conf="?", kids=[P("Noushad"), P("Shamshad")]),
-                P("A.Kader", conf="?", kids=[P("Saleena"), P("Nachi")]),
-                P("Khaled", conf="?", kids=[P("Mohamed")]),
-                P("Nafisa", conf="?", kids=[P("Unais"), P("Sehadi")]),
-                P("Fathima", conf="?", kids=[P("Asif"), P("Haris"), P("Reshmi"), P("Tasli")]),
-                P("Kulsu", conf="?", kids=[P("Tha?"), P("Tajiba"), P("Anas")]),
-                P("Jameela", conf="?", kids=[P("Hijas")]),
-            ]),
-            P("Basheer", kids=[P("Roslan", note="Malaysia")]),
-            P("Pockerkka", kids=[P("Hamza"), P("Rukya"), P("Soora")]),
-            P("Moolur Moidu", kids=[
-                P("Mulur Abdullah"), P("Kalathil Pathumma"), P("Khadija")]),
-        ]),
+        P("Ummatha", kids=[P("Kunhi Moideen", note="Nalan Kutti")]),
         P("Khadija", kids=[P("Aysha"), P("Mohamed"), P("Abdullah")]),
         P("Abdu", kids=[
             P("Kunhammed", note="Super Med"), P("Pathumma"), P("Mariyomma")]),
@@ -173,13 +146,40 @@ father = P("Valiya Chekkan & Thithi",
         P("Assya", note="No Issues"),
     ]),
     P("Assya", kids=[
+        P("Pathuuma", kids=[
+            P("Thayyulyil Moideen"), P("Vengadikal Abdullah"), P("Vengadikal Mammed")]),
+        P("Sooppy", kids=[P("Abdullah"), P("Nissar"), P("Moideen"), P("Assya")]),
+        P("Ayshoma", kids=[P("Abdullah"), P("Nissar"), P("Moideen"), P("Assya")], conf="?",
+          note="children column shared/ambiguous with Sooppy in the chart"),
         P("Khadisha", note="N.A. Backer's mother", kids=[
             P("N.A. Backer", spouse="Fathima", marriage="fathima+nabacker",
               note="m. Fathima (Mother sheet). Their children are shown under Fathima — "
                    "tap the couple icon to jump there."),
         ]),
+        P("C.K.Abdullah", note="Singapore; 07 Children"),
     ]),
-    P("Ummatha", kids=[P("Mammed", note="Malaysia", conf="?")]),
+    P("Ummatha", kids=[
+        P("Mammed", note="Malaysia", conf="?"),   # unverified — may belong to Salma or elsewhere
+        P("Pathu"),
+        P("Kunhamina", kids=[
+            P("Pathumma"),
+            P("Nabissa", spouse="Razak"),
+            P("Assya", spouse="Aseez"),
+            P("Sabiya", spouse="Gafoor"),
+            P("Basheer", kids=[P("Maimun"), P("Pathuma"), P("Ibrahim")]),
+            P("A.Rahman", conf="?", kids=[P("Noushad"), P("Shamshad")]),
+            P("A.Kader", conf="?", kids=[P("Saleena"), P("Nachi")]),
+            P("Khaled", conf="?", kids=[P("Mohamed")]),
+            P("Nafisa", conf="?", kids=[P("Unais"), P("Sehadi")]),
+            P("Fathima", conf="?", kids=[P("Asif"), P("Haris"), P("Reshmi"), P("Tasli")]),
+            P("Kulsu", conf="?", kids=[P("Tha?"), P("Tajiba"), P("Anas")]),
+            P("Jameela", conf="?", kids=[P("Hijas")]),
+        ]),
+        P("Basheer", kids=[P("Roslan", note="Malaysia")]),
+        P("Pockerkka", kids=[P("Hamza"), P("Rukya"), P("Soora")]),
+        P("Moolur Moidu", kids=[
+            P("Mulur Abdullah"), P("Kalathil Pathumma"), P("Khadija")]),
+    ]),
     P("Salma"),
     P("Beeran Musaliar", kids=[
         P("Kunhi Modideen", kids=[

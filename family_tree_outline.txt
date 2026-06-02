@@ -191,65 +191,8 @@ FATHER SHEET
         - Aseez
         - Ramla
         - Fathima
-      - Pathuuma
-        - Thayyulyil Moideen
-        - Vengadikal Abdullah
-        - Vengadikal Mammed
-      - Sooppy
-        - Abdullah
-        - Nissar
-        - Moideen
-        - Assya
-      - Ayshoma  (children column shared/ambiguous with Sooppy in the chart) ⚠️ VERIFY parent
-        - Abdullah
-        - Nissar
-        - Moideen
-        - Assya
-      - C.K.Abdullah  (Singapore; 07 Children)
     - Ummatha
       - Kunhi Moideen  (Nalan Kutti)
-      - Pathu
-      - Kunhamina
-        - Pathumma
-        - Nabissa  (m. Razak)
-        - Assya  (m. Aseez)
-        - Sabiya  (m. Gafoor)
-        - Basheer
-          - Maimun
-          - Pathuma
-          - Ibrahim
-        - A.Rahman ⚠️ VERIFY parent
-          - Noushad
-          - Shamshad
-        - A.Kader ⚠️ VERIFY parent
-          - Saleena
-          - Nachi
-        - Khaled ⚠️ VERIFY parent
-          - Mohamed
-        - Nafisa ⚠️ VERIFY parent
-          - Unais
-          - Sehadi
-        - Fathima ⚠️ VERIFY parent
-          - Asif
-          - Haris
-          - Reshmi
-          - Tasli
-        - Kulsu ⚠️ VERIFY parent
-          - Tha?
-          - Tajiba
-          - Anas
-        - Jameela ⚠️ VERIFY parent
-          - Hijas
-      - Basheer
-        - Roslan  (Malaysia)
-      - Pockerkka
-        - Hamza
-        - Rukya
-        - Soora
-      - Moolur Moidu
-        - Mulur Abdullah
-        - Kalathil Pathumma
-        - Khadija
     - Khadija
       - Aysha
       - Mohamed
@@ -263,10 +206,67 @@ FATHER SHEET
     - Moideen  ('Great Batchelor' — No Issues)
     - Assya  (No Issues)
   - Assya
+    - Pathuuma
+      - Thayyulyil Moideen
+      - Vengadikal Abdullah
+      - Vengadikal Mammed
+    - Sooppy
+      - Abdullah
+      - Nissar
+      - Moideen
+      - Assya
+    - Ayshoma  (children column shared/ambiguous with Sooppy in the chart) ⚠️ VERIFY parent
+      - Abdullah
+      - Nissar
+      - Moideen
+      - Assya
     - Khadisha  (N.A. Backer's mother)
       - N.A. Backer  (m. Fathima; m. Fathima (Mother sheet). Their children are shown under Fathima — tap the couple icon to jump there.)
+    - C.K.Abdullah  (Singapore; 07 Children)
   - Ummatha
     - Mammed  (Malaysia) ⚠️ VERIFY parent
+    - Pathu
+    - Kunhamina
+      - Pathumma
+      - Nabissa  (m. Razak)
+      - Assya  (m. Aseez)
+      - Sabiya  (m. Gafoor)
+      - Basheer
+        - Maimun
+        - Pathuma
+        - Ibrahim
+      - A.Rahman ⚠️ VERIFY parent
+        - Noushad
+        - Shamshad
+      - A.Kader ⚠️ VERIFY parent
+        - Saleena
+        - Nachi
+      - Khaled ⚠️ VERIFY parent
+        - Mohamed
+      - Nafisa ⚠️ VERIFY parent
+        - Unais
+        - Sehadi
+      - Fathima ⚠️ VERIFY parent
+        - Asif
+        - Haris
+        - Reshmi
+        - Tasli
+      - Kulsu ⚠️ VERIFY parent
+        - Tha?
+        - Tajiba
+        - Anas
+      - Jameela ⚠️ VERIFY parent
+        - Hijas
+    - Basheer
+      - Roslan  (Malaysia)
+    - Pockerkka
+      - Hamza
+      - Rukya
+      - Soora
+    - Moolur Moidu
+      - Mulur Abdullah
+      - Kalathil Pathumma
+      - Khadija
   - Salma
   - Beeran Musaliar
     - Kunhi Modideen
