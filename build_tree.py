@@ -170,8 +170,18 @@ father = P("Valiya Chekkan & Thithi",
         P("C.K.Abdullah", note="Singapore; 07 Children"),
     ]),
     P("Ummatha", kids=[
-        P("Mammed", note="Malaysia", conf="?"),   # unverified — may belong to Salma or elsewhere
-        P("Pathu"),
+        P("Pathu", kids=[
+            P("Kunhaissa", kids=[
+                P("P.M.Khaled"), P("Kunhabdulla"), P("Pathumma"),
+                P("Abbas"), P("Safiya"), P("Sura")]),
+            P("Kunhami", kids=[
+                P("Driver K.Ahmed"), P("Mahmoud-Baker"), P("Hamza"),
+                P("Karim"), P("3 Sister")]),
+            P("Nabisa", note="02 kids"),
+            P("Assainar", note="S'pore", kids=[
+                P("Hairu"), P("Sura"), P("Jameela"), P("Rashid")]),
+            P("K.Abdulla", note="10 Kids"),
+        ]),
         P("Kunhamina", kids=[
             P("Pathumma"),
             P("Nabissa", spouse="Razak"),
@@ -184,7 +194,7 @@ father = P("Valiya Chekkan & Thithi",
         P("Moolur Moidu", kids=[
             P("Mulur Abdullah"), P("Kalathil Pathumma"), P("Khadija")]),
     ]),
-    P("Salma"),
+    P("Salma", kids=[P("Mammed", note="Malaysia")]),
     P("Beeran Musaliar", kids=[
         P("Kunhi Modideen", kids=[
             P("Ismail Meladi", conf="?"), P("Kunhammed", conf="?"),
