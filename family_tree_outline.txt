@@ -215,11 +215,37 @@ FATHER SHEET
       - Nissar
       - Moideen
       - Assya
-    - Ayshoma  (children column shared/ambiguous with Sooppy in the chart) ⚠️ VERIFY parent
-      - Abdullah
-      - Nissar
-      - Moideen
-      - Assya
+    - Ayshoma
+      - Kunhamina
+        - A.Rahman
+          - Noushad
+          - Shamshad
+        - A.Kader
+          - Saleena
+          - Nachi
+        - Khaled
+          - Mohamed
+        - Nafisa
+          - Unais
+          - Sehadi
+        - Fathima
+          - Asif
+          - Haris
+          - Reshmi
+          - Tasli
+        - Kulsu
+          - Tha?
+          - Tajiba
+          - Anas
+        - Jameela
+          - Hijas
+      - Nafisa
+        - Advocate Najeeb
+      - Fathima
+        - Aysha
+        - Kulsu Teacher
+        - Faizal
+        - Zayar
     - Khadisha  (N.A. Backer's mother)
       - N.A. Backer  (m. Fathima; m. Fathima (Mother sheet). Their children are shown under Fathima — tap the couple icon to jump there.)
     - C.K.Abdullah  (Singapore; 07 Children)
@@ -235,28 +261,6 @@ FATHER SHEET
         - Maimun
         - Pathuma
         - Ibrahim
-      - A.Rahman ⚠️ VERIFY parent
-        - Noushad
-        - Shamshad
-      - A.Kader ⚠️ VERIFY parent
-        - Saleena
-        - Nachi
-      - Khaled ⚠️ VERIFY parent
-        - Mohamed
-      - Nafisa ⚠️ VERIFY parent
-        - Unais
-        - Sehadi
-      - Fathima ⚠️ VERIFY parent
-        - Asif
-        - Haris
-        - Reshmi
-        - Tasli
-      - Kulsu ⚠️ VERIFY parent
-        - Tha?
-        - Tajiba
-        - Anas
-      - Jameela ⚠️ VERIFY parent
-        - Hijas
     - Basheer
       - Roslan  (Malaysia)
     - Pockerkka
