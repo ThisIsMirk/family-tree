@@ -56,11 +56,12 @@ MOTHER / ALL SHEET
           - Noorjahan
             - Shurook
             - Diyana
-            - Shoroor
+            - Suroor
             - Mariyam
           - Sabitha
             - Sana
-            - Mohamed
+            - Muhammed
+            - Ayesha
         - Assu
           - Asif
           - Haris

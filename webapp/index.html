@@ -48,6 +48,21 @@
   #hits{position:absolute;left:0;right:0;top:46px;font-size:12px;color:var(--muted);
     padding-left:14px}
 
+  /* ---- search suggestions dropdown ---- */
+  #sugg{position:absolute;left:0;right:0;top:46px;z-index:40;background:var(--card);
+    border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+    max-height:min(62vh,440px);overflow-y:auto;-webkit-overflow-scrolling:touch;display:none}
+  #sugg.open{display:block}
+  .sg{padding:9px 14px;cursor:pointer;border-bottom:1px solid #efe7d6}
+  .sg:last-child{border-bottom:none}
+  .sg.active,.sg:hover{background:var(--bg)}
+  .sg-nm{font-family:var(--serif);font-size:15px;color:var(--ink);line-height:1.2}
+  .sg-nm mark{background:var(--gold-soft);color:inherit;border-radius:3px;padding:0 1px}
+  .sg-sub{font-size:11.5px;color:var(--muted);margin-top:2px;font-family:var(--sans)}
+  .sg-none{padding:11px 14px;font-size:13px;color:var(--muted)}
+  .sg-more{padding:8px 14px;font-size:11px;color:var(--muted);text-align:center;
+    background:var(--bg);position:sticky;bottom:0}
+
   /* ---- floating controls ---- */
   #tools{position:fixed;right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);z-index:20;
     display:flex;flex-direction:column;gap:10px}
@@ -77,11 +92,15 @@
   .node.match circle{stroke:#1f7a5a;stroke-width:3px}
   .node.match text{fill:#1f7a5a;font-weight:700}
   .mlink{stroke:var(--gold);stroke-width:1.3px;stroke-dasharray:2 2}
-  .mico{font-size:13px}
+  /* drawn heart (SVG path, not an emoji — Firefox won't render emoji inside SVG text) */
+  .mheart{fill:#c0392b;stroke:var(--bg);stroke-width:2.4px;stroke-linejoin:round;paint-order:stroke}
+  .couple:hover .mheart{fill:#a52f24}
   .couple{cursor:pointer}
   .couple .scirc{fill:var(--card);stroke:var(--node);stroke-width:1.6px}
-  .sname{font-family:var(--serif);font-size:13px;fill:var(--ink);text-decoration:underline;
+  .couple text.sname{font-family:var(--serif);font-size:13px;fill:#938b7d;text-decoration:underline;
     paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round}
+  .extlink path{fill:none;stroke:var(--gold);stroke-width:2.6px;stroke-linecap:round;stroke-linejoin:round}
+  .couple:hover .extlink path{stroke:var(--accent)}
 
   /* ---- detail bottom sheet ---- */
   #sheet{position:fixed;left:0;right:0;bottom:0;z-index:30;transform:translateY(110%);
@@ -124,6 +143,7 @@
       <input id="q" type="search" placeholder="Search a name…" autocomplete="off" autocorrect="off" />
       <button class="clr" id="clr" aria-label="clear">×</button>
       <div id="hits"></div>
+      <div id="sugg" role="listbox"></div>
     </div>
   </div>
 
@@ -213,14 +233,20 @@
     svg.call(zoom).on("dblclick.zoom", null);
     function viewSize(){ const r=svg.node().getBoundingClientRect(); return [r.width, r.height]; }
 
-    function centerOn(d, scale, xfrac){
+    // Apply a zoom transform. By default it glides there smoothly; pass animate=false to snap
+    // (used only for the initial boot anchoring, where a glide would look like a stray jump).
+    function applyTransform(t, animate){
+      if(animate===false){ svg.call(zoom.transform, t); return; }
+      svg.transition().duration(720).ease(d3.easeCubicInOut).call(zoom.transform, t);
+    }
+    function centerOn(d, scale, xfrac, animate){
       const [w,h]=viewSize();
       const s = scale || Math.max(0.5, Math.min(1.1, d3.zoomTransform(svg.node()).k || 0.8));
       const fx = (xfrac==null?0.5:xfrac);
       const t = d3.zoomIdentity.translate(w*fx - d.y*s, h*0.5 - d.x*s).scale(s);
-      svg.call(zoom.transform, t);
+      applyTransform(t, animate);
     }
-    function fitNodes(nodes){
+    function fitNodes(nodes, animate){
       if(!nodes.length) return;
       const xs=nodes.map(n=>n.x), ys=nodes.map(n=>n.y);
       const x0=Math.min(...xs), x1=Math.max(...xs), y0=Math.min(...ys), y1=Math.max(...ys);
@@ -229,7 +255,7 @@
       const s=Math.min(1.5, Math.max(0.08, 0.94*Math.min(w/tw, h/th)));
       const cx=(y0+y1)/2, cy=(x0+x1)/2;
       const t=d3.zoomIdentity.translate(w*0.46 - cx*s, h/2 - cy*s).scale(s);
-      svg.call(zoom.transform, t);
+      applyTransform(t, animate);
     }
     function fit(){ fitNodes(root.descendants()); }
     function navigate(target){
@@ -271,15 +297,24 @@
           .on("click",(e,d)=>{ e.stopPropagation(); (d.children||d._children)? toggle(d) : openSheet(d); });
       ent.append("text").attr("dy","0.32em")
           .on("click",(e,d)=>{ e.stopPropagation(); openSheet(d); });
-      // spouse: a small node (circle + underlined name) joined by a dashed line with 💑 at its centre.
+      // spouse: a small node (circle + underlined name) joined by a dashed line with ❤️ at its centre.
       // Tapping it jumps to that spouse's real node on the other sheet.
       ent.filter(d=>attrs(d).marriage).each(function(d){
         const p=partnerOf(d); if(!p) return;
         const g=d3.select(this).append("g").attr("class","couple");
         g.append("line").attr("class","mlink").attr("x1",0).attr("y1",8).attr("x2",0).attr("y2",46);
-        g.append("text").attr("class","mico").attr("x",0).attr("y",27).attr("dy","0.35em").attr("text-anchor","middle").text("💑");
+        g.append("path").attr("class","mheart").attr("transform","translate(-8.4,18.46) scale(0.7)")
+          .attr("d","M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
         g.append("circle").attr("class","scirc").attr("cx",0).attr("cy",50).attr("r",4.5);
-        g.append("text").attr("class","sname").attr("x",9).attr("y",50).attr("dy","0.32em").text(p.data.name);
+        const snm=g.append("text").attr("class","sname").attr("x",9).attr("y",50).attr("dy","0.32em").text(p.data.name);
+        // little "external link" glyph after the name so it reads as a tap-to-jump link
+        let nw=0; try{ nw=snm.node().getComputedTextLength(); }catch(_){}
+        if(!nw) nw=p.data.name.length*7;                 // fallback if not yet laid out
+        const ic=g.append("g").attr("class","extlink")
+                  .attr("transform","translate("+(9+nw+5)+",43) scale(0.42)");
+        ic.append("path").attr("d","M14 12v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6");  // open box
+        ic.append("path").attr("d","M13 3h8v8");                                                  // arrow corner
+        ic.append("path").attr("d","M21 3 10 14");                                                // arrow shaft
         g.on("click",(e)=>{ e.stopPropagation(); navigate(p); });
       });
 
@@ -314,7 +349,7 @@
       document.getElementById("s-name").textContent=d.data.name;
       const tags=document.getElementById("s-tags"); tags.innerHTML="";
       const addTag=(t,cls)=>{ const s=document.createElement("span"); s.className="tag"+(cls?" "+cls:""); s.textContent=t; tags.appendChild(s); return s; };
-      if(a.spouse){ const p=partnerOf(d); const chip=addTag("💑 "+a.spouse+(p?"  ›":""), p?"link":""); if(p) chip.onclick=()=>{ closeSheet(); navigate(p); }; }
+      if(a.spouse){ const p=partnerOf(d); const chip=addTag("❤️ "+a.spouse+(p?"  ›":""), p?"link":""); if(p) chip.onclick=()=>{ closeSheet(); navigate(p); }; }
       if(a.sheet && !a.root) addTag(a.sheet+" sheet");
       const kids=(d.children?d.children.length:0)+(d._children&&!d.children?d._children.length:0);
       if(kids) addTag(kids+" child"+(kids>1?"ren":""));
@@ -329,39 +364,114 @@
     }
     function closeSheet(){ sheet.classList.remove("open"); selected=null; }
     document.getElementById("sx").onclick=closeSheet;
-    document.getElementById("s-center").onclick=()=>{ if(selected){ closeSheet(); centerOn(selected); } };
+    document.getElementById("s-center").onclick=()=>{ const d=selected; if(d){ closeSheet(); centerOn(d); } };
     document.getElementById("s-toggle").onclick=()=>{ if(selected){ toggle(selected); openSheet(selected); centerOn(selected); } };
     svg.on("click",closeSheet);
 
     // tools
-    document.getElementById("t-full").onclick=fit;          // see the whole tree
-    document.getElementById("t-home").onclick=openView;     // back to the opening view
+    document.getElementById("t-full").onclick=()=>fit();          // see the whole tree (glides)
+    document.getElementById("t-home").onclick=()=>openView(true); // back to the opening view (glides)
 
-    // search
-    const q=document.getElementById("q"), clr=document.getElementById("clr"), hits=document.getElementById("hits");
-    let timer=null;
-    q.addEventListener("input",()=>{ clearTimeout(timer); timer=setTimeout(runSearch,160); });
-    clr.onclick=()=>{ q.value=""; runSearch(); q.focus(); };
-    function runSearch(){
+    // search — live dropdown of name suggestions, each with its parentage subtitle
+    const q=document.getElementById("q"), clr=document.getElementById("clr"),
+          hits=document.getElementById("hits"), sugg=document.getElementById("sugg");
+    const SUGG_MAX=12;            // how many suggestions to show at once
+    let sgList=[], sgActive=-1;
+
+    function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+    function highlight(name, term){
+      const i=name.toLowerCase().indexOf(term);
+      if(i<0) return esc(name);
+      return esc(name.slice(0,i))+"<mark>"+esc(name.slice(i,i+term.length))+"</mark>"+esc(name.slice(i+term.length));
+    }
+    // "Child of <parent>" — and "<parent> & <parent's spouse>" when the other parent is on file
+    function parentLabel(d){
+      const p=d.parent;
+      if(!p || attrs(p).root) return "";          // founders have no parent in the tree
+      let names=p.data.name;
+      const sp=attrs(p).spouse;
+      if(sp) names+=" & "+sp;
+      return "Child of "+names;
+    }
+    // Rank: names that START with the term first, then names that merely contain it; alpha within each.
+    function rankMatches(term){
+      const starts=[], contains=[];
+      everyone.forEach(d=>{
+        if(attrs(d).root) return;
+        const i=d.data.name.toLowerCase().indexOf(term);
+        if(i===0) starts.push(d); else if(i>0) contains.push(d);
+      });
+      const byName=(a,b)=>a.data.name.localeCompare(b.data.name);
+      return starts.sort(byName).concat(contains.sort(byName));
+    }
+
+    function closeSugg(){ sugg.classList.remove("open"); sugg.innerHTML=""; sgList=[]; sgActive=-1; }
+    function renderSuggestions(){
       const term=q.value.trim().toLowerCase();
       clr.style.display=term?"block":"none";
-      matches=new Set();
-      if(!term){ hits.textContent=""; update(root); return; }
-      const found=everyone.filter(d=>!attrs(d).root && d.data.name.toLowerCase().includes(term));
-      found.forEach(d=>{ matches.add(d); let a=d.parent; while(a){ expand(a); a=a.parent; } });
-      update(root);
-      hits.textContent = found.length? found.length+" match"+(found.length>1?"es":"") : "no matches";
-      if(found.length){ centerOn(found[0], 0.95); }
+      if(!term){ closeSugg(); return; }
+      const all=rankMatches(term);
+      sgList=all.slice(0,SUGG_MAX); sgActive=-1;
+      if(!sgList.length){
+        sugg.innerHTML='<div class="sg-none">No matches for &ldquo;'+esc(q.value.trim())+'&rdquo;</div>';
+        sugg.classList.add("open"); return;
+      }
+      let html=sgList.map((d,idx)=>{
+        const sub=parentLabel(d);
+        return '<div class="sg" data-i="'+idx+'" role="option">'
+          +'<div class="sg-nm">'+highlight(d.data.name,term)+'</div>'
+          +(sub?'<div class="sg-sub">'+esc(sub)+'</div>':'')
+          +'</div>';
+      }).join("");
+      if(all.length>sgList.length) html+='<div class="sg-more">+'+(all.length-sgList.length)+' more — keep typing to narrow</div>';
+      sugg.innerHTML=html;
+      sugg.classList.add("open");
+    }
+    function moveActive(dir){
+      if(!sgList.length) return;
+      sgActive=(sgActive+dir+sgList.length)%sgList.length;
+      const els=sugg.querySelectorAll(".sg");
+      els.forEach((el,i)=>el.classList.toggle("active",i===sgActive));
+      if(els[sgActive]) els[sgActive].scrollIntoView({block:"nearest"});
+    }
+    // commit a choice: glow just that node, expand its ancestors, fly to it, open its card
+    function chooseSuggestion(d){
+      closeSugg();
+      hits.textContent="";
+      q.blur();
+      matches=new Set([d]);
+      navigate(d);   // expands ancestors, update(root), centers, opens the detail sheet
     }
 
+    q.addEventListener("input", renderSuggestions);
+    q.addEventListener("focus", ()=>{ if(q.value.trim()) renderSuggestions(); });
+    q.addEventListener("keydown", e=>{
+      if(!sugg.classList.contains("open")) return;
+      if(e.key==="ArrowDown"){ e.preventDefault(); moveActive(1); }
+      else if(e.key==="ArrowUp"){ e.preventDefault(); moveActive(-1); }
+      else if(e.key==="Enter"){
+        const d = sgActive>=0 ? sgList[sgActive] : sgList[0];
+        if(d){ e.preventDefault(); chooseSuggestion(d); }
+      }
+      else if(e.key==="Escape"){ closeSugg(); }
+    });
+    sugg.addEventListener("click", e=>{
+      const item=e.target.closest(".sg"); if(!item) return;
+      const d=sgList[+item.dataset.i]; if(d) chooseSuggestion(d);
+    });
+    // tapping anywhere outside the search closes the dropdown (without clearing the text)
+    document.addEventListener("click", e=>{ if(!e.target.closest(".search")) closeSugg(); });
+
+    clr.onclick=()=>{ q.value=""; closeSugg(); hits.textContent=""; matches=new Set(); update(root); q.focus(); };
+
     // boot — fully expanded, opened readable at the first founder (left); drag/zoom to explore
-    function openView(){
+    function openView(animate){
       const f=(root.children&&root.children[0])||root, s=0.8, [w,h]=viewSize();
-      svg.call(zoom.transform, d3.zoomIdentity.translate(168 - f.y*s, h*0.5 - f.x*s).scale(s));
+      applyTransform(d3.zoomIdentity.translate(168 - f.y*s, h*0.5 - f.x*s).scale(s), animate);
     }
     update(root);
-    requestAnimationFrame(openView);
-    setTimeout(openView, 250);   // re-anchor once the viewport is sized
+    requestAnimationFrame(()=>openView(false));
+    setTimeout(()=>openView(false), 250);   // re-anchor once the viewport is sized (snap, no glide)
     const hint=document.getElementById("hint");
     hint.style.opacity=1; setTimeout(()=>hint.style.opacity=0, 3200);
   })();
