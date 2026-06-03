@@ -245,7 +245,6 @@ def walk(node, parent_id, sheet, depth, lines):
     })
     marks = ""
     if node["star"]:        marks += " ★"           # direct line
-    if node["conf"] == "?": marks += " ⚠️ VERIFY parent"
     extra = []
     if node["spouse"]: extra.append(f"m. {node['spouse']}")
     if node["note"]:   extra.append(node["note"])
@@ -288,7 +287,6 @@ def to_d3(node, sheet):
     attrs = {"sheet": sheet}
     if node["spouse"]: attrs["spouse"] = node["spouse"]
     if node["note"]:   attrs["note"]   = node["note"]
-    if node["conf"] != "ok": attrs["conf"] = node["conf"]
     if node.get("marriage"): attrs["marriage"] = node["marriage"]
     if node.get("color"):    attrs["color"]    = node["color"]
     if node.get("emph"):     attrs["emph"]     = True
