@@ -62,9 +62,8 @@ is iteratively **verifying the tree branch-by-branch against the Excel** and giv
 - Repo **ThisIsMirk/family-tree** (gh CLI authed as ThisIsMirk), **public**, on GitHub Pages:
   **https://thisismirk.github.io/family-tree/** (root `index.html` redirects to `webapp/`).
 - Pushing to `main` auto-redeploys Pages in ~1 min.
-- As of this handoff: latest commit `4f5a9dd`, **4 local commits ahead of origin (un-pushed)**, plus
-  **uncommitted working changes** (removed the "needs-verifying" flags from the UI; reduced the
-  bottom-right controls to the two buttons above). Run `git status` / `git log` to confirm current state.
+- End of last session: everything committed **and pushed**; working tree clean; live site current.
+  Always run `git status` / `git log` to confirm the present state, and **push only when the user asks**.
 
 ## Open items
 - More Excel data may still be missing (user is recovering it branch by branch).
