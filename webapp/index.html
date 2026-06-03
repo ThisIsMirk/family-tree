@@ -81,6 +81,14 @@
 
   /* ---- tree visuals ---- */
   .link{fill:none;stroke:var(--line);stroke-width:1.4px}
+  /* golden lineage of the open person (colour/width set inline; here = the glow) */
+  .link.gold-desc{filter:drop-shadow(0 0 1.6px rgba(232,195,74,.5))}
+  .link.gold-anc{filter:drop-shadow(0 0 2px rgba(240,210,90,.6));animation:goldpulse 1.5s ease-in-out infinite}
+  @keyframes goldpulse{
+    0%,100%{filter:drop-shadow(0 0 1.5px rgba(240,210,90,.45))}
+    50%    {filter:drop-shadow(0 0 6px  rgba(255,226,130,.95))}
+  }
+  @media (prefers-reduced-motion:reduce){ .link.gold-anc{animation:none} }
   .node{transition:transform .34s cubic-bezier(.2,.8,.2,1)}
   .node circle{stroke-width:1.6px;cursor:pointer}
   .node .ncol{fill:var(--card);stroke:var(--node)}
@@ -91,6 +99,9 @@
   .node.root text{font-weight:700;font-size:15px}
   .node.match circle{stroke:#1f7a5a;stroke-width:3px}
   .node.match text{fill:#1f7a5a;font-weight:700}
+  /* the open/selected person: their dot filled gold (high specificity to beat .collapsed/.match/.root) */
+  .node.sel circle.ncol{fill:#e8c34a;stroke:#b8862f;stroke-width:2px}
+  .node.sel text{font-weight:700}
   .mlink{stroke:var(--gold);stroke-width:1.3px;stroke-dasharray:2 2}
   /* drawn heart (SVG path, not an emoji — Firefox won't render emoji inside SVG text) */
   .mheart{fill:#c0392b;stroke:var(--bg);stroke-width:2.4px;stroke-linejoin:round;paint-order:stroke}
@@ -272,6 +283,7 @@
       if(attrs(d).root) c+=" root";
       if(d._children && !d.children) c+=" collapsed";
       if(matches.has(d)) c+=" match";
+      if(d===selected) c+=" sel";
       return c;
     }
     function label(d){ return d.data.name; }
@@ -284,12 +296,9 @@
       const link = gLink.selectAll("path.link").data(links, d=>d.target._id);
       link.enter().append("path").attr("class","link")
         .merge(link)
-          .attr("d", d=>diag(d.source,d.target))
-          .style("stroke", d=> lineageColor[d.target._id] || (blood.has(d.target._id) ? "#6b5a3e" : null))
-          .style("stroke-width", d=> lineageColor[d.target._id] ? "2.6px" : (blood.has(d.target._id) ? "2.2px" : null))
-          .classed("lineage", d=> !!(lineageColor[d.target._id] || blood.has(d.target._id)));
+          .attr("d", d=>diag(d.source,d.target));
       link.exit().remove();
-      gLink.selectAll("path.lineage").raise();   // keep the bloodline on top
+      paintLineage();   // colour the links (steady bloodline + the open person's golden lineage)
 
       const node = gNode.selectAll("g.node").data(nodes, d=>d._id);
       const ent = node.enter().append("g");
@@ -335,6 +344,40 @@
       return `M${s.y},${s.x}C${(s.y+t.y)/2},${s.x} ${(s.y+t.y)/2},${t.x} ${t.y},${t.x}`;
     }
 
+    // Colour the links: the steady bloodline (pink → Mariyomma, blue → Rajab, brown emphasis) plus,
+    // when a person is open in the detail sheet, their GOLDEN lineage — a glowing pulse all the way up
+    // to the founder, and a thinner, calmer gold down through every descendant. Gold overrides the rest.
+    const GOLD="#e8c34a";
+    function paintLineage(){
+      const selId = selected ? selected._id : null;
+      const anc=new Set(), desc=new Set();
+      if(selected){
+        selected.ancestors().forEach(n=>anc.add(n._id));      // selected + every ancestor up to the founder
+        selected.descendants().forEach(n=>desc.add(n._id));   // selected + everyone below
+      }
+      const isAnc  = d=> anc.has(d.target._id);                          // a link on the upward chain
+      const isDesc = d=> !isAnc(d) && desc.has(d.target._id) && d.target._id!==selId;  // a link inside the subtree
+      gLink.selectAll("path.link")
+        .classed("gold-anc",  isAnc)
+        .classed("gold-desc", isDesc)
+        .classed("lineage",   d=> !isAnc(d) && !isDesc(d) && !!(lineageColor[d.target._id] || blood.has(d.target._id)))
+        .style("stroke", d=>{
+          if(isAnc(d) || isDesc(d)) return GOLD;
+          return lineageColor[d.target._id] || (blood.has(d.target._id) ? "#6b5a3e" : null);
+        })
+        .style("stroke-width", d=>{
+          if(isAnc(d))  return "2.4px";   // not thicker than the bloodline (2.6px); the glow carries the emphasis
+          if(isDesc(d)) return "1.6px";   // descendants a touch thinner still
+          return lineageColor[d.target._id] ? "2.6px" : (blood.has(d.target._id) ? "2.2px" : null);
+        });
+      // stacking order (last raised = on top): bloodline → gold descendants → gold ancestor chain
+      gLink.selectAll("path.lineage").raise();
+      gLink.selectAll("path.gold-desc").raise();
+      gLink.selectAll("path.gold-anc").raise();
+      // fill the open person's own dot gold
+      gNode.selectAll("g.node").classed("sel", d=> d===selected);
+    }
+
     // ----- interactions -----
     function toggle(d){
       if(d.children){ d._children=d.children; d.children=null; }
@@ -361,10 +404,12 @@
       else if(d._children){ tBtn.textContent="Show "+d._children.length+" children"; tBtn.style.display="block"; }
       else { tBtn.style.display="none"; }
       sheet.classList.add("open");
+      paintLineage();   // light up this person's golden lineage
     }
-    function closeSheet(){ sheet.classList.remove("open"); selected=null; }
+    function closeSheet(){ sheet.classList.remove("open"); selected=null; paintLineage(); }
     document.getElementById("sx").onclick=closeSheet;
-    document.getElementById("s-center").onclick=()=>{ const d=selected; if(d){ closeSheet(); centerOn(d); } };
+    // Center keeps the person selected (gold lineage stays lit); it just slides the sheet out of the way
+    document.getElementById("s-center").onclick=()=>{ const d=selected; if(d){ sheet.classList.remove("open"); centerOn(d); } };
     document.getElementById("s-toggle").onclick=()=>{ if(selected){ toggle(selected); openSheet(selected); centerOn(selected); } };
     svg.on("click",closeSheet);
 
