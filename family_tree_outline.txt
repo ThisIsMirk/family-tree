@@ -151,7 +151,10 @@ MOTHER / ALL SHEET
               - Sister
             - Aysha
             - Gafoor
-            - Zubaida  (03 Kids)
+            - Zubaida
+              - ?  (Please let Mirza know if you know who belongs here.)
+              - ?  (Please let Mirza know if you know who belongs here.)
+              - ?  (Please let Mirza know if you know who belongs here.)
             - Rahim Madathil
               - Hina
     - Abdu  (No Issues)
@@ -234,7 +237,7 @@ FATHER SHEET
           - Reshmi
           - Tasli
         - Kulsu
-          - Tha?
+          - Thanzi
           - Tajiba
           - Anas
         - Jameela
@@ -248,7 +251,14 @@ FATHER SHEET
         - Zayar
     - Khadisha  (N.A. Backer's mother)
       - N.A. Backer  (m. Fathima; m. Fathima (Mother sheet). Their children are shown under Fathima — tap the couple icon to jump there.)
-    - C.K.Abdullah  (Singapore; 07 Children)
+    - C.K.Abdullah  (Singapore)
+      - ?  (Please let Mirza know if you know who belongs here.)
+      - ?  (Please let Mirza know if you know who belongs here.)
+      - ?  (Please let Mirza know if you know who belongs here.)
+      - ?  (Please let Mirza know if you know who belongs here.)
+      - ?  (Please let Mirza know if you know who belongs here.)
+      - ?  (Please let Mirza know if you know who belongs here.)
+      - ?  (Please let Mirza know if you know who belongs here.)
   - Ummatha
     - Pathu
       - Kunhaissa
@@ -263,29 +273,53 @@ FATHER SHEET
         - Mahmoud-Baker
         - Hamza
         - Karim
-        - 3 Sister
-      - Nabisa  (02 kids)
+        - ?  (Daughter — Please let Mirza know if you know who belongs here.)
+        - ?  (Daughter — Please let Mirza know if you know who belongs here.)
+        - ?  (Daughter — Please let Mirza know if you know who belongs here.)
+      - Nabisa
+        - ?  (Please let Mirza know if you know who belongs here.)
+        - ?  (Please let Mirza know if you know who belongs here.)
       - Assainar  (S'pore)
         - Hairu
         - Sura
         - Jameela
         - Rashid
-      - K.Abdulla  (10 Kids)
+      - K.Abdulla
+        - ?  (Please let Mirza know if you know who belongs here.)
+        - ?  (Please let Mirza know if you know who belongs here.)
+        - ?  (Please let Mirza know if you know who belongs here.)
+        - ?  (Please let Mirza know if you know who belongs here.)
+        - ?  (Please let Mirza know if you know who belongs here.)
+        - ?  (Please let Mirza know if you know who belongs here.)
+        - ?  (Please let Mirza know if you know who belongs here.)
+        - ?  (Please let Mirza know if you know who belongs here.)
+        - ?  (Please let Mirza know if you know who belongs here.)
+        - ?  (Please let Mirza know if you know who belongs here.)
     - Kunhamina
       - Pathumma
       - Nabissa  (m. Razak)
       - Assya  (m. Aseez)
       - Sabiya  (m. Gafoor)
       - Basheer
-        - Maimun
-        - Pathuma
-        - Ibrahim
     - Basheer
-      - Roslan  (Malaysia)
+      - Maimun
+      - Pathuma
+        - Roslan  (Malaysia)
+      - Ibrahim
     - Pockerkka
       - Hamza
       - Rukya
       - Soora
+      - ?  (Malaysia — Please let Mirza know if you know who belongs here.)
+      - ?  (Malaysia — Please let Mirza know if you know who belongs here.)
+      - ?  (Malaysia — Please let Mirza know if you know who belongs here.)
+      - ?  (Malaysia — Please let Mirza know if you know who belongs here.)
+      - ?  (Malaysia — Please let Mirza know if you know who belongs here.)
+      - ?  (Malaysia — Please let Mirza know if you know who belongs here.)
+      - ?  (Malaysia — Please let Mirza know if you know who belongs here.)
+      - ?  (Malaysia — Please let Mirza know if you know who belongs here.)
+      - ?  (Malaysia — Please let Mirza know if you know who belongs here.)
+      - ?  (Malaysia — Please let Mirza know if you know who belongs here.)
     - Moolur Moidu
       - Mulur Abdullah
       - Kalathil Pathumma
@@ -296,11 +330,16 @@ FATHER SHEET
     - Kunhi Modideen
       - Ismail Meladi ⚠️ VERIFY parent
       - Kunhammed ⚠️ VERIFY parent
-      - 3 Daughters ⚠️ VERIFY parent
+      - ?  (Daughter — Please let Mirza know if you know who belongs here.)
+      - ?  (Daughter — Please let Mirza know if you know who belongs here.)
+      - ?  (Daughter — Please let Mirza know if you know who belongs here.)
   - Mohd Musaliar
     - Farhat Moideen Haji  (Also appears in the Mother sheet (under Kunhaissa's line))
       - Mammed
-      - Safiya  (3 kids - Kattadi)
+      - Safiya
+        - ?  (Kattadi — Please let Mirza know if you know who belongs here.)
+        - ?  (Kattadi — Please let Mirza know if you know who belongs here.)
+        - ?  (Kattadi — Please let Mirza know if you know who belongs here.)
       - Salam ⚠️ VERIFY parent
       - Aysha ⚠️ VERIFY parent
       - Gafoor ⚠️ VERIFY parent
@@ -317,4 +356,6 @@ FATHER SHEET
       - Kulsu
     - Thadiyan Mammed ⚠️ VERIFY parent
       - Yasser Arafat
-      - 03 Daughters
+      - ?  (Daughter — Please let Mirza know if you know who belongs here.)
+      - ?  (Daughter — Please let Mirza know if you know who belongs here.)
+      - ?  (Daughter — Please let Mirza know if you know who belongs here.)

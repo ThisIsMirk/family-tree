@@ -14,6 +14,12 @@ def P(name, kids=None, spouse=None, note=None, conf="ok", star=False, marriage=N
     return {"name": name, "spouse": spouse, "note": note, "conf": conf, "star": star,
             "marriage": marriage, "color": color, "emph": emph, "kids": kids or []}
 
+ASK = "Please let Mirza know if you know who belongs here."
+def unknown(n, extra=None):
+    """n placeholder '?' children for an Excel 'N children/daughters' count."""
+    note = f"{extra} — {ASK}" if extra else ASK
+    return [P("?", note=note) for _ in range(n)]
+
 # ---------------------------------------------------------------------------
 # MOTHER / ALL sheet  (root: Nelliadi Beeran Musaliar)
 # ---------------------------------------------------------------------------
@@ -106,7 +112,7 @@ mother = P("Nelliadi Beeran Musaliar", [
                         P("Ahmed"), P("Safiya"), P("Salam"),
                         P("Soora", kids=[P("Basi"), P("Junaid"), P("Sister")]),
                         P("Aysha"), P("Gafoor"),
-                        P("Zubaida", note="03 Kids"),
+                        P("Zubaida", kids=unknown(3)),
                         P("Rahim Madathil", kids=[P("Hina")]),
                       ])]),
             ]),
@@ -156,7 +162,7 @@ father = P("Valiya Chekkan & Thithi",
                 P("Khaled", kids=[P("Mohamed")]),
                 P("Nafisa", kids=[P("Unais"), P("Sehadi")]),
                 P("Fathima", kids=[P("Asif"), P("Haris"), P("Reshmi"), P("Tasli")]),
-                P("Kulsu", kids=[P("Tha?"), P("Tajiba"), P("Anas")]),
+                P("Kulsu", kids=[P("Thanzi"), P("Tajiba"), P("Anas")]),
                 P("Jameela", kids=[P("Hijas")]),
             ]),
             P("Nafisa", kids=[P("Advocate Najeeb")]),
@@ -167,7 +173,7 @@ father = P("Valiya Chekkan & Thithi",
               note="m. Fathima (Mother sheet). Their children are shown under Fathima — "
                    "tap the couple icon to jump there."),
         ]),
-        P("C.K.Abdullah", note="Singapore; 07 Children"),
+        P("C.K.Abdullah", note="Singapore", kids=unknown(7)),
     ]),
     P("Ummatha", kids=[
         P("Pathu", kids=[
@@ -176,21 +182,24 @@ father = P("Valiya Chekkan & Thithi",
                 P("Abbas"), P("Safiya"), P("Sura")]),
             P("Kunhami", kids=[
                 P("Driver K.Ahmed"), P("Mahmoud-Baker"), P("Hamza"),
-                P("Karim"), P("3 Sister")]),
-            P("Nabisa", note="02 kids"),
+                P("Karim"), *unknown(3, "Daughter")]),
+            P("Nabisa", kids=unknown(2)),
             P("Assainar", note="S'pore", kids=[
                 P("Hairu"), P("Sura"), P("Jameela"), P("Rashid")]),
-            P("K.Abdulla", note="10 Kids"),
+            P("K.Abdulla", kids=unknown(10)),
         ]),
         P("Kunhamina", kids=[
             P("Pathumma"),
             P("Nabissa", spouse="Razak"),
             P("Assya", spouse="Aseez"),
             P("Sabiya", spouse="Gafoor"),
-            P("Basheer", kids=[P("Maimun"), P("Pathuma"), P("Ibrahim")]),
+            P("Basheer"),
         ]),
-        P("Basheer", kids=[P("Roslan", note="Malaysia")]),
-        P("Pockerkka", kids=[P("Hamza"), P("Rukya"), P("Soora")]),
+        P("Basheer", kids=[
+            P("Maimun"),
+            P("Pathuma", kids=[P("Roslan", note="Malaysia")]),
+            P("Ibrahim")]),
+        P("Pockerkka", kids=[P("Hamza"), P("Rukya"), P("Soora"), *unknown(10, "Malaysia")]),
         P("Moolur Moidu", kids=[
             P("Mulur Abdullah"), P("Kalathil Pathumma"), P("Khadija")]),
     ]),
@@ -198,13 +207,13 @@ father = P("Valiya Chekkan & Thithi",
     P("Beeran Musaliar", kids=[
         P("Kunhi Modideen", kids=[
             P("Ismail Meladi", conf="?"), P("Kunhammed", conf="?"),
-            P("3 Daughters", conf="?")])]),
+            *unknown(3, "Daughter")])]),
     P("Mohd Musaliar", kids=[
         P("Farhat Moideen Haji",
           note="Also appears in the Mother sheet (under Kunhaissa's line)",
           kids=[
             P("Mammed"),
-            P("Safiya", note="3 kids - Kattadi"),
+            P("Safiya", kids=unknown(3, "Kattadi")),
             P("Salam", conf="?"), P("Aysha", conf="?"), P("Gafoor", conf="?"),
             P("Rahim", conf="?", kids=[P("Hina")]),
             P("Zubaida", conf="?"),
@@ -213,7 +222,7 @@ father = P("Valiya Chekkan & Thithi",
     P("Hassan", note="children Kunhi Moideen & Thadiyan Mammed may belong here OR be gen-1 siblings",
       conf="?", kids=[
         P("Kunhi Moideen", conf="?", kids=[P("Siddique"), P("Hairu"), P("Kulsu")]),
-        P("Thadiyan Mammed", conf="?", kids=[P("Yasser Arafat"), P("03 Daughters")]),
+        P("Thadiyan Mammed", conf="?", kids=[P("Yasser Arafat"), *unknown(3, "Daughter")]),
     ]),
 ])
 
