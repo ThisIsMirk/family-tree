@@ -19,32 +19,47 @@ is iteratively **verifying the tree branch-by-branch against the Excel** and giv
 - `note` — shown only in the tap-to-open **detail card**, not inline. Preserve Excel metadata here
   (nicknames like `"Nalan Kutti"`, places like `"Singapore"`/`"Kattadi"`).
 - `star=True` — on a person in the user's direct line (no longer drawn specially; legacy).
-- `marriage="id"` — both spouses of a cross-sheet couple share an id → renders a 💑 link + lets you
-  tap to jump to the spouse on the other sheet. (`partnerOf`/`navigate` in the app.)
-- `color="#hex"` — colours that person's **lineage path** from the founder (pink Mariyomma, blue Rajab).
-- `emph=True` — bold/darken that person's **entire descent** (currently Mariyomma & Assu).
+- `marriage="id"` — both spouses of a couple share an id → renders a ❤️ link + lets you
+  tap to jump to the spouse elsewhere in the tree. (`partnerOf`/`navigate` in the app.)
+- `color="#hex"` — colours that person's **lineage path** up to the root Nelliadi (pink Mariyomma & Assu,
+  blue Rajab, light-blue N.A. Backer). All these paths now converge at Nelliadi.
+- `emph=True` — bold/darken that person's **entire descent** (currently Mariyomma & Assu = the `blood` set,
+  which is also what the ⌕ button / default view frames).
+- `sheet="Mother/All"|"Father"` — overrides the source-sheet tag for that node **and its whole subtree**
+  (used to keep the Father family tagged "Father" now that it lives inside Nelliadi's tree).
 - `unknown(n, extra=None)` — helper returning `n` "?" placeholder children for an Excel "N children"
   count; each gets the note `"<extra> — Please let Mirza know if you know who belongs here."`
   Splice with `*unknown(7)` inside a kids list, or `kids=unknown(7)`.
 
 ## Key family facts (so corrections make sense)
-- **TWO separate founding families, joined ONLY by marriage** (NOT one bloodline):
-  `Nelliadi Beeran Musaliar` (Mother/All sheets) and `Valiya Chekkan & Thithi` (Father sheet).
-  ⚠️ The "Valiya Chekkan" who is Nelliadi's son is a **different person** from "Valiya Chekkan & Thithi".
-- The two sheets connect via two marriages: **Mariyomma × Rajab** and **Fathima × N.A. Backer**.
-- User's line: … → Khadija(Kundantavida) → **Mariyomma** (m. Rajab) → **Fathima** (m. **N.A. Backer**)
-  → **Sajith** → the user. **Mujeeb** (the Excel's author) is the user's uncle.
-- The grandparents **Fathima & N.A. Backer ARE blood-related** (~2nd cousins once removed) — both
-  descend from `Valiya Chekkan & Thithi` (via siblings **Mariyam** and **Assya**).
+- **ONE bloodline. The common ancestor of both sheets is `Nelliadi Beeran Musaliar`** (the tree root).
+  ⚠️ UPDATED 2026: the Father sheet's `Valiya Chekkan & Thithi` **IS** Nelliadi's son **Valiya Chekkan**
+  (m. **Thithi**) — the same man. So the whole Father family hangs under Nelliadi via Valiya Chekkan.
+  (An earlier session had them as separate people; the user confirmed they are the same.)
+- The "Mother/All" vs "Father" split is now just **source-document provenance** (the `sheet` attr), not
+  two families. The two sheets still connect via marriages **Mariyomma × Rajab** and **Fathima × N.A. Backer** —
+  now marriages between relatives who both descend from Nelliadi.
+- User's line: Nelliadi → Thykkandi Mariyomma → Aysha → Khadija(Kundantavida) → **Mariyomma** (m. Rajab)
+  → **Fathima** (m. **N.A. Backer**) → **Sajith** → the user. **Mujeeb** (the Excel's author) is the user's uncle.
+- The grandparents **Fathima & N.A. Backer ARE blood-related** — both descend from Valiya Chekkan
+  (Nelliadi's son) via siblings **Mariyam** and **Assya**.
 - Tree is ~355 people and growing as dropped Excel data is recovered.
 
 ## Web app features
-- Loads **fully expanded**, opening anchored on the founder (Nelliadi). Tap a **dot** to collapse/expand;
-  tap a **name** to open the detail card (spouse chip, lineage, notes, sheet).
-- Pink lineage → Mariyomma, blue → Rajab; their descent drawn darker/bolder.
+- Always **fully expanded** — branch collapsing was **removed** (elderly users hid family by accident).
+  Tapping a **dot OR a name** both just open the detail card. No show/hide-children button.
+- **Default view = the living family** (Mariyomma + all her descendants & Assu, i.e. the `blood` set),
+  on both phone and desktop (`showFamily()` at boot).
+- **Detail card**: spouse chip, lineage path, notes, source sheet. Selecting a person lights their
+  **golden lineage** — it animates/draws outward from them, glowing+pulsing up to Nelliadi, calmer/thinner
+  down through descendants; gold overrides the pink/blue/blood colours.
+- Lineage colours: pink → Mariyomma & Assu, blue → Rajab, light-blue → N.A. Backer (all converge at Nelliadi).
+- **Generation columns**: faint vertical dividers between depths + "Gen N" labels pinned at the top
+  (Nelliadi = Gen 1). Labels auto-hide when zoomed out.
 - **"?" branches** = unknown children from Excel counts; tapping shows "Please let Mirza know…".
-- Search box; big Mother/Father vertical gap (`sideOf` separation).
-- **Two buttons** bottom-right: **⤢** = see the whole tree, **⌂** = back to the opening view.
+- Search box with a live **suggestions dropdown** (each shows "Child of <parent(s)>").
+- Bottom-right buttons: **desktop** = **＋ / − / ⌕**; **mobile** = **⤢ / ⌕**. ⌕ = zoom to the family,
+  ⤢ = whole tree, ＋/− = zoom in/out. Camera moves **glide**.
 
 ## How the user works with you (norms)
 - They give corrections like "X is the child of Y, has N kids …"; you edit `build_tree.py`, rebuild,

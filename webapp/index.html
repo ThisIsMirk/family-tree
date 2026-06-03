@@ -77,6 +77,8 @@
   .tool{width:46px;height:46px;border-radius:14px;border:1px solid var(--line);
     background:var(--card);color:var(--ink);box-shadow:var(--shadow);font-size:20px;
     display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none}
+  .tool#t-in,.tool#t-out{font-size:26px;font-weight:600;line-height:1}
+  .desktop-only{display:none}   /* +/- zoom buttons: desktop only (touch devices pinch instead) */
 
   /* ---- legend chip ---- */
   #legend{position:fixed;left:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);z-index:20;
@@ -152,6 +154,8 @@
     #brand{font-size:19px}
     .node text{font-size:13px}
     #legend{max-width:none}
+    .desktop-only{display:flex}   /* show +/- zoom on desktop … */
+    .mobile-only{display:none}    /* … and hide the whole-tree button there */
   }
 </style>
 </head>
@@ -174,7 +178,9 @@
   </div>
 
   <div id="tools">
-    <div class="tool" id="t-full" title="See the whole tree">⤢</div>
+    <div class="tool desktop-only" id="t-in" title="Zoom in">+</div>
+    <div class="tool desktop-only" id="t-out" title="Zoom out">−</div>
+    <div class="tool mobile-only" id="t-full" title="See the whole tree">⤢</div>
     <div class="tool" id="t-home" title="Zoom to Mariyomma & Assu's family">⌕</div>
   </div>
 
@@ -283,7 +289,7 @@
     }
     function fit(){ fitNodes(root.descendants()); }
     // zoom to the living family: Mariyomma + all her descendants, and Assu's branch (the `blood` set)
-    function showFamily(){ const fam=everyone.filter(d=>blood.has(d._id)); fitNodes(fam.length?fam:root.descendants()); }
+    function showFamily(animate){ const fam=everyone.filter(d=>blood.has(d._id)); fitNodes(fam.length?fam:root.descendants(), animate); }
     function navigate(target){
       let a=target.parent; while(a){ expand(a); a=a.parent; }
       update(root);
@@ -367,10 +373,11 @@
     let maxGen=1;
     function drawGenerations(){
       const desc=root.descendants();
-      maxGen=Math.max(1, ...desc.map(d=>d.depth));
+      const maxD=Math.max(0, ...desc.map(d=>d.depth));  // deepest depth; Nelliadi (the root) is depth 0 = Gen 1
+      maxGen=maxD+1;
       const xs=desc.map(d=>d.x), y0=Math.min(...xs)-80, y1=Math.max(...xs)+80;  // full breadth (vertical) extent
-      // a divider on each side of every generation column (depth g column is at x=g*LEVEL_W)
-      const lines=gGen.selectAll("line.genline").data(d3.range(1, maxGen+2));
+      // a divider on each side of every generation column (depth d column is at x=d*LEVEL_W)
+      const lines=gGen.selectAll("line.genline").data(d3.range(0, maxD+2));
       lines.enter().append("line").attr("class","genline").merge(lines)
         .attr("x1", g=>(g-0.5)*LEVEL_W).attr("x2", g=>(g-0.5)*LEVEL_W)
         .attr("y1", y0).attr("y2", y1);
@@ -386,7 +393,7 @@
       const [w]=viewSize();
       const tight = LEVEL_W*t.k < 46;          // columns too close together → hide the labels (lines stay)
       [...gensEl.children].forEach((s,i)=>{
-        const sx = t.x + ((i+1)*LEVEL_W)*t.k;  // screen x of this generation's column centre
+        const sx = t.x + (i*LEVEL_W)*t.k;       // label i = Gen (i+1) = depth i, whose column sits at x=i*LEVEL_W
         if(tight || sx<44 || sx>w-8){ s.style.display="none"; }
         else { s.style.display=""; s.style.left=sx+"px"; }
       });
@@ -482,8 +489,11 @@
     svg.on("click",closeSheet);
 
     // tools
-    document.getElementById("t-full").onclick=()=>fit();          // see the whole tree (glides)
-    document.getElementById("t-home").onclick=()=>showFamily();   // zoom to Mariyomma & Assu's family (glides)
+    document.getElementById("t-full").onclick=()=>fit();          // see the whole tree (glides) — mobile
+    document.getElementById("t-home").onclick=()=>showFamily(true); // zoom to Mariyomma & Assu's family (glides)
+    const zoomBy=f=> svg.transition().duration(200).ease(d3.easeCubicOut).call(zoom.scaleBy, f);
+    document.getElementById("t-in").onclick =()=>zoomBy(1.35);    // desktop +
+    document.getElementById("t-out").onclick=()=>zoomBy(1/1.35);  // desktop −
 
     // search — live dropdown of name suggestions, each with its parentage subtitle
     const q=document.getElementById("q"), clr=document.getElementById("clr"),
@@ -577,14 +587,14 @@
 
     clr.onclick=()=>{ q.value=""; closeSugg(); hits.textContent=""; matches=new Set(); update(root); q.focus(); };
 
-    // boot — fully expanded, opened readable at the first founder (left); drag/zoom to explore
+    // boot — fully expanded, opened on the living family (Mariyomma + descendants & Assu); drag/zoom to explore
     function openView(animate){
-      const f=(root.children&&root.children[0])||root, s=0.8, [w,h]=viewSize();
+      const f=root, s=0.8, [w,h]=viewSize();
       applyTransform(d3.zoomIdentity.translate(168 - f.y*s, h*0.5 - f.x*s).scale(s), animate);
     }
     update(root);
-    requestAnimationFrame(()=>openView(false));
-    setTimeout(()=>openView(false), 250);   // re-anchor once the viewport is sized (snap, no glide)
+    requestAnimationFrame(()=>showFamily(false));
+    setTimeout(()=>showFamily(false), 250);   // re-frame once the viewport is sized (snap, no glide)
     const hint=document.getElementById("hint");
     hint.style.opacity=1; setTimeout(()=>hint.style.opacity=0, 3200);
   })();

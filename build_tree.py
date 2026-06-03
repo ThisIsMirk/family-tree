@@ -10,9 +10,9 @@ A node also carries optional spouse / note, and 'star' marks the user's direct l
 """
 import json, re
 
-def P(name, kids=None, spouse=None, note=None, conf="ok", star=False, marriage=None, color=None, emph=False):
+def P(name, kids=None, spouse=None, note=None, conf="ok", star=False, marriage=None, color=None, emph=False, sheet=None):
     return {"name": name, "spouse": spouse, "note": note, "conf": conf, "star": star,
-            "marriage": marriage, "color": color, "emph": emph, "kids": kids or []}
+            "marriage": marriage, "color": color, "emph": emph, "sheet": sheet, "kids": kids or []}
 
 ASK = "Please let Mirza know if you know who belongs here."
 def unknown(n, extra=None):
@@ -24,7 +24,7 @@ def unknown(n, extra=None):
 # MOTHER / ALL sheet  (root: Nelliadi Beeran Musaliar)
 # ---------------------------------------------------------------------------
 mother = P("Nelliadi Beeran Musaliar", [
-    P("Valiya Chekkan"),   # NOTE: a different person from the Father sheet's "Valiya Chekkan & Thithi"
+    P("Valiya Chekkan"),   # placeholder — replaced below with the merged Father family (he IS "Valiya Chekkan & Thithi")
     P("Cheriya Chekkan", [
         P("Mahmoud"),
         P("Kunhamina"),
@@ -48,7 +48,7 @@ mother = P("Nelliadi Beeran Musaliar", [
             ]),
             P("Khadija", note="Kundantavida", star=True, kids=[
                 P("Mariyomma", star=True, spouse="Rajab", marriage="rajab+mariyomma", color="#e25c9c", emph=True,
-                  note="m. Rajab (Father sheet). Their children are the start of this family.",
+                  note="m. Rajab (her relative — both descend from Nelliadi). Their children are the start of this family.",
                   kids=[
                     P("Fathima", star=True, spouse="N.A. Backer", marriage="fathima+nabacker", note="Mummy ❤️", kids=[
                         P("Feroz"),
@@ -124,17 +124,19 @@ mother = P("Nelliadi Beeran Musaliar", [
 ])
 
 # ---------------------------------------------------------------------------
-# FATHER sheet  (root: Valiya Chekkan & Thithi — a DIFFERENT Valiya Chekkan, NOT Nelliadi's son)
+# FATHER sheet — now KNOWN to be the SAME man as Nelliadi's son "Valiya Chekkan"
+# (he married Thithi). So this whole family hangs under Nelliadi via Valiya Chekkan,
+# making Nelliadi Beeran Musaliar the single common ancestor of both sides.
 # ---------------------------------------------------------------------------
-father = P("Valiya Chekkan & Thithi",
-    note="'Porathut House' — a separate founding family, joined to the other side only by marriage.",
+valiya_chekkan = P("Valiya Chekkan", spouse="Thithi", sheet="Father",
+    note="'Porathut House'.",
     kids=[
     P("Mariyam", kids=[
         P("Pathumma", star=True, kids=[
             P("Sulekha", kids=[P("Bavakka"), P("Ahmed"), P("Pokku")]),
             P("Rajab", star=True, spouse="Mariyomma", marriage="rajab+mariyomma", color="#3f74cf",
-              note="m. Mariyomma (Mother sheet). Their children are detailed under Mariyomma — "
-                   "tap the couple icon to jump there."),
+              note="m. Mariyomma (his relative — both descend from Nelliadi). Their children are detailed "
+                   "under Mariyomma — tap the couple icon to jump there."),
             P("Sehad", kids=[P("Soora", kids=[P("Sulfat")])]),
             P("Mariyam", kids=[P("Hamza"), P("Mustafa"), P("A.Backer")]),
             P("Kader Haji", kids=[
@@ -170,7 +172,7 @@ father = P("Valiya Chekkan & Thithi",
         ]),
         P("Khadisha", note="N.A. Backer's mother", kids=[
             P("N.A. Backer", spouse="Fathima", marriage="fathima+nabacker", color="#7eb3e8",
-              note="Daddy ❤️ — m. Fathima (Mother sheet). Their children are shown under Fathima — "
+              note="Daddy ❤️ — m. Fathima. Their children are shown under Fathima — "
                    "tap the couple icon to jump there."),
         ]),
         P("C.K.Abdullah", note="Singapore", kids=unknown(7)),
@@ -236,6 +238,7 @@ def slug(s, i):
 persons = []
 counter = [0]
 def walk(node, parent_id, sheet, depth, lines):
+    sheet = node.get("sheet") or sheet      # a node can switch the sheet/provenance for its whole subtree
     counter[0] += 1
     pid = slug(node["name"], counter[0])
     persons.append({
@@ -253,15 +256,17 @@ def walk(node, parent_id, sheet, depth, lines):
     for k in node["kids"]:
         walk(k, pid, sheet, depth + 1, lines)
 
-m_lines, f_lines = [], []
-walk(mother, None, "Mother/All", 0, m_lines)
-walk(father, None, "Father", 0, f_lines)
+# Merge: the Father family is the descent of Nelliadi's son Valiya Chekkan (m. Thithi).
+mother["kids"][0] = valiya_chekkan
+lines = []
+walk(mother, None, "Mother/All", 0, lines)
 
 data = {
     "meta": {
         "source": "family_tree.xls (hand-drawn chart, 2005)",
         "note": "Best-effort reconstruction. Nodes flagged confidence='?' need verification. "
-                "The two sheets are separate families joined only by marriage (Mariyomma x Rajab; Fathima x N.A. Backer).",
+                "Both sheets descend from one ancestor, Nelliadi Beeran Musaliar: the Father line's "
+                "'Valiya Chekkan & Thithi' is Nelliadi's son Valiya Chekkan (m. Thithi).",
         "legend": {"directLine": "user's ancestry (Nelliadi Beeran Musaliar -> ... -> Sajith -> you)",
                    "confidence": "'ok' = clear in chart; '?' = parent link is a guess"},
     },
@@ -276,14 +281,15 @@ data = {
 with open("family_tree.json", "w") as fh:
     json.dump(data, fh, indent=2, ensure_ascii=False)
 
-outline = ("MOTHER / ALL SHEET\n" + "="*60 + "\n" + "\n".join(m_lines) +
-           "\n\n\nFATHER SHEET\n" + "="*60 + "\n" + "\n".join(f_lines) + "\n")
+outline = ("PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)\n" + "="*60 + "\n" +
+           "\n".join(lines) + "\n")
 with open("family_tree_outline.txt", "w") as fh:
     fh.write(outline)
 
 # ---- also emit nested data for the webapp (d3.hierarchy format) ----
 import os
 def to_d3(node, sheet):
+    sheet = node.get("sheet") or sheet
     attrs = {"sheet": sheet}
     if node["spouse"]: attrs["spouse"] = node["spouse"]
     if node["note"]:   attrs["note"]   = node["note"]
@@ -295,14 +301,15 @@ def to_d3(node, sheet):
     if kids: d["children"] = kids
     return d
 
-webapp_root = {"name": "Perooli Family", "attrs": {"root": True}, "children": [
-    to_d3(mother, "Mother/All"), to_d3(father, "Father")]}
+# Single tree: Nelliadi Beeran Musaliar is the root / common ancestor of both sides.
+webapp_root = to_d3(mother, "Mother/All")
+webapp_root["attrs"]["root"] = True
 os.makedirs("webapp", exist_ok=True)
 with open("webapp/tree-data.js", "w") as fh:
     fh.write("window.FAMILY_DATA = " + json.dumps(webapp_root, ensure_ascii=False) + ";\n")
 
 n_uncertain = sum(1 for p in persons if p["confidence"] == "?")
-print(f"Total people: {len(persons)}  (Mother≈{len(m_lines)}, Father≈{len(f_lines)})")
+print(f"Total people: {len(persons)}")
 print(f"Flagged for verification (uncertain parent): {n_uncertain}")
 print()
 print(outline)
