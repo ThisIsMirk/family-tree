@@ -10,15 +10,52 @@ A node also carries optional spouse / note, and 'star' marks the user's direct l
 """
 import json, re
 
-def P(name, kids=None, spouse=None, note=None, conf="ok", star=False, marriage=None, color=None, emph=False, sheet=None):
+def P(name, kids=None, spouse=None, note=None, conf="ok", star=False, marriage=None, color=None, emph=False, sheet=None, side=None, twin=None):
     return {"name": name, "spouse": spouse, "note": note, "conf": conf, "star": star,
-            "marriage": marriage, "color": color, "emph": emph, "sheet": sheet, "kids": kids or []}
+            "marriage": marriage, "color": color, "emph": emph, "sheet": sheet,
+            "side": side, "twin": twin, "kids": kids or []}
 
 ASK = "Please let Mirza know if you know who belongs here."
 def unknown(n, extra=None):
     """n placeholder '?' children for an Excel 'N children/daughters' count."""
     note = f"{extra} — {ASK}" if extra else ASK
     return [P("?", note=note) for _ in range(n)]
+
+# ---------------------------------------------------------------------------
+# The "joined" family. Mariyomma (mother's side) married Rajab (father's side), and their
+# daughter Fathima married N.A. Backer (father's side). Per the family, the descendants of
+# these marriages are shown on BOTH sides: a PINK copy under the mother and a BLUE copy under
+# the father. The two copies of a person share a `twin` id so the app can jump between them.
+# (Built person-by-person: a person's pink copy sits under their mother, blue copy under their
+# father — so e.g. Mujeeb appears under Fathima (pink) and under N.A. Backer (blue), not thrice.)
+# ---------------------------------------------------------------------------
+def D(name, twin, side, kids=None, **kw):
+    return P(name, kids=kids, side=side, twin=twin, **kw)
+
+def fathima_kids(side):
+    return [
+        D("Feroz",  "feroz",  side),
+        D("Sajith", "sajith", side, star=True),
+        D("Mujeeb", "mujeeb", side, note="Listed as the original file's author"),
+        D("Hafis",  "hafis",  side),
+    ]
+
+def joined_children(side):
+    """Mariyomma & Rajab's 7 children (+ descendants), tagged for `side`. On the father side,
+       Fathima is a leaf — her children live under their own father, N.A. Backer."""
+    fathima = D("Fathima", "fathima", side, star=True, spouse="N.A. Backer",
+                marriage=("fathima+nabacker" if side == "mother" else None),
+                note=("Mummy ❤️" if side == "mother" else None),
+                kids=(fathima_kids("mother") if side == "mother" else None))
+    return [
+        fathima,
+        D("Khadija",    "khadija2",  side, kids=[D("Hafsa","hafsa",side), D("Salima","salima",side), D("Reshma","reshma",side), D("Reetha","reetha",side)]),
+        D("K.Abdullah", "kabdullah", side, kids=[D("Anna","anna",side), D("Ishan","ishan",side)]),
+        D("Safiya",     "safiya2",   side, kids=[D("Aamir","aamir",side), D("Sabir","sabir",side), D("Hiba","hiba",side)]),
+        D("Mumtaz",     "mumtaz",    side, kids=[D("Fahad","fahad",side), D("Eva","eva",side)]),
+        D("Noorjahan",  "noorjahan", side, kids=[D("Shurook","shurook",side), D("Diyana","diyana",side), D("Suroor","suroor",side), D("Mariyam","mariyam2",side)]),
+        D("Sabitha",    "sabitha",   side, kids=[D("Sana","sana",side), D("Muhammed","muhammed",side), D("Ayesha","ayesha",side)]),
+    ]
 
 # ---------------------------------------------------------------------------
 # MOTHER / ALL sheet  (root: Nelliadi Beeran Musaliar)
@@ -48,20 +85,8 @@ mother = P("Nelliadi Beeran Musaliar", [
             ]),
             P("Khadija", note="Kundantavida", star=True, kids=[
                 P("Mariyomma", star=True, spouse="Rajab", marriage="rajab+mariyomma", color="#e25c9c", emph=True,
-                  note="m. Rajab (her relative — both descend from Nelliadi). Their children are the start of this family.",
-                  kids=[
-                    P("Fathima", star=True, spouse="N.A. Backer", marriage="fathima+nabacker", note="Mummy ❤️", kids=[
-                        P("Feroz"),
-                        P("Sajith", star=True),
-                        P("Mujeeb", note="Listed as the original file's author"),
-                        P("Hafis")]),
-                    P("Khadija", kids=[P("Hafsa"), P("Salima"), P("Reshma"), P("Reetha")]),
-                    P("K.Abdullah", kids=[P("Anna"), P("Ishan")]),
-                    P("Safiya", kids=[P("Aamir"), P("Sabir"), P("Hiba")]),
-                    P("Mumtaz", kids=[P("Fahad"), P("Eva")]),
-                    P("Noorjahan", kids=[P("Shurook"), P("Diyana"), P("Suroor"), P("Mariyam")]),
-                    P("Sabitha", kids=[P("Sana"), P("Muhammed"), P("Ayesha")]),
-                  ]),
+                  note="m. Rajab — their children appear on both sides (pink here; blue under Rajab).",
+                  kids=joined_children("mother")),       # PINK side: full family under Mariyomma
                 P("Assu", emph=True, color="#e25c9c", kids=[P("Asif"), P("Haris"), P("Reshmi"), P("Taslima")]),
             ]),
             P("Moidu", note="Singapore"),
@@ -135,8 +160,8 @@ valiya_chekkan = P("Valiya Chekkan", spouse="Thithi", sheet="Father",
         P("Pathumma", star=True, kids=[
             P("Sulekha", kids=[P("Bavakka"), P("Ahmed"), P("Pokku")]),
             P("Rajab", star=True, spouse="Mariyomma", marriage="rajab+mariyomma", color="#3f74cf",
-              note="m. Mariyomma (his relative — both descend from Nelliadi). Their children are detailed "
-                   "under Mariyomma — tap the couple icon to jump there."),
+              note="m. Mariyomma — their children appear here (blue) and on the mother's side (pink under Mariyomma).",
+              kids=joined_children("father")),          # BLUE side: full family under Rajab
             P("Sehad", kids=[P("Soora", kids=[P("Sulfat")])]),
             P("Mariyam", kids=[P("Hamza"), P("Mustafa"), P("A.Backer")]),
             P("Kader Haji", kids=[
@@ -172,8 +197,8 @@ valiya_chekkan = P("Valiya Chekkan", spouse="Thithi", sheet="Father",
         ]),
         P("Khadisha", note="N.A. Backer's mother", kids=[
             P("N.A. Backer", spouse="Fathima", marriage="fathima+nabacker", color="#7eb3e8",
-              note="Daddy ❤️ — m. Fathima. Their children are shown under Fathima — "
-                   "tap the couple icon to jump there."),
+              note="Daddy ❤️ — m. Fathima. Their children appear here (blue) and on the mother's side (pink under Fathima).",
+              kids=fathima_kids("father")),             # BLUE side: Feroz/Sajith/Mujeeb/Hafis under their father
         ]),
         P("C.K.Abdullah", note="Singapore", kids=unknown(7)),
     ]),
@@ -244,7 +269,7 @@ def walk(node, parent_id, sheet, depth, lines):
     persons.append({
         "id": pid, "name": node["name"], "parentId": parent_id, "sheet": sheet,
         "spouse": node["spouse"], "notes": node["note"], "confidence": node["conf"],
-        "directLine": node["star"],
+        "directLine": node["star"], "side": node.get("side"), "twin": node.get("twin"),
     })
     marks = ""
     if node["star"]:        marks += " ★"           # direct line
@@ -296,6 +321,8 @@ def to_d3(node, sheet):
     if node.get("marriage"): attrs["marriage"] = node["marriage"]
     if node.get("color"):    attrs["color"]    = node["color"]
     if node.get("emph"):     attrs["emph"]     = True
+    if node.get("side"):     attrs["side"]     = node["side"]   # "mother" (pink) / "father" (blue)
+    if node.get("twin"):     attrs["twin"]     = node["twin"]   # links a person's pink & blue copies
     d = {"name": node["name"], "attrs": attrs}
     kids = [to_d3(k, sheet) for k in node["kids"]]
     if kids: d["children"] = kids
