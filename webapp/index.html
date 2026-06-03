@@ -78,6 +78,10 @@
     background:var(--card);color:var(--ink);box-shadow:var(--shadow);font-size:20px;
     display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none}
   .tool#t-in,.tool#t-out{font-size:26px;font-weight:600;line-height:1}
+  .homeico{width:27px;height:27px;display:block}
+  /* the detail sheet covers the bottom — float the controls/legend up above it (still tappable) */
+  #tools,#legend{transition:transform .26s cubic-bezier(.2,.8,.2,1)}
+  body.sheet-open #tools,body.sheet-open #legend{transform:translateY(calc(-1 * var(--sheetH,190px) + 4px));z-index:31}
   .desktop-only{display:none}   /* +/- zoom buttons: desktop only (touch devices pinch instead) */
 
   /* ---- legend chip ---- */
@@ -181,7 +185,16 @@
     <div class="tool desktop-only" id="t-in" title="Zoom in">+</div>
     <div class="tool desktop-only" id="t-out" title="Zoom out">−</div>
     <div class="tool mobile-only" id="t-full" title="See the whole tree">⤢</div>
-    <div class="tool" id="t-home" title="Zoom to Mariyomma & Assu's family">⌕</div>
+    <div class="tool" id="t-home" title="Home — Mariyomma &amp; Assu's family">
+      <svg class="homeico" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="5" y="10.8" width="14" height="9.7" rx="1" fill="#f0dfb8" stroke="#9c7b3e" stroke-width="1"/>
+        <path d="M12 2.6 1.8 11.4h20.4z" fill="#cf7a2e" stroke="#9c5326" stroke-width="1" stroke-linejoin="round"/>
+        <rect x="10.1" y="14.3" width="3.9" height="6.2" rx="0.5" fill="#3f5d52"/>
+        <circle cx="13.1" cy="17.5" r="0.5" fill="#e8c34a"/>
+        <rect x="6.4" y="12.7" width="2.8" height="2.8" rx="0.4" fill="#9cc2dd" stroke="#6f93ad" stroke-width="0.7"/>
+        <rect x="14.8" y="12.7" width="2.8" height="2.8" rx="0.4" fill="#9cc2dd" stroke="#6f93ad" stroke-width="0.7"/>
+      </svg>
+    </div>
   </div>
 
   <div id="gens"></div>
@@ -478,14 +491,15 @@
       document.getElementById("s-note").textContent=a.note||"";
       const path=d.ancestors().reverse().map(n=>n.data.name).filter(n=>n!=="Perooli Family");
       document.getElementById("s-meta").textContent= path.length>1? "Lineage: "+path.join("  ›  ") : "";
-      sheet.classList.add("open");
+      sheet.classList.add("open"); document.body.classList.add("sheet-open");
+      document.body.style.setProperty("--sheetH", sheet.getBoundingClientRect().height+"px");  // lift controls above the sheet
       paintLineage();     // light up this person's golden lineage
       animateLineage();   // …and draw it outward from them
     }
-    function closeSheet(){ sheet.classList.remove("open"); selected=null; paintLineage(); }
+    function closeSheet(){ sheet.classList.remove("open"); document.body.classList.remove("sheet-open"); selected=null; paintLineage(); }
     document.getElementById("sx").onclick=closeSheet;
     // Center keeps the person selected (gold lineage stays lit); it just slides the sheet out of the way
-    document.getElementById("s-center").onclick=()=>{ const d=selected; if(d){ sheet.classList.remove("open"); centerOn(d); } };
+    document.getElementById("s-center").onclick=()=>{ const d=selected; if(d){ sheet.classList.remove("open"); document.body.classList.remove("sheet-open"); centerOn(d); } };
     svg.on("click",closeSheet);
 
     // tools
