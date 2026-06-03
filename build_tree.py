@@ -62,7 +62,7 @@ mother = P("Nelliadi Beeran Musaliar", [
                     P("Noorjahan", kids=[P("Shurook"), P("Diyana"), P("Suroor"), P("Mariyam")]),
                     P("Sabitha", kids=[P("Sana"), P("Muhammed"), P("Ayesha")]),
                   ]),
-                P("Assu", emph=True, kids=[P("Asif"), P("Haris"), P("Reshmi"), P("Taslima")]),
+                P("Assu", emph=True, color="#e25c9c", kids=[P("Asif"), P("Haris"), P("Reshmi"), P("Taslima")]),
             ]),
             P("Moidu", note="Singapore"),
             P("Mammed", note="Singapore"),
@@ -169,7 +169,7 @@ father = P("Valiya Chekkan & Thithi",
             P("Fathima", kids=[P("Aysha"), P("Kulsu Teacher"), P("Faizal"), P("Zayar")]),
         ]),
         P("Khadisha", note="N.A. Backer's mother", kids=[
-            P("N.A. Backer", spouse="Fathima", marriage="fathima+nabacker",
+            P("N.A. Backer", spouse="Fathima", marriage="fathima+nabacker", color="#7eb3e8",
               note="m. Fathima (Mother sheet). Their children are shown under Fathima — "
                    "tap the couple icon to jump there."),
         ]),
