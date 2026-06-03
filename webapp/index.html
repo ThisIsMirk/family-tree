@@ -63,6 +63,14 @@
   .sg-more{padding:8px 14px;font-size:11px;color:var(--muted);text-align:center;
     background:var(--bg);position:sticky;bottom:0}
 
+  /* ---- generation labels (pinned at top, tracked horizontally on zoom) ---- */
+  #gens{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top, 0px) + 56px);height:0;z-index:8;
+    pointer-events:none}
+  .genlbl{position:absolute;transform:translateX(-50%);white-space:nowrap;
+    font-family:var(--serif);font-size:12px;letter-spacing:.3px;color:var(--muted);
+    background:rgba(245,239,228,.78);backdrop-filter:blur(3px);
+    padding:2px 9px;border-radius:999px;border:1px solid var(--line)}
+
   /* ---- floating controls ---- */
   #tools{position:fixed;right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);z-index:20;
     display:flex;flex-direction:column;gap:10px}
@@ -81,6 +89,7 @@
   .dot.norm{background:var(--node)}
 
   /* ---- tree visuals ---- */
+  .genline{stroke:#cdbf9f;stroke-width:1;opacity:.4;vector-effect:non-scaling-stroke}
   .link{fill:none;stroke:var(--line);stroke-width:1.4px}
   /* golden lineage of the open person (colour/width set inline; here = the glow) */
   .link.gold-desc{filter:drop-shadow(0 0 1.6px rgba(232,195,74,.5))}
@@ -166,8 +175,10 @@
 
   <div id="tools">
     <div class="tool" id="t-full" title="See the whole tree">⤢</div>
-    <div class="tool" id="t-home" title="Back to the opening view">⌂</div>
+    <div class="tool" id="t-home" title="Back to the opening view">⌕</div>
   </div>
+
+  <div id="gens"></div>
 
   <div id="sheet">
     <button class="x" id="sx">×</button>
@@ -195,6 +206,7 @@
     const container = svg.insert("g",":first-child").attr("class","viewport");
     container.append(()=>gLink.node());
     container.append(()=>gNode.node());
+    const gGen = container.insert("g",":first-child").attr("class","gens");  // generation dividers, behind everything
 
     const NODE_H = 30;     // vertical spacing between siblings
     const LEVEL_W = 216;   // horizontal spacing between generations (room for long names)
@@ -241,7 +253,7 @@
 
     // ----- zoom -----
     const zoom = d3.zoom().scaleExtent([0.08, 2.6])
-      .on("zoom", e=> container.attr("transform", e.transform));
+      .on("zoom", e=>{ container.attr("transform", e.transform); layoutGenLabels(e.transform); });
     svg.call(zoom).on("dblclick.zoom", null);
     function viewSize(){ const r=svg.node().getBoundingClientRect(); return [r.width, r.height]; }
 
@@ -340,9 +352,42 @@
 
       node.exit().remove();
       nodes.forEach(d=>{ d.x0=d.x; d.y0=d.y; });
+      drawGenerations();
     }
     function diag(s,t){
       return `M${s.y},${s.x}C${(s.y+t.y)/2},${s.x} ${(s.y+t.y)/2},${t.x} ${t.y},${t.x}`;
+    }
+
+    // ---- generation columns: faint vertical dividers between depths + "Gen N" labels pinned at the top ----
+    // Every node at depth g sits at the same x = g*LEVEL_W (d3 nodeSize), so generations line up as columns —
+    // and because both founding families start at depth 1, the dividers line up across the whole page.
+    const gensEl=document.getElementById("gens");
+    let maxGen=1;
+    function drawGenerations(){
+      const desc=root.descendants();
+      maxGen=Math.max(1, ...desc.map(d=>d.depth));
+      const xs=desc.map(d=>d.x), y0=Math.min(...xs)-80, y1=Math.max(...xs)+80;  // full breadth (vertical) extent
+      // a divider on each side of every generation column (depth g column is at x=g*LEVEL_W)
+      const lines=gGen.selectAll("line.genline").data(d3.range(1, maxGen+2));
+      lines.enter().append("line").attr("class","genline").merge(lines)
+        .attr("x1", g=>(g-0.5)*LEVEL_W).attr("x2", g=>(g-0.5)*LEVEL_W)
+        .attr("y1", y0).attr("y2", y1);
+      lines.exit().remove();
+      layoutGenLabels();
+    }
+    function layoutGenLabels(t){
+      t = t || d3.zoomTransform(svg.node());
+      if(gensEl.childElementCount!==maxGen){   // (re)build the label spans to match the generation count
+        gensEl.innerHTML="";
+        for(let g=1; g<=maxGen; g++){ const s=document.createElement("span"); s.className="genlbl"; s.textContent="Gen "+g; gensEl.appendChild(s); }
+      }
+      const [w]=viewSize();
+      const tight = LEVEL_W*t.k < 46;          // columns too close together → hide the labels (lines stay)
+      [...gensEl.children].forEach((s,i)=>{
+        const sx = t.x + ((i+1)*LEVEL_W)*t.k;  // screen x of this generation's column centre
+        if(tight || sx<44 || sx>w-8){ s.style.display="none"; }
+        else { s.style.display=""; s.style.left=sx+"px"; }
+      });
     }
 
     // Colour the links: the steady bloodline (pink → Mariyomma, blue → Rajab, brown emphasis) plus,
