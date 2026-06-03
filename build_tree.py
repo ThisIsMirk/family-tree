@@ -50,7 +50,7 @@ mother = P("Nelliadi Beeran Musaliar", [
                 P("Mariyomma", star=True, spouse="Rajab", marriage="rajab+mariyomma", color="#e25c9c", emph=True,
                   note="m. Rajab (Father sheet). Their children are the start of this family.",
                   kids=[
-                    P("Fathima", star=True, spouse="N.A. Backer", marriage="fathima+nabacker", kids=[
+                    P("Fathima", star=True, spouse="N.A. Backer", marriage="fathima+nabacker", note="Mummy ❤️", kids=[
                         P("Feroz"),
                         P("Sajith", star=True),
                         P("Mujeeb", note="Listed as the original file's author"),
@@ -170,7 +170,7 @@ father = P("Valiya Chekkan & Thithi",
         ]),
         P("Khadisha", note="N.A. Backer's mother", kids=[
             P("N.A. Backer", spouse="Fathima", marriage="fathima+nabacker", color="#7eb3e8",
-              note="m. Fathima (Mother sheet). Their children are shown under Fathima — "
+              note="Daddy ❤️ — m. Fathima (Mother sheet). Their children are shown under Fathima — "
                    "tap the couple icon to jump there."),
         ]),
         P("C.K.Abdullah", note="Singapore", kids=unknown(7)),

@@ -175,7 +175,7 @@
 
   <div id="tools">
     <div class="tool" id="t-full" title="See the whole tree">⤢</div>
-    <div class="tool" id="t-home" title="Back to the opening view">⌕</div>
+    <div class="tool" id="t-home" title="Zoom to Mariyomma & Assu's family">⌕</div>
   </div>
 
   <div id="gens"></div>
@@ -282,6 +282,8 @@
       applyTransform(t, animate);
     }
     function fit(){ fitNodes(root.descendants()); }
+    // zoom to the living family: Mariyomma + all her descendants, and Assu's branch (the `blood` set)
+    function showFamily(){ const fam=everyone.filter(d=>blood.has(d._id)); fitNodes(fam.length?fam:root.descendants()); }
     function navigate(target){
       let a=target.parent; while(a){ expand(a); a=a.parent; }
       update(root);
@@ -481,7 +483,7 @@
 
     // tools
     document.getElementById("t-full").onclick=()=>fit();          // see the whole tree (glides)
-    document.getElementById("t-home").onclick=()=>openView(true); // back to the opening view (glides)
+    document.getElementById("t-home").onclick=()=>showFamily();   // zoom to Mariyomma & Assu's family (glides)
 
     // search — live dropdown of name suggestions, each with its parentage subtitle
     const q=document.getElementById("q"), clr=document.getElementById("clr"),
