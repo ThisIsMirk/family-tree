@@ -10,10 +10,10 @@ A node also carries optional spouse / note, and 'star' marks the user's direct l
 """
 import json, re
 
-def P(name, kids=None, spouse=None, note=None, conf="ok", star=False, marriage=None, color=None, emph=False, sheet=None, side=None, twin=None):
+def P(name, kids=None, spouse=None, note=None, conf="ok", star=False, marriage=None, color=None, emph=False, sheet=None, side=None, twin=None, pic=None, spouse_pic=None):
     return {"name": name, "spouse": spouse, "note": note, "conf": conf, "star": star,
             "marriage": marriage, "color": color, "emph": emph, "sheet": sheet,
-            "side": side, "twin": twin, "kids": kids or []}
+            "side": side, "twin": twin, "pic": pic, "spouse_pic": spouse_pic, "kids": kids or []}
 
 ASK = "Please let Mirza know if you know who belongs here."
 def unknown(n, extra=None):
@@ -23,30 +23,84 @@ def unknown(n, extra=None):
 
 # ---------------------------------------------------------------------------
 # The "joined" family. Mariyomma (mother's side) married Rajab (father's side), and their
-# daughter Fathima married N.A. Backer (father's side). Per the family, the descendants of
+# daughter Fathima married Nangeri Aboobacker (father's side). Per the family, the descendants of
 # these marriages are shown on BOTH sides: a PINK copy under the mother and a BLUE copy under
 # the father. The two copies of a person share a `twin` id so the app can jump between them.
 # (Built person-by-person: a person's pink copy sits under their mother, blue copy under their
-# father — so e.g. Mujeeb appears under Fathima (pink) and under N.A. Backer (blue), not thrice.)
+# father — so e.g. Mujeeb appears under Fathima (pink) and under Nangeri Aboobacker (blue), not thrice.)
 # ---------------------------------------------------------------------------
 def D(name, twin, side, kids=None, **kw):
     return P(name, kids=kids, side=side, twin=twin, **kw)
 
+def sajith_kids(side):
+    # Sajith's children. Pictures live on the canonical (Mariyomma-side) copy only.
+    m = (side == "mother")
+    return [
+        D("Mirza", "mirza", side, pic=("pics/mirza.jpeg" if m else None)),
+        D("Rajab", "rajab_jr", side, note="Named after his great-grandfather Rajab.",
+          pic=("pics/rajab.jpeg" if m else None)),
+        D("Aman",  "aman",  side, pic=("pics/aman.jpeg" if m else None)),
+    ]
+
+def feroz_kids(side):
+    m = (side == "mother")
+    return [
+        D("Adam",   "adam",   side, pic=("pics/Adam.jpeg"   if m else None)),
+        D("Hessa",  "hessa",  side, pic=("pics/Hessa.jpeg"  if m else None)),
+        D("Selsha", "selsha", side, pic=("pics/Selsha.jpeg" if m else None)),
+    ]
+
+def mujeeb_kids(side):
+    return [   # no photos yet
+        D("Niharika", "niharika", side),
+        D("Norell",   "norell",   side),
+        D("Olivia",   "olivia",   side),
+    ]
+
+def hafis_kids(side):
+    m = (side == "mother")
+    return [
+        D("Zayan", "zayan", side, pic=("pics/Zayan.png" if m else None)),
+        D("Zarif", "zarif", side, pic=("pics/Zarif.png" if m else None)),
+        D("Zara",  "zara",  side, pic=("pics/Zara.png"  if m else None)),
+        D("Zayed", "zayed", side, pic=("pics/Zayed.png" if m else None)),
+    ]
+
 def fathima_kids(side):
     return [
-        D("Feroz",  "feroz",  side),
-        D("Sajith", "sajith", side, star=True),
-        D("Mujeeb", "mujeeb", side, note="Listed as the original file's author"),
-        D("Hafis",  "hafis",  side),
+        D("Feroz",  "feroz",  side, spouse="Praseena", spouse_pic="pics/Praseena.jpeg", kids=feroz_kids(side)),
+        D("Sajith", "sajith", side, star=True, pic=("pics/sajith.jpeg" if side=="mother" else None),
+          spouse="Shaniba", spouse_pic="pics/shaniba.jpeg", kids=sajith_kids(side)),
+        D("Mujeeb", "mujeeb", side, note="Listed as the original file's author",
+          spouse="Husna", kids=mujeeb_kids(side)),
+        D("Hafis",  "hafis",  side, pic=("pics/Hafis.png" if side=="mother" else None),
+          spouse="Sonia", spouse_pic="pics/Soniaaunty.png", kids=hafis_kids(side)),
+    ]
+
+def fathima_sana_kids(side):
+    m = (side == "mother")
+    return [
+        D("Joaan", "joaan", side, pic=("pics/Joaan.jpeg" if m else None)),
+        D("Ryaan", "ryaan", side, pic=("pics/Ryaan.jpeg" if m else None)),
+    ]
+
+def sabeetha_kids(side):
+    m = (side == "mother")
+    return [
+        D("Fathima Sana", "fathima_sana", side, pic=("pics/sana.jpeg" if m else None),
+          spouse="Shinu", spouse_pic="pics/Shinu.jpeg", kids=fathima_sana_kids(side)),
+        D("Mohammed Jathin", "mohammed_jathin", side, pic=("pics/mohammed.jpeg" if m else None)),
+        D("Aysha Zeba",      "aysha_zeba",      side, pic=("pics/Aysha.jpeg"    if m else None)),
     ]
 
 def joined_children(side):
-    """Mariyomma & Rajab's 7 children (+ descendants), tagged for `side`. On the father side,
-       Fathima is a leaf — her children live under their own father, N.A. Backer."""
-    fathima = D("Fathima", "fathima", side, star=True, spouse="N.A. Backer",
+    """Mariyomma & Rajab's 7 children (+ descendants), tagged for `side`. Fathima carries her
+       children on BOTH the mother (Mariyomma) and father (Rajab) sides — and they also appear a
+       third time under their own father Nangeri Aboobacker — so each of those 4 shows up 3×."""
+    fathima = D("Fathima", "fathima", side, star=True, spouse="Nangeri Aboobacker",
                 marriage=("fathima+nabacker" if side == "mother" else None),
                 note=("Mummy ❤️" if side == "mother" else None),
-                kids=(fathima_kids("mother") if side == "mother" else None))
+                kids=fathima_kids(side))
     return [
         fathima,
         D("Khadija",    "khadija2",  side, kids=[D("Hafsa","hafsa",side), D("Salima","salima",side), D("Reshma","reshma",side), D("Reetha","reetha",side)]),
@@ -54,7 +108,8 @@ def joined_children(side):
         D("Safiya",     "safiya2",   side, kids=[D("Aamir","aamir",side), D("Sabir","sabir",side), D("Hiba","hiba",side)]),
         D("Mumtaz",     "mumtaz",    side, kids=[D("Fahad","fahad",side), D("Eva","eva",side)]),
         D("Noorjahan",  "noorjahan", side, kids=[D("Shurook","shurook",side), D("Diyana","diyana",side), D("Suroor","suroor",side), D("Mariyam","mariyam2",side)]),
-        D("Sabitha",    "sabitha",   side, kids=[D("Sana","sana",side), D("Muhammed","muhammed",side), D("Ayesha","ayesha",side)]),
+        D("Sabeetha",   "sabeetha",  side, pic=("pics/sabeetha.jpeg" if side=="mother" else None),
+          spouse="Basheer", spouse_pic="pics/basheer.jpeg", kids=sabeetha_kids(side)),
     ]
 
 # ---------------------------------------------------------------------------
@@ -195,10 +250,10 @@ valiya_chekkan = P("Valiya Chekkan", spouse="Thithi", sheet="Father",
             P("Nafisa", kids=[P("Advocate Najeeb")]),
             P("Fathima", kids=[P("Aysha"), P("Kulsu Teacher"), P("Faizal"), P("Zayar")]),
         ]),
-        P("Khadisha", note="N.A. Backer's mother", kids=[
-            P("N.A. Backer", spouse="Fathima", marriage="fathima+nabacker", color="#7eb3e8",
-              note="Daddy ❤️ — m. Fathima. Their children appear here (blue) and on the mother's side (pink under Fathima).",
-              kids=fathima_kids("father")),             # BLUE side: Feroz/Sajith/Mujeeb/Hafis under their father
+        P("Khadisha", note="Nangeri Aboobacker's mother", kids=[
+            P("Nangeri Aboobacker", spouse="Fathima", marriage="fathima+nabacker", color="#7eb3e8",
+              note="Daddy ❤️ — m. Fathima. Their children appear here (Nangeri Aboobacker's side, light blue) and on the mother's side (pink under Fathima).",
+              kids=fathima_kids("backer")),             # N.A. BACKER's side: Feroz/Sajith/Mujeeb/Hafis under their father
         ]),
         P("C.K.Abdullah", note="Singapore", kids=unknown(7)),
     ]),
@@ -297,7 +352,7 @@ data = {
     },
     "crossLinks": [
         {"marriage": ["Mariyomma (Mother)", "Rajab (Father)"], "children": "the 7 siblings incl. Fathima"},
-        {"marriage": ["Fathima (Mother)", "N.A. Backer (Father)"],
+        {"marriage": ["Fathima (Mother)", "Nangeri Aboobacker (Father)"],
          "children": ["Feroz", "Sajith", "Mujeeb", "Hafis"]},
         {"samePerson": ["Farhat Moideen Haji (Mother)", "Farhat Moideen Haji (Father)"], "note": "unverified"},
     ],
@@ -323,6 +378,8 @@ def to_d3(node, sheet):
     if node.get("emph"):     attrs["emph"]     = True
     if node.get("side"):     attrs["side"]     = node["side"]   # "mother" (pink) / "father" (blue)
     if node.get("twin"):     attrs["twin"]     = node["twin"]   # links a person's pink & blue copies
+    if node.get("pic"):      attrs["pic"]      = node["pic"]    # circular photo (path under webapp/)
+    if node.get("spouse_pic"): attrs["spousePic"] = node["spouse_pic"]   # married-in spouse's photo
     d = {"name": node["name"], "attrs": attrs}
     kids = [to_d3(k, sheet) for k in node["kids"]]
     if kids: d["children"] = kids

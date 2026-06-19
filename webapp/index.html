@@ -60,8 +60,9 @@
   .sg-nm mark{background:var(--gold-soft);color:inherit;border-radius:3px;padding:0 1px}
   .sg-side{font-family:var(--sans);font-size:10px;font-weight:600;padding:1px 6px;border-radius:999px;
     vertical-align:middle;color:#fff;white-space:nowrap}
-  .sg-side.sg-m{background:#d4408a}   /* mother's side = pink */
-  .sg-side.sg-f{background:#3f74cf}   /* father's side = blue */
+  .sg-side.sg-m{background:#d4408a}   /* Mariyomma's side = pink */
+  .sg-side.sg-f{background:#3f74cf}   /* Rajab's side = blue */
+  .sg-side.sg-b{background:#5a97d6}   /* Nangeri Aboobacker's side = lighter blue */
   .sg-sub{font-size:11.5px;color:var(--muted);margin-top:2px;font-family:var(--sans)}
   .sg-none{padding:11px 14px;font-size:13px;color:var(--muted)}
   .sg-more{padding:8px 14px;font-size:11px;color:var(--muted);text-align:center;
@@ -121,7 +122,14 @@
   /* dual people: pink outline on the mother's-side copy, blue on the father's-side copy */
   .node.side-m circle.ncol{stroke:#d4408a;stroke-width:2.2px}
   .node.side-f circle.ncol{stroke:#3f74cf;stroke-width:2.2px}
-  /* the open/selected person: their dot filled gold (high specificity to beat .collapsed/.match/.root/.side) */
+  .node.side-b circle.ncol{stroke:#7eb3e8;stroke-width:2.2px}
+  .photo{cursor:pointer}
+  .photoring{fill:none;stroke:#d4408a;stroke-width:2.2px;cursor:pointer}
+  .node.sel .photoring{stroke:#b8862f;stroke-width:2.8px}
+  /* side branches greyed out (Mariyomma's line stays in full colour); opacity fade is set inline */
+  .node.dim text{fill:#9b9384}
+  .node.dim circle.ncol{stroke:#beb6a6;fill:#f3eee3}
+  /* the open/selected person: their dot filled gold (high specificity to beat .collapsed/.match/.root/.side/.dim) */
   .node.sel circle.ncol{fill:#e8c34a;stroke:#b8862f;stroke-width:2px}
   .node.sel text{font-weight:700}
   .mlink{stroke:var(--gold);stroke-width:1.3px;stroke-dasharray:2 2}
@@ -143,14 +151,41 @@
   #sheet.open{transform:translateY(0)}
   #sheet .grip{width:40px;height:4px;border-radius:2px;background:#ddd2bb;margin:6px auto 12px}
   #sheet .nm{font-family:var(--serif);font-size:22px;font-weight:600;line-height:1.15}
+  #s-photo{display:none;width:76px;height:76px;border-radius:50%;object-fit:cover;
+    border:2px solid var(--gold-soft);box-shadow:0 2px 8px rgba(50,38,20,.18);
+    float:left;margin:2px 14px 8px 0;cursor:zoom-in}
+  /* married-in spouse shown in the card (no branch) */
+  #s-spouse{display:none;align-items:center;gap:11px;clear:both;
+    margin:10px 0 2px;padding:8px 10px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+  #s-spouse .sp-photo{width:50px;height:50px;border-radius:50%;object-fit:cover;flex:none;
+    border:2px solid var(--gold-soft);cursor:zoom-in}
+  #s-spouse .sp-name{font-family:var(--serif);font-size:16px;color:var(--ink);line-height:1.2}
+  #s-spouse .sp-rel{display:block;font-family:var(--sans);font-size:11px;color:var(--muted);margin-top:2px}
+
+  /* tap-to-enlarge photo lightbox (full-screen, circular, responsive) */
+  #lightbox{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;
+    background:rgba(22,16,8,.84);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+    padding:max(env(safe-area-inset-top,0px),16px) 16px max(env(safe-area-inset-bottom,0px),16px);
+    cursor:zoom-out}
+  #lightbox.open{display:flex}
+  #lb-img{width:min(82vw,82vh,460px);height:min(82vw,82vh,460px);border-radius:50%;object-fit:cover;
+    border:4px solid rgba(255,255,255,.92);box-shadow:0 14px 60px rgba(0,0,0,.55);
+    animation:lbpop .22s cubic-bezier(.2,.9,.3,1)}
+  @keyframes lbpop{from{transform:scale(.86);opacity:.3}to{transform:scale(1);opacity:1}}
+  #lb-close{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:14px;
+    width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.16);
+    color:#fff;font-size:26px;line-height:1;cursor:pointer}
+  @media (prefers-reduced-motion:reduce){ #lb-img{animation:none} }
   #sheet .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
   .tag{font-size:11.5px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);
     color:var(--muted);background:var(--bg)}
   .tag.link{color:#6f4e12;border-color:var(--gold-soft);background:#fbf2dc;cursor:pointer}
-  .tag.side-m{color:#fff;background:#d4408a;border-color:#d4408a}   /* Mother's Side = pink */
-  .tag.side-f{color:#fff;background:#3f74cf;border-color:#3f74cf}   /* Father's Side = blue */
+  .tag.side-m{color:#fff;background:#d4408a;border-color:#d4408a}   /* Mariyomma's Side = pink */
+  .tag.side-f{color:#fff;background:#3f74cf;border-color:#3f74cf}   /* Rajab's Side = blue */
+  .tag.side-b{color:#fff;background:#5a97d6;border-color:#5a97d6}   /* Nangeri Aboobacker's Side = lighter blue */
   .tag.link.side-m{color:#a3236a;background:#fbe4f0;border-color:#e6a9cd}   /* pink jump link */
   .tag.link.side-f{color:#244b8f;background:#e4ecfb;border-color:#a9c2ea}   /* blue jump link */
+  .tag.link.side-b{color:#2a5a86;background:#e8f1fb;border-color:#bcd9f3}   /* light-blue jump link */
   #sheet .note{font-size:13.5px;color:var(--ink);line-height:1.5;margin:8px 0 4px}
   #sheet .meta{font-size:12.5px;color:var(--muted);margin-top:6px}
   #sheet .acts{display:flex;gap:10px;margin-top:14px}
@@ -213,8 +248,10 @@
   <div id="sheet">
     <button class="x" id="sx">×</button>
     <div class="grip"></div>
+    <img id="s-photo" alt="" />
     <div class="nm" id="s-name">—</div>
     <div class="tags" id="s-tags"></div>
+    <div id="s-spouse"></div>
     <div class="note" id="s-note"></div>
     <div class="meta" id="s-meta"></div>
     <div class="acts">
@@ -224,6 +261,11 @@
 
   <div id="hint">Pinch to zoom · drag to move · tap a name for details</div>
 
+  <div id="lightbox" aria-hidden="true">
+    <button id="lb-close" aria-label="Close">×</button>
+    <img id="lb-img" alt="" />
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
   <script src="tree-data.js"></script>
   <script>
@@ -231,6 +273,9 @@
     if(!window.FAMILY_DATA){ document.body.innerHTML='<p style="padding:24px;font-family:sans-serif">Could not load tree-data.js</p>'; return; }
 
     const svg = d3.select("svg");
+    const PHOTO_R = 15;   // radius of the circular photo shown on a node
+    // shared circular clip for node photos (userSpaceOnUse → clips in each node's local coords)
+    svg.append("defs").append("clipPath").attr("id","photoClip").append("circle").attr("r",PHOTO_R);
     const gLink = svg.append("g").attr("class","links");
     const gNode = svg.append("g").attr("class","nodes");
     const container = svg.insert("g",":first-child").attr("class","viewport");
@@ -244,6 +289,7 @@
                           .separation((a,b)=>{
                             let s = (a.parent===b.parent?1:1.5);
                             if(attrs(a).marriage || attrs(b).marriage) s += 2.0; // room for the spouse node
+                            s += ((hasPhoto(a)?1:0)+(hasPhoto(b)?1:0)) * 0.35;   // a little breathing room around photo nodes
                             if(sideOf(a)!==sideOf(b)) s += 10;  // big gap between the Mother and Father trees
                             return s;
                           });
@@ -275,6 +321,15 @@
     const twins={};
     everyone.forEach(d=>{ const t=attrs(d).twin; if(t){ (twins[t]=twins[t]||[]).push(d); } });
     function twinOf(d){ const t=attrs(d).twin; return t ? (twins[t]||[]).find(x=>x!==d)||null : null; }
+    const SIDE_ORDER={mother:0, father:1, backer:2};
+    function twinsOf(d){ const t=attrs(d).twin; return t ? (twins[t]||[]).filter(x=>x!==d).sort((a,b)=>SIDE_ORDER[attrs(a).side]-SIDE_ORDER[attrs(b).side]) : []; }
+    function canonicalOf(d){ const t=attrs(d).twin; return t ? (twins[t]||[]).find(x=>attrs(x).side==="mother")||null : null; }
+    // the three "sides": mother = Mariyomma (pink, canonical); father = Rajab (blue) and
+    // backer = Nangeri Aboobacker (light blue) are the duplicate pointer copies.
+    function sideLabel(s){ return s==="father"?"Rajab's Side" : s==="backer"?"Nangeri Aboobacker's Side" : "Mariyomma's Side"; }
+    function sideClass(s){ return s==="father"?"side-f" : s==="backer"?"side-b" : "side-m"; }
+    function isDup(d){ const s=attrs(d).side; return s==="father"||s==="backer"; }   // a greyed pointer copy
+    function hasPhoto(d){ return !!attrs(d).pic && !isDup(d); }   // show photos only on the canonical (Mariyomma-side) copy
 
     // Highlight the main bloodline: colour every link from a founder down to the couple
     // (pink → Mariyomma, blue → Rajab). Keyed by the link's target node id.
@@ -283,6 +338,12 @@
     // Emphasise the ENTIRE descent of flagged ancestors (the living family branches)
     const blood = new Set();
     everyone.filter(d=>attrs(d).emph).forEach(r=>(function mark(d){ blood.add(d._id); (d.children||d._children||[]).forEach(mark); })(r));
+
+    // Only the DUPLICATE (blue, father-side) copies under Rajab & Nangeri Aboobacker are greyed and fade
+    // outward — they're pointers back to the canonical pink (mother's-side) records. The rest of the
+    // genuine tree keeps its normal colour. _off = depth within a duplicate branch (0 = not a duplicate).
+    everyone.forEach(d=>{ d._off = isDup(d) ? ((d.parent ? d.parent._off : 0) + 1) : 0; });
+    function dimOpacity(d){ return d._off ? Math.max(0.3, 0.8 - 0.08*(d._off-1)) : 1; }
 
     // Default view: the whole tree, fully expanded
     expandAll();
@@ -335,8 +396,8 @@
       if(d._children && !d.children) c+=" collapsed";
       if(matches.has(d)) c+=" match";
       if(d===selected) c+=" sel";
-      if(attrs(d).side==="mother") c+=" side-m";       // pink outline — mother's-side copy
-      else if(attrs(d).side==="father") c+=" side-f";  // blue outline — father's-side copy
+      if(attrs(d).side) c+=" "+sideClass(attrs(d).side);   // pink / blue / light-blue outline by side
+      if(d._off) c+=" dim";                                // a greyed duplicate-pointer copy
       return c;
     }
     function label(d){ return d.data.name; }
@@ -356,9 +417,19 @@
       const node = gNode.selectAll("g.node").data(nodes, d=>d._id);
       const ent = node.enter().append("g");
       ent.append("circle").attr("class","ncol").attr("r",5.5)
-          .on("click",(e,d)=>{ e.stopPropagation(); openSheet(d); });   // dot opens details (branches never hide)
+          .on("click",(e,d)=>{ e.stopPropagation(); openOrRedirect(d); });   // dot opens details (branches never hide)
       ent.append("text").attr("dy","0.32em")
-          .on("click",(e,d)=>{ e.stopPropagation(); openSheet(d); });
+          .on("click",(e,d)=>{ e.stopPropagation(); openOrRedirect(d); });
+      // photo: people on Mariyomma's side with a picture get a circular photo in place of the dot
+      ent.filter(d=>attrs(d).pic && !isDup(d)).each(function(d){
+        const g=d3.select(this);
+        g.append("image").attr("class","photo").attr("href",attrs(d).pic)
+          .attr("x",-PHOTO_R).attr("y",-PHOTO_R).attr("width",PHOTO_R*2).attr("height",PHOTO_R*2)
+          .attr("clip-path","url(#photoClip)").attr("preserveAspectRatio","xMidYMid slice")
+          .on("click",(e)=>{ e.stopPropagation(); openOrRedirect(d); });
+        g.append("circle").attr("class","photoring").attr("r",PHOTO_R)
+          .on("click",(e)=>{ e.stopPropagation(); openOrRedirect(d); });
+      });
       // spouse: a small node (circle + underlined name) joined by a dashed line with ❤️ at its centre.
       // Tapping it jumps to that spouse's real node on the other sheet.
       ent.filter(d=>attrs(d).marriage).each(function(d){
@@ -383,10 +454,10 @@
       const all = ent.merge(node);
       all.attr("class", classes)
          .attr("transform", d=>`translate(${d.y},${d.x})`)
-         .style("opacity",1);
-      all.select("circle").attr("r", d=>attrs(d).root?7: (d._children?6:4.5));
+         .style("opacity", dimOpacity);
+      all.select("circle").attr("r", d=>hasPhoto(d)?0: (attrs(d).root?7: (d._children?6:4.5)));  // hide the dot under a photo
       all.select("text")
-          .attr("x", d=> (d.children||d._children)? -10 : 10)
+          .attr("x", d=>{ const off = hasPhoto(d)? PHOTO_R+5 : 10; return (d.children||d._children)? -off : off; })
           .attr("text-anchor", d=> (d.children||d._children)? "end":"start")
           .text(label);
 
@@ -452,13 +523,16 @@
         .classed("lineage",   d=> !isAnc(d) && !isDesc(d) && !!(lineageColor[d.target._id] || blood.has(d.target._id)))
         .style("stroke", d=>{
           if(isAnc(d) || isDesc(d)) return GOLD;
+          if(d.target._off) return "#c4bcab";   // side branch → grey
           return lineageColor[d.target._id] || (blood.has(d.target._id) ? "#6b5a3e" : null);
         })
         .style("stroke-width", d=>{
           if(isAnc(d))  return "2.4px";   // not thicker than the bloodline (2.6px); the glow carries the emphasis
           if(isDesc(d)) return "1.6px";   // descendants a touch thinner still
+          if(d.target._off) return null;
           return lineageColor[d.target._id] ? "2.6px" : (blood.has(d.target._id) ? "2.2px" : null);
-        });
+        })
+        .style("opacity", d=> (isAnc(d)||isDesc(d)) ? 1 : dimOpacity(d.target));   // fade side-branch links
       // stacking order (last raised = on top): bloodline → gold descendants → gold ancestor chain
       gLink.selectAll("path.lineage").raise();
       gLink.selectAll("path.gold-desc").raise();
@@ -498,19 +572,45 @@
     // ----- interactions -----
     // detail sheet
     const sheet=document.getElementById("sheet");
+    // A father-side (blue) duplicate is just a pointer — tapping it flies to the canonical
+    // pink (Perooli / mother's-side) copy instead of opening the duplicate's own card.
+    function openOrRedirect(d){
+      if(isDup(d)){ const c=canonicalOf(d); if(c){ navigate(c); return; } }   // greyed copy → canonical pink record
+      openSheet(d);
+    }
     function openSheet(d){
       selected=d; const a=attrs(d);
       document.getElementById("s-name").textContent=d.data.name;
+      // photo: use this copy's pic, or borrow it from a twin copy (only the canonical copy stores it)
+      const picNode = a.pic ? d : twinsOf(d).find(x=>attrs(x).pic);
+      const photo=document.getElementById("s-photo");
+      if(picNode){ photo.src=attrs(picNode).pic; photo.style.display="block"; }
+      else { photo.style.display="none"; photo.removeAttribute("src"); }
       const tags=document.getElementById("s-tags"); tags.innerHTML="";
       const addTag=(t,cls)=>{ const s=document.createElement("span"); s.className="tag"+(cls?" "+cls:""); s.textContent=t; tags.appendChild(s); return s; };
-      if(a.spouse){ const p=partnerOf(d); const chip=addTag("❤️ "+a.spouse+(p?"  ›":""), p?"link":""); if(p) chip.onclick=()=>{ closeSheet(); navigate(p); }; }
-      // side tag (only for people who descend from both sides); plain sheet tag is dropped
-      if(a.side==="mother") addTag("Mother's Side","side-m");
-      else if(a.side==="father") addTag("Father's Side","side-f");
-      // jump to this person's other-side copy
-      const tw=twinOf(d);
-      if(tw){ const ts=attrs(tw).side; const chip=addTag((ts==="father"?"⇄ Also on Father's Side":"⇄ Also on Mother's Side")+"  ›",
-                       "link "+(ts==="father"?"side-f":"side-m")); chip.onclick=()=>{ closeSheet(); navigate(tw); }; }
+      // spouse: a blood spouse (cross-marriage) keeps the jump chip; a married-in spouse with a
+      // photo gets a richer block (circular photo + name) — they have no branch of their own.
+      const spEl=document.getElementById("s-spouse"); spEl.style.display="none"; spEl.innerHTML="";
+      if(a.spouse){
+        const partner=partnerOf(d);
+        if(a.spousePic && !partner){
+          spEl.style.display="flex";
+          const im=document.createElement("img"); im.className="sp-photo"; im.src=a.spousePic; im.alt=a.spouse;
+          im.onclick=(e)=>{ e.stopPropagation(); openLightbox(a.spousePic); };
+          const nm=document.createElement("div"); nm.className="sp-name";
+          nm.innerHTML="❤️ "+esc(a.spouse)+'<span class="sp-rel">Spouse</span>';
+          spEl.appendChild(im); spEl.appendChild(nm);
+        } else {
+          const chip=addTag("❤️ "+a.spouse+(partner?"  ›":""), partner?"link":"");
+          if(partner) chip.onclick=()=>{ closeSheet(); navigate(partner); };
+        }
+      }
+      // side tag for this copy (only people who descend from both sides have one); sheet tag is dropped
+      if(a.side) addTag(sideLabel(a.side), sideClass(a.side));
+      // a jump button to EACH of this person's other-side copies (a person can appear up to 3×)
+      twinsOf(d).forEach(tw=>{ const ts=attrs(tw).side;
+        const chip=addTag("⇄ "+sideLabel(ts)+"  ›", "link "+sideClass(ts));
+        chip.onclick=()=>{ closeSheet(); navigate(tw); }; });
       const kids=(d.children?d.children.length:0)+(d._children&&!d.children?d._children.length:0);
       if(kids) addTag(kids+" child"+(kids>1?"ren":""));
       document.getElementById("s-note").textContent=a.note||"";
@@ -526,6 +626,16 @@
     // Center keeps the person selected (gold lineage stays lit); it just slides the sheet out of the way
     document.getElementById("s-center").onclick=()=>{ const d=selected; if(d){ sheet.classList.remove("open"); document.body.classList.remove("sheet-open"); centerOn(d); } };
     svg.on("click",closeSheet);
+
+    // photo lightbox: tap a card photo to enlarge; tap the backdrop / ✕ / Esc to close
+    const lightbox=document.getElementById("lightbox"), lbImg=document.getElementById("lb-img");
+    function openLightbox(src){ if(src){ lbImg.src=src; lightbox.classList.add("open"); } }
+    function closeLightbox(){ lightbox.classList.remove("open"); lbImg.removeAttribute("src"); }
+    document.getElementById("s-photo").addEventListener("click",(e)=>{
+      e.stopPropagation(); openLightbox(e.currentTarget.getAttribute("src"));
+    });
+    lightbox.addEventListener("click", closeLightbox);
+    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape" && lightbox.classList.contains("open")) closeLightbox(); });
 
     // tools
     document.getElementById("t-full").onclick=()=>fit();          // see the whole tree (glides) — mobile
@@ -580,9 +690,9 @@
       }
       let html=sgList.map((d,idx)=>{
         const sub=parentLabel(d);
-        const sd=attrs(d).side;   // dual people show a pink/blue side badge so the two copies are distinct
-        const badge = sd==="mother" ? ' <span class="sg-side sg-m">Mother’s Side</span>'
-                    : sd==="father" ? ' <span class="sg-side sg-f">Father’s Side</span>' : '';
+        const sd=attrs(d).side;   // dual/triple people show a coloured side badge so each copy is distinct
+        const sgcls = sd==="father" ? "sg-f" : sd==="backer" ? "sg-b" : "sg-m";
+        const badge = sd ? ' <span class="sg-side '+sgcls+'">'+esc(sideLabel(sd))+'</span>' : '';
         return '<div class="sg" data-i="'+idx+'" role="option">'
           +'<div class="sg-nm">'+highlight(d.data.name,term)+badge+'</div>'
           +(sub?'<div class="sg-sub">'+esc(sub)+'</div>':'')

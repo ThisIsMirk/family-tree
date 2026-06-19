@@ -12,3 +12,6 @@ __pycache__/
 
 # Claude Code local (personal) settings
 .claude/settings.local.json
+
+# Raw photo library (local only — curated copies live in webapp/pics)
+family_pictures/

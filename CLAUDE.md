@@ -22,7 +22,7 @@ is iteratively **verifying the tree branch-by-branch against the Excel** and giv
 - `marriage="id"` — both spouses of a couple share an id → renders a ❤️ link + lets you
   tap to jump to the spouse elsewhere in the tree. (`partnerOf`/`navigate` in the app.)
 - `color="#hex"` — colours that person's **lineage path** up to the root Nelliadi (pink Mariyomma & Assu,
-  blue Rajab, light-blue N.A. Backer). All these paths now converge at Nelliadi.
+  blue Rajab, light-blue Nangeri Aboobacker). All these paths now converge at Nelliadi.
 - `emph=True` — bold/darken that person's **entire descent** (currently Mariyomma & Assu = the `blood` set,
   which is also what the ⌕ button / default view frames).
 - `sheet="Mother/All"|"Father"` — overrides the source-sheet tag for that node **and its whole subtree**
@@ -37,11 +37,11 @@ is iteratively **verifying the tree branch-by-branch against the Excel** and giv
   (m. **Thithi**) — the same man. So the whole Father family hangs under Nelliadi via Valiya Chekkan.
   (An earlier session had them as separate people; the user confirmed they are the same.)
 - The "Mother/All" vs "Father" split is now just **source-document provenance** (the `sheet` attr), not
-  two families. The two sheets still connect via marriages **Mariyomma × Rajab** and **Fathima × N.A. Backer** —
+  two families. The two sheets still connect via marriages **Mariyomma × Rajab** and **Fathima × Nangeri Aboobacker** —
   now marriages between relatives who both descend from Nelliadi.
 - User's line: Nelliadi → Thykkandi Mariyomma → Aysha → Khadija(Kundantavida) → **Mariyomma** (m. Rajab)
-  → **Fathima** (m. **N.A. Backer**) → **Sajith** → the user. **Mujeeb** (the Excel's author) is the user's uncle.
-- The grandparents **Fathima & N.A. Backer ARE blood-related** — both descend from Valiya Chekkan
+  → **Fathima** (m. **Nangeri Aboobacker**) → **Sajith** → the user. **Mujeeb** (the Excel's author) is the user's uncle.
+- The grandparents **Fathima & Nangeri Aboobacker ARE blood-related** — both descend from Valiya Chekkan
   (Nelliadi's son) via siblings **Mariyam** and **Assya**.
 - Tree is ~355 people and growing as dropped Excel data is recovered.
 
@@ -53,7 +53,7 @@ is iteratively **verifying the tree branch-by-branch against the Excel** and giv
 - **Detail card**: spouse chip, lineage path, notes, source sheet. Selecting a person lights their
   **golden lineage** — it animates/draws outward from them, glowing+pulsing up to Nelliadi, calmer/thinner
   down through descendants; gold overrides the pink/blue/blood colours.
-- Lineage colours: pink → Mariyomma & Assu, blue → Rajab, light-blue → N.A. Backer (all converge at Nelliadi).
+- Lineage colours: pink → Mariyomma & Assu, blue → Rajab, light-blue → Nangeri Aboobacker (all converge at Nelliadi).
 - **Generation columns**: faint vertical dividers between depths + "Gen N" labels pinned at the top
   (Nelliadi = Gen 1). Labels auto-hide when zoomed out.
 - **"?" branches** = unknown children from Excel counts; tapping shows "Please let Mirza know…".
