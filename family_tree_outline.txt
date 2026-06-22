@@ -27,26 +27,43 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
               - Zarif
               - Zara
               - Zayed
-          - Khadija
-            - Hafsa
+          - Khadeeja
+            - Hafsa  (m. Hamsath)
+              - Sohan  (m. Najma)
+              - Adheena  (m. Mohammad Fasil)
+                - Ahammed Looth
+                - Inthan
             - Salima
-            - Reshma
+            - Reshma  (m. Mohammed Ashraf)
+              - Fathwimath
+              - Mosus
+              - Eesa
             - Reetha
           - K.Abdullah
             - Anna
             - Ishan
-          - Safiya
-            - Aamir
-            - Sabir
+          - Safiya  (m. Abdul Khader)
+            - Aamir  (m. Shubi)
+              - Alik
+              - Avik
+            - Sabir  (m. Farin)
+              - Ruaa
+              - Raed
             - Hiba
+              - Eira
           - Mumtaz
             - Fahad
             - Eva
-          - Noorjahan
-            - Shurook
-            - Diyana
-            - Suroor
-            - Mariyam
+          - Noorjahan  (m. Abdu Rahman)
+            - Shurouk  (m. Mehlika)
+              - Mohammed
+              - Sheikha
+            - Diyana  (m. Abdullah)
+              - Ahmed
+              - Hamid
+              - Houri
+            - Suroor  (m. Fathima Sidra)
+            - Faheema Mariyom
           - Sabeetha  (m. Basheer)
             - Fathima Sana  (m. Shinu)
               - Joaan
@@ -306,26 +323,43 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
               - Zarif
               - Zara
               - Zayed
-          - Khadija
-            - Hafsa
+          - Khadeeja
+            - Hafsa  (m. Hamsath)
+              - Sohan  (m. Najma)
+              - Adheena  (m. Mohammad Fasil)
+                - Ahammed Looth
+                - Inthan
             - Salima
-            - Reshma
+            - Reshma  (m. Mohammed Ashraf)
+              - Fathwimath
+              - Mosus
+              - Eesa
             - Reetha
           - K.Abdullah
             - Anna
             - Ishan
-          - Safiya
-            - Aamir
-            - Sabir
+          - Safiya  (m. Abdul Khader)
+            - Aamir  (m. Shubi)
+              - Alik
+              - Avik
+            - Sabir  (m. Farin)
+              - Ruaa
+              - Raed
             - Hiba
+              - Eira
           - Mumtaz
             - Fahad
             - Eva
-          - Noorjahan
-            - Shurook
-            - Diyana
-            - Suroor
-            - Mariyam
+          - Noorjahan  (m. Abdu Rahman)
+            - Shurouk  (m. Mehlika)
+              - Mohammed
+              - Sheikha
+            - Diyana  (m. Abdullah)
+              - Ahmed
+              - Hamid
+              - Houri
+            - Suroor  (m. Fathima Sidra)
+            - Faheema Mariyom
           - Sabeetha  (m. Basheer)
             - Fathima Sana  (m. Shinu)
               - Joaan

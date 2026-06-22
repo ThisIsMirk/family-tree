@@ -93,6 +93,68 @@ def sabeetha_kids(side):
         D("Aysha Zeba",      "aysha_zeba",      side, pic=("pics/Aysha.jpeg"    if m else None)),
     ]
 
+def shurouk_kids(side):
+    return [D("Mohammed","mohammed_shurouk",side), D("Sheikha","sheikha",side)]   # no photos yet
+
+def diyana_kids(side):
+    return [D("Ahmed","ahmed_diyana",side), D("Hamid","hamid",side), D("Houri","houri",side)]  # no photos yet
+
+def noorjahan_kids(side):
+    m=(side=="mother")
+    return [
+        D("Shurouk","shurouk",side, pic=("pics/shurouk.jpeg" if m else None),
+          spouse="Mehlika", spouse_pic="pics/mehlika.jpeg", kids=shurouk_kids(side)),
+        D("Diyana","diyana",side, pic=("pics/diyana.jpeg" if m else None),
+          spouse="Abdullah", kids=diyana_kids(side)),
+        D("Suroor","suroor",side, pic=("pics/suroor.jpeg" if m else None),
+          spouse="Fathima Sidra", spouse_pic="pics/fathima_sidra.jpeg"),
+        D("Faheema Mariyom","faheema_mariyom",side, pic=("pics/mariyom.jpeg" if m else None)),
+    ]
+
+def aamir_kids(side):
+    m=(side=="mother")
+    return [D("Alik","alik",side,pic=("pics/alik.jpg" if m else None)),
+            D("Avik","avik",side,pic=("pics/avik.jpg" if m else None))]
+
+def sabir_kids(side):
+    m=(side=="mother")
+    return [D("Ruaa","ruaa",side,pic=("pics/ruaa.jpg" if m else None)),
+            D("Raed","raed",side,pic=("pics/raed.jpeg" if m else None))]
+
+def hiba_kids(side):
+    m=(side=="mother")
+    return [D("Eira","eira",side,pic=("pics/eira.jpg" if m else None))]
+
+def safiya_kids(side):
+    m=(side=="mother")
+    return [
+        D("Aamir","aamir",side,pic=("pics/aamir.jpg" if m else None),
+          spouse="Shubi", spouse_pic="pics/shubi.jpg", kids=aamir_kids(side)),
+        D("Sabir","sabir",side,pic=("pics/sabir.jpg" if m else None),
+          spouse="Farin", spouse_pic="pics/farin.jpeg", kids=sabir_kids(side)),
+        D("Hiba","hiba",side,pic=("pics/hiba.jpg" if m else None), kids=hiba_kids(side)),
+    ]
+
+def reshma_kids(side):
+    return [D("Fathwimath","fathwimath",side), D("Mosus","mosus",side), D("Eesa","eesa",side)]
+
+def adheena_kids(side):
+    return [D("Ahammed Looth","ahammed_looth",side), D("Inthan","inthan",side)]
+
+def hafsa_kids(side):
+    return [
+        D("Sohan",   "sohan",   side, spouse="Najma"),
+        D("Adheena", "adheena", side, spouse="Mohammad Fasil", kids=adheena_kids(side)),
+    ]
+
+def khadeeja_kids(side):
+    return [
+        D("Hafsa",  "hafsa",  side, spouse="Hamsath", kids=hafsa_kids(side)),
+        D("Salima", "salima", side),
+        D("Reshma", "reshma", side, spouse="Mohammed Ashraf", kids=reshma_kids(side)),
+        D("Reetha", "reetha", side),
+    ]
+
 def joined_children(side):
     """Mariyomma & Rajab's 7 children (+ descendants), tagged for `side`. Fathima carries her
        children on BOTH the mother (Mariyomma) and father (Rajab) sides — and they also appear a
@@ -103,11 +165,13 @@ def joined_children(side):
                 kids=fathima_kids(side))
     return [
         fathima,
-        D("Khadija",    "khadija2",  side, kids=[D("Hafsa","hafsa",side), D("Salima","salima",side), D("Reshma","reshma",side), D("Reetha","reetha",side)]),
+        D("Khadeeja",   "khadeeja",  side, kids=khadeeja_kids(side)),
         D("K.Abdullah", "kabdullah", side, kids=[D("Anna","anna",side), D("Ishan","ishan",side)]),
-        D("Safiya",     "safiya2",   side, kids=[D("Aamir","aamir",side), D("Sabir","sabir",side), D("Hiba","hiba",side)]),
+        D("Safiya",     "safiya2",   side, pic=("pics/safiya.jpg" if side=="mother" else None),
+          spouse="Abdul Khader", spouse_pic="pics/abdul_khader.jpg", kids=safiya_kids(side)),
         D("Mumtaz",     "mumtaz",    side, kids=[D("Fahad","fahad",side), D("Eva","eva",side)]),
-        D("Noorjahan",  "noorjahan", side, kids=[D("Shurook","shurook",side), D("Diyana","diyana",side), D("Suroor","suroor",side), D("Mariyam","mariyam2",side)]),
+        D("Noorjahan",  "noorjahan", side, pic=("pics/noorjahan.jpeg" if side=="mother" else None),
+          spouse="Abdu Rahman", spouse_pic="pics/abdu_rahman.jpeg", kids=noorjahan_kids(side)),
         D("Sabeetha",   "sabeetha",  side, pic=("pics/sabeetha.jpeg" if side=="mother" else None),
           spouse="Basheer", spouse_pic="pics/basheer.jpeg", kids=sabeetha_kids(side)),
     ]
