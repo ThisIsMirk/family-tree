@@ -453,8 +453,20 @@ def to_d3(node, sheet):
 webapp_root = to_d3(mother, "Mother/All")
 webapp_root["attrs"]["root"] = True
 os.makedirs("webapp", exist_ok=True)
+# A content version stamped into the data file. The webapp appends it (?v=…) to image URLs so
+# photos re-download only when the data OR the photo set (names/sizes) changes — otherwise cached.
+import hashlib
+payload = json.dumps(webapp_root, ensure_ascii=False)
+_h = hashlib.md5(payload.encode("utf-8"))
+_picdir = "webapp/pics"
+if os.path.isdir(_picdir):
+    for _fn in sorted(os.listdir(_picdir)):
+        _h.update(_fn.encode("utf-8"))
+        _h.update(str(os.path.getsize(os.path.join(_picdir, _fn))).encode("utf-8"))
+family_ver = _h.hexdigest()[:10]
 with open("webapp/tree-data.js", "w") as fh:
-    fh.write("window.FAMILY_DATA = " + json.dumps(webapp_root, ensure_ascii=False) + ";\n")
+    fh.write('window.FAMILY_VER = "%s";\n' % family_ver)
+    fh.write("window.FAMILY_DATA = " + payload + ";\n")
 
 n_uncertain = sum(1 for p in persons if p["confidence"] == "?")
 print(f"Total people: {len(persons)}")

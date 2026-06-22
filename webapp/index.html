@@ -267,10 +267,21 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-  <script src="tree-data.js"></script>
   <script>
+  // Cache-busting loader: always fetch the freshest tree-data.js (it's small), so phones never
+  // get stuck on a stale copy after a push. tree-data.js sets window.FAMILY_VER, which we then
+  // append to image URLs so photos re-download only when the data/photo set actually changes.
   (function(){
+    var s=document.createElement("script");
+    s.src="tree-data.js?t="+Date.now();
+    s.onload=startApp;
+    s.onerror=function(){ document.body.innerHTML='<p style="padding:24px;font-family:sans-serif">Could not load tree-data.js</p>'; };
+    document.head.appendChild(s);
+  })();
+  function startApp(){
     if(!window.FAMILY_DATA){ document.body.innerHTML='<p style="padding:24px;font-family:sans-serif">Could not load tree-data.js</p>'; return; }
+    const AV = window.FAMILY_VER ? ("?v="+window.FAMILY_VER) : "";   // image cache-bust token
+    function picURL(p){ return p ? p+AV : p; }
 
     const svg = d3.select("svg");
     const PHOTO_R = 15;   // radius of the circular photo shown on a node
@@ -423,7 +434,7 @@
       // photo: people on Mariyomma's side with a picture get a circular photo in place of the dot
       ent.filter(d=>attrs(d).pic && !isDup(d)).each(function(d){
         const g=d3.select(this);
-        g.append("image").attr("class","photo").attr("href",attrs(d).pic)
+        g.append("image").attr("class","photo").attr("href",picURL(attrs(d).pic))
           .attr("x",-PHOTO_R).attr("y",-PHOTO_R).attr("width",PHOTO_R*2).attr("height",PHOTO_R*2)
           .attr("clip-path","url(#photoClip)").attr("preserveAspectRatio","xMidYMid slice")
           .on("click",(e)=>{ e.stopPropagation(); openOrRedirect(d); });
@@ -584,7 +595,7 @@
       // photo: use this copy's pic, or borrow it from a twin copy (only the canonical copy stores it)
       const picNode = a.pic ? d : twinsOf(d).find(x=>attrs(x).pic);
       const photo=document.getElementById("s-photo");
-      if(picNode){ photo.src=attrs(picNode).pic; photo.style.display="block"; }
+      if(picNode){ photo.src=picURL(attrs(picNode).pic); photo.style.display="block"; }
       else { photo.style.display="none"; photo.removeAttribute("src"); }
       const tags=document.getElementById("s-tags"); tags.innerHTML="";
       const addTag=(t,cls)=>{ const s=document.createElement("span"); s.className="tag"+(cls?" "+cls:""); s.textContent=t; tags.appendChild(s); return s; };
@@ -595,8 +606,8 @@
         const partner=partnerOf(d);
         if(a.spousePic && !partner){
           spEl.style.display="flex";
-          const im=document.createElement("img"); im.className="sp-photo"; im.src=a.spousePic; im.alt=a.spouse;
-          im.onclick=(e)=>{ e.stopPropagation(); openLightbox(a.spousePic); };
+          const im=document.createElement("img"); im.className="sp-photo"; im.src=picURL(a.spousePic); im.alt=a.spouse;
+          im.onclick=(e)=>{ e.stopPropagation(); openLightbox(picURL(a.spousePic)); };
           const nm=document.createElement("div"); nm.className="sp-name";
           nm.innerHTML="❤️ "+esc(a.spouse)+'<span class="sp-rel">Spouse</span>';
           spEl.appendChild(im); spEl.appendChild(nm);
@@ -749,7 +760,7 @@
     setTimeout(()=>showFamily(false), 250);   // re-frame once the viewport is sized (snap, no glide)
     const hint=document.getElementById("hint");
     hint.style.opacity=1; setTimeout(()=>hint.style.opacity=0, 3200);
-  })();
+  }
   </script>
 </body>
 </html>
