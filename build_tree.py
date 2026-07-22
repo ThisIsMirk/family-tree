@@ -67,6 +67,13 @@ BIO = {
     "hiba": ("28 Jan 1992", "Marketing Executive"),
     "eira": ("18 Nov 2014", "Student"),
     # Kadheeja's household
+    "salima": ("25 Apr 1975", "Homemaker"),
+    "sajiya": ("2 Jun 1993", "ECE Engineer"),
+    "tihami": ("30 Jan 2018", "Student"),
+    "yildiz": ("13 Feb 2025", "Infant"),
+    "muhammed_azeez": ("7 Nov 1996", "EEE Engineer"),
+    "ayisha_aseez": ("21 Aug 2004", "Student (BDS)"),
+    "ibrahim_aseez": ("21 Aug 2004", "Student (MBBS)"),
     "reshma": ("10 Sep 1977", "Finance Manager, Carewell Clinic"),
     "fathwimath": ("29 Nov 2001", "BSD Student"),
     "mosus": ("19 Aug 2004", "NIT Student, Calicut"),
@@ -106,6 +113,9 @@ SPOUSE_BIO = {
     "safiya2":      ("7 Jan 1947",  "Senior Executive, Wataniya Telecom"),  # Abdul Khader
     "aamir":        ("10 May 1989", "IT Engineer"),                  # Shubi Amir
     "sabir":        ("2 Nov 1989",  "HR Executive"),                 # Farin Harris
+    "salima":       ("10 Apr 1967", "Sr. Facilities Officer"),       # Aseez Kanhirakoottathil
+    "sajiya":       ("6 Sep 1988",  "Mechanical Engineer"),          # Muhammed Wasil
+    "muhammed_azeez": ("2 Oct 2000", "Chemical Engineer"),           # Laamia Thaha
     "reshma":       ("1 Apr 1968",  "Doctor"),                       # Mohammed Ashraf P.K
     "afsath":       ("2 Jun 1964",  "Retired Head Master"),          # Hamsath Palakeel
     "sohan":        ("3 Feb 1996",  "PhD Scholar"),                  # Najma .K.K
@@ -150,10 +160,11 @@ def feroz_kids(side):
     ]
 
 def mujeeb_kids(side):
-    return [   # no photos yet
-        D("Niharika", "niharika", side),
-        D("Norell",   "norell",   side),
-        D("Olivia",   "olivia",   side),
+    m=(side=="mother")
+    return [
+        D("Niharika", "niharika", side, pic=("pics/niharika.jpeg" if m else None)),
+        D("Norell",   "norell",   side, pic=("pics/norell.jpeg" if m else None)),
+        D("Olivia",   "olivia",   side, pic=("pics/olivia.jpeg" if m else None)),
     ]
 
 def hafis_kids(side):
@@ -171,7 +182,8 @@ def fathima_kids(side):
         D("Sajith", "sajith", side, star=True, pic=("pics/sajith.jpeg" if side=="mother" else None),
           spouse="Shaniba", spouse_pic="pics/shaniba.jpeg", kids=sajith_kids(side)),
         D("Mujeeb", "mujeeb", side, note="Listed as the original file's author",
-          spouse="Husna", kids=mujeeb_kids(side)),
+          pic=("pics/mujeeb.jpeg" if side=="mother" else None),
+          spouse="Husna", spouse_pic="pics/husna.jpeg", kids=mujeeb_kids(side)),
         D("Hafis",  "hafis",  side, pic=("pics/Hafis.png" if side=="mother" else None),
           spouse="Sonia", spouse_pic="pics/Soniaaunty.png", kids=hafis_kids(side)),
     ]

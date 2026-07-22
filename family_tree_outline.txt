@@ -33,13 +33,13 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
               - Adheena  (m. Mohammed Fasil [b. 22 May 1988, Business]; b. 10 Dec 1992; Psychiatric Social Worker)
                 - Ahammed Looth  (b. 26 Dec 2018; Student)
               - Inthan  (b. 9 Sep 2004; Engineering Student)
-            - Salima  (m. Aseez Kanhirakoottathil)
-              - Sajiya Aseez  (m. Muhammed Wasil)
-                - Tihami Wasil
-                - Yildiz Feray
-              - Muhammed Azeez  (m. Laamia Thaha)
-              - Ayisha Aseez
-              - Ibrahim Aseez
+            - Salima  (m. Aseez Kanhirakoottathil [b. 10 Apr 1967, Sr. Facilities Officer]; b. 25 Apr 1975; Homemaker)
+              - Sajiya Aseez  (m. Muhammed Wasil [b. 6 Sep 1988, Mechanical Engineer]; b. 2 Jun 1993; ECE Engineer)
+                - Tihami Wasil  (b. 30 Jan 2018; Student)
+                - Yildiz Feray  (b. 13 Feb 2025; Infant)
+              - Muhammed Azeez  (m. Laamia Thaha [b. 2 Oct 2000, Chemical Engineer]; b. 7 Nov 1996; EEE Engineer)
+              - Ayisha Aseez  (b. 21 Aug 2004; Student (BDS))
+              - Ibrahim Aseez  (b. 21 Aug 2004; Student (MBBS))
             - Reshma  (m. Mohammed Ashraf [b. 1 Apr 1968, Doctor]; b. 10 Sep 1977; Finance Manager, Carewell Clinic)
               - Fathwimath  (b. 29 Nov 2001; BSD Student)
               - Mosus  (b. 19 Aug 2004; NIT Student, Calicut)
@@ -337,13 +337,13 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
               - Adheena  (m. Mohammed Fasil [b. 22 May 1988, Business]; b. 10 Dec 1992; Psychiatric Social Worker)
                 - Ahammed Looth  (b. 26 Dec 2018; Student)
               - Inthan  (b. 9 Sep 2004; Engineering Student)
-            - Salima  (m. Aseez Kanhirakoottathil)
-              - Sajiya Aseez  (m. Muhammed Wasil)
-                - Tihami Wasil
-                - Yildiz Feray
-              - Muhammed Azeez  (m. Laamia Thaha)
-              - Ayisha Aseez
-              - Ibrahim Aseez
+            - Salima  (m. Aseez Kanhirakoottathil [b. 10 Apr 1967, Sr. Facilities Officer]; b. 25 Apr 1975; Homemaker)
+              - Sajiya Aseez  (m. Muhammed Wasil [b. 6 Sep 1988, Mechanical Engineer]; b. 2 Jun 1993; ECE Engineer)
+                - Tihami Wasil  (b. 30 Jan 2018; Student)
+                - Yildiz Feray  (b. 13 Feb 2025; Infant)
+              - Muhammed Azeez  (m. Laamia Thaha [b. 2 Oct 2000, Chemical Engineer]; b. 7 Nov 1996; EEE Engineer)
+              - Ayisha Aseez  (b. 21 Aug 2004; Student (BDS))
+              - Ibrahim Aseez  (b. 21 Aug 2004; Student (MBBS))
             - Reshma  (m. Mohammed Ashraf [b. 1 Apr 1968, Doctor]; b. 10 Sep 1977; Finance Manager, Carewell Clinic)
               - Fathwimath  (b. 29 Nov 2001; BSD Student)
               - Mosus  (b. 19 Aug 2004; NIT Student, Calicut)
