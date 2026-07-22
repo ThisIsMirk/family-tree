@@ -28,17 +28,23 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
               - Zara
               - Zayed
           - Khadeeja
-            - Hafsa  (m. Hamsath)
+            - Afsath  (m. Hamsath)
               - Sohan  (m. Najma)
-              - Adheena  (m. Mohammad Fasil)
+              - Adheena  (m. Mohammed Fasil)
                 - Ahammed Looth
-                - Inthan
-            - Salima
+              - Inthan
+            - Salima  (m. Aseez Kanhirakoottathil)
+              - Sajiya Aseez  (m. Muhammed Wasil)
+                - Tihami Wasil
+                - Yildiz Feray
+              - Muhammed Azeez  (m. Laamia Thaha)
+              - Ayisha Aseez
+              - Ibrahim Aseez
             - Reshma  (m. Mohammed Ashraf)
               - Fathwimath
               - Mosus
               - Eesa
-            - Reetha
+            - Reedha
           - K.Abdullah
             - Anna
             - Ishan
@@ -56,8 +62,8 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
             - Eva
           - Noorjahan  (m. Abdu Rahman)
             - Shurouk  (m. Mehlika)
-              - Mohammed
-              - Sheikha
+              - Mohammad Abdul Rahiman
+              - Sheikha Fathima
             - Diyana  (m. Abdullah)
               - Ahmed
               - Hamid
@@ -324,17 +330,23 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
               - Zara
               - Zayed
           - Khadeeja
-            - Hafsa  (m. Hamsath)
+            - Afsath  (m. Hamsath)
               - Sohan  (m. Najma)
-              - Adheena  (m. Mohammad Fasil)
+              - Adheena  (m. Mohammed Fasil)
                 - Ahammed Looth
-                - Inthan
-            - Salima
+              - Inthan
+            - Salima  (m. Aseez Kanhirakoottathil)
+              - Sajiya Aseez  (m. Muhammed Wasil)
+                - Tihami Wasil
+                - Yildiz Feray
+              - Muhammed Azeez  (m. Laamia Thaha)
+              - Ayisha Aseez
+              - Ibrahim Aseez
             - Reshma  (m. Mohammed Ashraf)
               - Fathwimath
               - Mosus
               - Eesa
-            - Reetha
+            - Reedha
           - K.Abdullah
             - Anna
             - Ishan
@@ -352,8 +364,8 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
             - Eva
           - Noorjahan  (m. Abdu Rahman)
             - Shurouk  (m. Mehlika)
-              - Mohammed
-              - Sheikha
+              - Mohammad Abdul Rahiman
+              - Sheikha Fathima
             - Diyana  (m. Abdullah)
               - Ahmed
               - Hamid
