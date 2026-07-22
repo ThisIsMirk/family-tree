@@ -151,6 +151,12 @@
   #sheet.open{transform:translateY(0)}
   #sheet .grip{width:40px;height:4px;border-radius:2px;background:#ddd2bb;margin:6px auto 12px}
   #sheet .nm{font-family:var(--serif);font-size:22px;font-weight:600;line-height:1.15}
+  #sheet .dob{display:none;font-family:var(--sans);font-size:12.5px;color:var(--muted);
+    margin-top:3px;letter-spacing:.2px}
+  #sheet .dob b{font-weight:600;color:var(--ink)}
+  #sheet .occ{display:none;font-family:var(--sans);font-size:11px;font-style:italic;
+    color:var(--muted);margin-top:2px}
+  #sheet .occ::before{content:"💼 ";font-style:normal;font-size:10px;opacity:.75}
   #s-photo{display:none;width:76px;height:76px;border-radius:50%;object-fit:cover;
     border:2px solid var(--gold-soft);box-shadow:0 2px 8px rgba(50,38,20,.18);
     float:left;margin:2px 14px 8px 0;cursor:zoom-in}
@@ -161,6 +167,8 @@
     border:2px solid var(--gold-soft);cursor:zoom-in}
   #s-spouse .sp-name{font-family:var(--serif);font-size:16px;color:var(--ink);line-height:1.2}
   #s-spouse .sp-rel{display:block;font-family:var(--sans);font-size:11px;color:var(--muted);margin-top:2px}
+  #s-spouse .sp-occ{display:block;font-family:var(--sans);font-size:10.5px;font-style:italic;color:var(--muted);margin-top:1px}
+  #s-spouse .sp-occ::before{content:"💼 ";font-style:normal;font-size:9.5px;opacity:.75}
 
   /* tap-to-enlarge photo lightbox (full-screen, circular, responsive) */
   #lightbox{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;
@@ -250,6 +258,8 @@
     <div class="grip"></div>
     <img id="s-photo" alt="" />
     <div class="nm" id="s-name">—</div>
+    <div class="dob" id="s-dob"></div>
+    <div class="occ" id="s-occ"></div>
     <div class="tags" id="s-tags"></div>
     <div id="s-spouse"></div>
     <div class="note" id="s-note"></div>
@@ -592,6 +602,12 @@
     function openSheet(d){
       selected=d; const a=attrs(d);
       document.getElementById("s-name").textContent=d.data.name;
+      const dobEl=document.getElementById("s-dob");
+      if(a.dob){ dobEl.innerHTML="Born <b>"+esc(a.dob)+"</b>"; dobEl.style.display="block"; }
+      else { dobEl.style.display="none"; dobEl.textContent=""; }
+      const occEl=document.getElementById("s-occ");
+      if(a.occ){ occEl.textContent=a.occ; occEl.style.display="block"; }
+      else { occEl.style.display="none"; occEl.textContent=""; }
       // photo: use this copy's pic, or borrow it from a twin copy (only the canonical copy stores it)
       const picNode = a.pic ? d : twinsOf(d).find(x=>attrs(x).pic);
       const photo=document.getElementById("s-photo");
@@ -604,13 +620,19 @@
       const spEl=document.getElementById("s-spouse"); spEl.style.display="none"; spEl.innerHTML="";
       if(a.spouse){
         const partner=partnerOf(d);
-        if(a.spousePic && !partner){
+        if(!partner && (a.spousePic || a.spouseDob || a.spouseOcc)){
           spEl.style.display="flex";
-          const im=document.createElement("img"); im.className="sp-photo"; im.src=picURL(a.spousePic); im.alt=a.spouse;
-          im.onclick=(e)=>{ e.stopPropagation(); openLightbox(picURL(a.spousePic)); };
+          if(a.spousePic){
+            const im=document.createElement("img"); im.className="sp-photo"; im.src=picURL(a.spousePic); im.alt=a.spouse;
+            im.onclick=(e)=>{ e.stopPropagation(); openLightbox(picURL(a.spousePic)); };
+            spEl.appendChild(im);
+          }
           const nm=document.createElement("div"); nm.className="sp-name";
-          nm.innerHTML="❤️ "+esc(a.spouse)+'<span class="sp-rel">Spouse</span>';
-          spEl.appendChild(im); spEl.appendChild(nm);
+          let sub="Spouse"; if(a.spouseDob) sub+=" · b. "+esc(a.spouseDob);
+          let html="❤️ "+esc(a.spouse)+'<span class="sp-rel">'+sub+'</span>';
+          if(a.spouseOcc) html+='<span class="sp-occ">'+esc(a.spouseOcc)+'</span>';
+          nm.innerHTML=html;
+          spEl.appendChild(nm);
         } else {
           const chip=addTag("❤️ "+a.spouse+(partner?"  ›":""), partner?"link":"");
           if(partner) chip.onclick=()=>{ closeSheet(); navigate(partner); };

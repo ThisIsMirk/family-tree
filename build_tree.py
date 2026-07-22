@@ -10,10 +10,11 @@ A node also carries optional spouse / note, and 'star' marks the user's direct l
 """
 import json, re
 
-def P(name, kids=None, spouse=None, note=None, conf="ok", star=False, marriage=None, color=None, emph=False, sheet=None, side=None, twin=None, pic=None, spouse_pic=None):
+def P(name, kids=None, spouse=None, note=None, conf="ok", star=False, marriage=None, color=None, emph=False, sheet=None, side=None, twin=None, pic=None, spouse_pic=None, dob=None, occ=None, spouse_dob=None, spouse_occ=None):
     return {"name": name, "spouse": spouse, "note": note, "conf": conf, "star": star,
             "marriage": marriage, "color": color, "emph": emph, "sheet": sheet,
-            "side": side, "twin": twin, "pic": pic, "spouse_pic": spouse_pic, "kids": kids or []}
+            "side": side, "twin": twin, "pic": pic, "spouse_pic": spouse_pic, "dob": dob, "occ": occ,
+            "spouse_dob": spouse_dob, "spouse_occ": spouse_occ, "kids": kids or []}
 
 ASK = "Please let Mirza know if you know who belongs here."
 def unknown(n, extra=None):
@@ -29,7 +30,105 @@ def unknown(n, extra=None):
 # (Built person-by-person: a person's pink copy sits under their mother, blue copy under their
 # father — so e.g. Mujeeb appears under Fathima (pink) and under Nangeri Aboobacker (blue), not thrice.)
 # ---------------------------------------------------------------------------
+# Birth date + occupation for the living generation, from "Perooli Branch.xlsx" (uncle's sheet).
+# Keyed by the person's unique `twin` id so both copies (pink/blue) get it and there's no
+# risk of matching a same-named ancestor. Value = (dob, occupation); dob may be None.
+BIO = {
+    # Sabeetha's household
+    "sabeetha": ("19 Aug 1973", "Entrepreneur"),
+    "fathima_sana": ("2 Sep 1991", "Engineer, Fly Over Wonders"),
+    "joaan": ("25 Oct 2017", "Student"),
+    "ryaan": ("5 Sep 2022", "Student"),
+    "mohammed_jathin": ("21 May 2001", "Chef"),
+    "aysha_zeba": ("13 Sep 2009", "Student"),
+    # Fathima & Nangeri Aboobacker's household
+    "fathima": ("26 Jan 1951", "Homemaker"),
+    "mujeeb": ("19 Dec 1971", "Farmer"),
+    "niharika": ("17 Jun 2001", "Marketing Coordinator"),
+    "norell": ("4 Dec 2008", "Student"),
+    "olivia": ("4 Dec 2008", "Student"),
+    "sajith": ("1 Jul 1969", "Civil Engineer"),
+    "mirza": ("9 Nov 1998", "Data Engineer"),
+    "rajab_jr": ("26 Feb 2001", "Operations, Malabar"),
+    "aman": ("16 Aug 2009", "Student"),
+    "hafis": ("1 Jan 1973", "Engineer"),
+    "zayan": (None, "Student"), "zayed": (None, "Student"),
+    "zarif": (None, "Student"), "zara": (None, "Student"),
+    "feroz": ("26 Jan 1967", "Doctor"),
+    "adam": (None, "Aditya Honda"),
+    "selsha": (None, "HR Manager"),
+    "hessa": (None, "Media Manager"),
+    # Safiya's household
+    "safiya2": ("21 Jun 1959", "Homemaker"),
+    "aamir": ("15 Jun 1983", "Senior IT Engineer"),
+    "alik": ("22 Jul 2014", "Student"), "avik": ("2 Feb 2016", "Student"),
+    "sabir": ("15 Jun 1983", "Administration Officer"),
+    "ruaa": ("24 May 2014", "Student"), "raed": ("26 Jun 2020", "Student"),
+    "hiba": ("28 Jan 1992", "Marketing Executive"),
+    "eira": ("18 Nov 2014", "Student"),
+    # Kadheeja's household
+    "reshma": ("10 Sep 1977", "Finance Manager, Carewell Clinic"),
+    "fathwimath": ("29 Nov 2001", "BSD Student"),
+    "mosus": ("19 Aug 2004", "NIT Student, Calicut"),
+    "eesa": ("29 May 2006", "MBBS Student, TVM"),
+    "afsath": ("28 Feb 1971", "Tailor"),
+    "sohan": ("11 Nov 1990", "Senior Software Engineer"),
+    "adheena": ("10 Dec 1992", "Psychiatric Social Worker"),
+    "ahammed_looth": ("26 Dec 2018", "Student"),
+    "inthan": ("9 Sep 2004", "Engineering Student"),
+    # Noorjahan's household
+    "noorjahan": ("10 Jan 1969", "Entrepreneur"),
+    "shurouk": ("24 Jul 1987", "Business"),
+    "mohammed_shurouk": ("10 Nov 2018", "Student"),
+    "sheikha": ("10 Aug 2023", "Toddler"),
+    "diyana": ("4 Jan 1990", "Dentist"),
+    "ahmed_diyana": ("22 Aug 2014", "Student"),
+    "hamid": ("8 Jan 2019", "Student"),
+    "houri": ("30 Apr 2025", "Toddler"),
+    "suroor": ("11 Dec 1994", "Civil Engineer"),
+    "faheema_mariyom": ("20 Oct 2022", "Architect"),
+    # Mumtaz's household
+    "mumtaz": ("8 Apr 1966", "Homemaker"),
+    "fahad": ("2 Apr 1986", "Entrepreneur"),
+    "elenor": ("19 Dec 2020", "Student"),
+    "eva": ("15 Oct 1990", "Entrepreneur"),
+    "noom": ("3 Oct 2017", "Student"),
+}
+
+# Married-in spouses (shown as a chip on their partner's node, not their own node), keyed by the
+# PARTNER's twin id. Value = (spouse_dob, spouse_occ); dob may be None.
+SPOUSE_BIO = {
+    "sabeetha":     ("20 May 1968", "KWA Supdt (Retired)"),          # Abdul Basheer .T.K
+    "fathima_sana": ("2 Aug 1990",  "Engineer"),                     # Shinu Azees
+    "mujeeb":       ("24 Feb 1974", "Engineer, Malabar Group"),      # Husna Beegum .PP
+    "hafis":        (None,          "Doctor"),                       # Sonia Haris
+    "feroz":        (None,          "Director, Aditya Honda"),       # Praseena KK
+    "safiya2":      ("7 Jan 1947",  "Senior Executive, Wataniya Telecom"),  # Abdul Khader
+    "aamir":        ("10 May 1989", "IT Engineer"),                  # Shubi Amir
+    "sabir":        ("2 Nov 1989",  "HR Executive"),                 # Farin Harris
+    "reshma":       ("1 Apr 1968",  "Doctor"),                       # Mohammed Ashraf P.K
+    "afsath":       ("2 Jun 1964",  "Retired Head Master"),          # Hamsath Palakeel
+    "sohan":        ("3 Feb 1996",  "PhD Scholar"),                  # Najma .K.K
+    "adheena":      ("22 May 1988", "Business"),                     # Mohammed Fasil
+    "noorjahan":    ("15 Apr 1959", "Business"),                     # Abdu Rahman Thekkatt
+    "shurouk":      ("23 Aug 1990", "Auditor, Projects"),            # Fathima Mehlika
+    "diyana":       ("1 May 1985",  "Business"),                     # Abdullah Zuhair
+    "suroor":       ("29 Oct 1999", "Psychologist"),                 # Fathima Sidra
+    "mumtaz":       ("1 May 1953",  "Business"),                     # Abdurahiman Kkutty
+    "fahad":        ("5 Jun 1991",  "Entrepreneur"),                 # Lubna Habeeb
+    "eva":          ("11 Jan 1983", "Entrepreneur"),                 # Mohammed Shijil
+    "sajith":       ("26 Jul 1969", "Homemaker"),                    # Shaniba Chemmikkat
+}
+
 def D(name, twin, side, kids=None, **kw):
+    if twin in BIO:                             # auto-fill dob/occupation from the uncle's sheet
+        dob, occ = BIO[twin]
+        if dob: kw.setdefault("dob", dob)
+        if occ: kw.setdefault("occ", occ)
+    if twin in SPOUSE_BIO:                      # …and their spouse's dob/occupation
+        sdob, socc = SPOUSE_BIO[twin]
+        if sdob: kw.setdefault("spouse_dob", sdob)
+        if socc: kw.setdefault("spouse_occ", socc)
     return P(name, kids=kids, side=side, twin=twin, **kw)
 
 def sajith_kids(side):
@@ -160,6 +259,17 @@ def afsath_kids(side):
         D("Inthan",  "inthan",  side, pic=("pics/inthan.jpeg" if m else None)),
     ]
 
+def mumtaz_kids(side):
+    m=(side=="mother")
+    return [
+        D("Fahad","fahad",side, pic=("pics/fahad.jpeg" if m else None),
+          spouse="Lubna Habeeb", spouse_pic="pics/lubna.jpeg",
+          kids=[D("Elenor Ocean Fahad","elenor",side, pic=("pics/elenor.jpeg" if m else None))]),
+        D("Eva","eva",side, pic=("pics/eva.jpeg" if m else None),
+          spouse="Mohammed Shijil", spouse_pic="pics/shijil.jpeg",
+          kids=[D("Noom Miraya Shijil","noom",side, pic=("pics/noom.jpeg" if m else None))]),
+    ]
+
 def sajiya_kids(side):
     m=(side=="mother")
     return [D("Tihami Wasil","tihami",side, pic=("pics/tihami.jpeg" if m else None)),
@@ -201,7 +311,8 @@ def joined_children(side):
         D("K.Abdullah", "kabdullah", side, kids=[D("Anna","anna",side), D("Ishan","ishan",side)]),
         D("Safiya",     "safiya2",   side, pic=("pics/safiya.jpg" if side=="mother" else None),
           spouse="Abdul Khader", spouse_pic="pics/abdul_khader.jpg", kids=safiya_kids(side)),
-        D("Mumtaz",     "mumtaz",    side, kids=[D("Fahad","fahad",side), D("Eva","eva",side)]),
+        D("Mumtaz",     "mumtaz",    side, pic=("pics/mumtaz.jpeg" if side=="mother" else None),
+          spouse="Abdurahiman Kkutty", spouse_pic="pics/abdurahiman.jpeg", kids=mumtaz_kids(side)),
         D("Noorjahan",  "noorjahan", side, pic=("pics/noorjahan.jpeg" if side=="mother" else None),
           spouse="Abdu Rahman", spouse_pic="pics/abdu_rahman.jpeg", kids=noorjahan_kids(side)),
         D("Sabeetha",   "sabeetha",  side, pic=("pics/sabeetha.jpeg" if side=="mother" else None),
@@ -348,6 +459,7 @@ valiya_chekkan = P("Valiya Chekkan", spouse="Thithi", sheet="Father",
         ]),
         P("Khadisha", note="Nangeri Aboobacker's mother", kids=[
             P("Nangeri Aboobacker", spouse="Fathima", marriage="fathima+nabacker", color="#7eb3e8",
+              dob="28 Mar 1942", occ="Retired ACP, Kerala Police",
               note="Daddy ❤️ — m. Fathima. Their children appear here (Nangeri Aboobacker's side, light blue) and on the mother's side (pink under Fathima).",
               kids=fathima_kids("backer")),             # N.A. BACKER's side: Feroz/Sajith/Mujeeb/Hafis under their father
         ]),
@@ -421,11 +533,19 @@ def walk(node, parent_id, sheet, depth, lines):
         "id": pid, "name": node["name"], "parentId": parent_id, "sheet": sheet,
         "spouse": node["spouse"], "notes": node["note"], "confidence": node["conf"],
         "directLine": node["star"], "side": node.get("side"), "twin": node.get("twin"),
+        "dob": node.get("dob"), "occupation": node.get("occ"),
+        "spouseDob": node.get("spouse_dob"), "spouseOccupation": node.get("spouse_occ"),
     })
     marks = ""
     if node["star"]:        marks += " ★"           # direct line
     extra = []
-    if node["spouse"]: extra.append(f"m. {node['spouse']}")
+    if node["spouse"]:
+        sp = f"m. {node['spouse']}"
+        sd = [x for x in (node.get('spouse_dob') and f"b. {node['spouse_dob']}", node.get('spouse_occ')) if x]
+        if sd: sp += f" [{', '.join(sd)}]"
+        extra.append(sp)
+    if node.get("dob"):  extra.append(f"b. {node['dob']}")
+    if node.get("occ"):  extra.append(node["occ"])
     if node["note"]:   extra.append(node["note"])
     suffix = f"  ({'; '.join(extra)})" if extra else ""
     lines.append("  " * depth + f"- {node['name']}{suffix}{marks}")
@@ -476,6 +596,10 @@ def to_d3(node, sheet):
     if node.get("twin"):     attrs["twin"]     = node["twin"]   # links a person's pink & blue copies
     if node.get("pic"):      attrs["pic"]      = node["pic"]    # circular photo (path under webapp/)
     if node.get("spouse_pic"): attrs["spousePic"] = node["spouse_pic"]   # married-in spouse's photo
+    if node.get("dob"):      attrs["dob"]      = node["dob"]    # birth date, shown under the name
+    if node.get("occ"):      attrs["occ"]      = node["occ"]    # occupation, small line in the card
+    if node.get("spouse_dob"): attrs["spouseDob"] = node["spouse_dob"]   # spouse's birth date
+    if node.get("spouse_occ"): attrs["spouseOcc"] = node["spouse_occ"]   # spouse's occupation
     d = {"name": node["name"], "attrs": attrs}
     kids = [to_d3(k, sheet) for k in node["kids"]]
     if kids: d["children"] = kids
