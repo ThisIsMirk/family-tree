@@ -52,8 +52,8 @@ BIO = {
     "rajab_jr": ("26 Feb 2001", "Operations, Malabar"),
     "aman": ("16 Aug 2009", "Student"),
     "hafis": ("1 Jan 1973", "Engineer"),
-    "zayan": (None, "Student"), "zayed": (None, "Student"),
-    "zarif": (None, "Student"), "zara": (None, "Student"),
+    "zayan": ("2 Mar 2005", "Student"), "zayed": ("13 Dec 2007", "Student"),
+    "zarif": ("28 May 2010", "Student"), "zaara": ("16 Aug 2012", "Student"),
     "feroz": ("26 Jan 1967", "Doctor"),
     "adam": (None, "Aditya Honda"),
     "selsha": (None, "HR Manager"),
@@ -120,7 +120,7 @@ SPOUSE_BIO = {
     "sabeetha":     ("20 May 1968", "KWA Supdt (Retired)"),          # Abdul Basheer .T.K
     "fathima_sana": ("2 Aug 1990",  "Engineer"),                     # Shinu Azees
     "mujeeb":       ("24 Feb 1974", "Engineer, Malabar Group"),      # Husna Beegum .PP
-    "hafis":        (None,          "Doctor"),                       # Sonia Haris
+    "hafis":        ("25 Oct 1979", "Doctor"),                       # Sonia Haris
     "feroz":        (None,          "Director, Aditya Honda"),       # Praseena KK
     "safiya2":      ("7 Jan 1947",  "Senior Executive, Wataniya Telecom"),  # Abdul Khader
     "aamir":        ("10 May 1989", "IT Engineer"),                  # Shubi Amir
@@ -186,10 +186,10 @@ def mujeeb_kids(side):
 def hafis_kids(side):
     m = (side == "mother")
     return [
-        D("Zayan", "zayan", side, pic=("pics/Zayan.jpg" if m else None)),
-        D("Zarif", "zarif", side, pic=("pics/Zarif.jpg" if m else None)),
-        D("Zara",  "zara",  side, pic=("pics/Zara.jpg"  if m else None)),
-        D("Zayed", "zayed", side, pic=("pics/Zayed.jpg" if m else None)),
+        D("Zayan", "zayan", side, pic=("pics/Zayan.jpg" if m else None)),   # 2005
+        D("Zayed", "zayed", side, pic=("pics/Zayed.jpg" if m else None)),   # 2007
+        D("Zarif", "zarif", side, pic=("pics/Zarif.jpg" if m else None)),   # 2010
+        D("Zaara", "zaara", side, pic=("pics/Zara.jpg"  if m else None)),   # 2012
     ]
 
 def fathima_kids(side):
