@@ -402,6 +402,7 @@ mother = P("Nelliadi Beeran Musaliar", [
             ]),
             P("Khadija", note="Kundantavida", star=True, kids=[
                 P("Mariyomma", star=True, spouse="Rajab", marriage="rajab+mariyomma", color="#e25c9c", emph=True,
+                  pic="pics/mariyomma.jpeg",
                   note="m. Rajab — their children appear on both sides (pink here; blue under Rajab).",
                   kids=joined_children("mother")),       # PINK side: full family under Mariyomma
                 P("Assu", emph=True, color="#e25c9c", kids=[P("Asif"), P("Haris"), P("Reshmi"), P("Taslima")]),
