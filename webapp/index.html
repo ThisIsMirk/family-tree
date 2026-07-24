@@ -28,8 +28,7 @@
   #top{position:fixed;top:0;left:0;right:0;z-index:20;
     padding:calc(env(safe-area-inset-top, 0px) + 10px) 12px 10px;
     display:flex;gap:8px;align-items:center;
-    background:linear-gradient(to bottom, rgba(245,239,228,.96), rgba(245,239,228,.78) 70%, rgba(245,239,228,0));
-    backdrop-filter:blur(6px)}
+    background:linear-gradient(to bottom, rgba(245,239,228,.98), rgba(245,239,228,.9) 70%, rgba(245,239,228,0))}
   #brand{font-family:var(--serif);font-weight:600;font-size:16px;letter-spacing:.2px;
     white-space:nowrap;color:var(--ink);display:flex;align-items:center;gap:7px}
   #brand .seal{width:22px;height:22px;border-radius:50%;background:
@@ -73,7 +72,7 @@
     pointer-events:none}
   .genlbl{position:absolute;transform:translateX(-50%);white-space:nowrap;
     font-family:var(--serif);font-size:12px;letter-spacing:.3px;color:var(--muted);
-    background:rgba(245,239,228,.78);backdrop-filter:blur(3px);
+    background:rgba(245,239,228,.94);
     padding:2px 9px;border-radius:999px;border:1px solid var(--line)}
 
   /* ---- floating controls ---- */
@@ -104,11 +103,9 @@
   .link{fill:none;stroke:var(--line);stroke-width:1.4px}
   /* golden lineage of the open person (colour/width set inline; here = the glow) */
   .link.gold-desc{filter:drop-shadow(0 0 1.6px rgba(232,195,74,.5))}
-  .link.gold-anc{filter:drop-shadow(0 0 2px rgba(240,210,90,.6));animation:goldpulse 1.5s ease-in-out infinite}
-  @keyframes goldpulse{
-    0%,100%{filter:drop-shadow(0 0 1.5px rgba(240,210,90,.45))}
-    50%    {filter:drop-shadow(0 0 6px  rgba(255,226,130,.95))}
-  }
+  .link.gold-anc{filter:drop-shadow(0 0 3px rgba(240,210,90,.7));animation:goldpulse 1.8s ease-in-out infinite}
+  /* pulse OPACITY (compositor-cheap) rather than re-rasterizing the drop-shadow filter each frame */
+  @keyframes goldpulse{ 0%,100%{opacity:.72} 50%{opacity:1} }
   @media (prefers-reduced-motion:reduce){ .link.gold-anc{animation:none} }
   .node circle{stroke-width:1.6px;cursor:pointer}
   .node .ncol{fill:var(--card);stroke:var(--node)}
@@ -205,7 +202,7 @@
 
   #hint{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;
     text-align:center;color:#f3efe6;font-size:13px;pointer-events:none;opacity:.0;
-    transition:opacity .4s;background:rgba(60,56,50,.62);backdrop-filter:blur(2px);
+    transition:opacity .4s;background:rgba(60,56,50,.82);
     padding:10px 16px;border-radius:14px;box-shadow:0 4px 18px rgba(40,30,15,.25);
     max-width:80vw}
   @media (min-width:760px){
