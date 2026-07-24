@@ -28,7 +28,7 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
               - Zara  (Student)
               - Zayed  (Student)
           - Khadeeja
-            - Afsath  (m. Hamsath [b. 2 Jun 1964, Retired Head Master]; b. 28 Feb 1971; Tailor)
+            - Hafsath  (m. Hamsath [b. 2 Jun 1964, Retired Head Master]; b. 28 Feb 1971; Tailor)
               - Sohan  (m. Najma [b. 3 Feb 1996, PhD Scholar]; b. 11 Nov 1990; Senior Software Engineer)
               - Adheena  (m. Mohammed Fasil [b. 22 May 1988, Business]; b. 10 Dec 1992; Psychiatric Social Worker)
                 - Ahammed Looth  (b. 26 Dec 2018; Student)
@@ -45,9 +45,13 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
               - Mosus  (b. 19 Aug 2004; NIT Student, Calicut)
               - Eesa  (b. 29 May 2006; MBBS Student, TVM)
             - Reedha
-          - K.Abdullah
-            - Anna
-            - Ishan
+          - Kunhi Abdulla  (m. Selina AP [b. 2 May 1966, Homemaker]; b. 24 Jun 1959; Advocate)
+            - Henna  (m. Sherin Babu [b. 30 Apr 1980, Director]; b. 7 Sep 1986; Homemaker)
+              - Isha Sherin Babu  (b. 2 Jul 2012; Student)
+              - Airah Sherin Babu  (b. 8 Nov 2014; Student)
+              - Omer Mohammed  (b. 18 Feb 2021; Student)
+            - Ishan  (m. Shemnitha [b. 25 Feb 1996, Pedodontist]; b. 23 Oct 1988; Engineer)
+              - Aaron Rajab Abdulla Perooli  (b. 14 May 2022; Student)
           - Safiya  (m. Abdul Khader [b. 7 Jan 1947, Senior Executive, Wataniya Telecom]; b. 21 Jun 1959; Homemaker)
             - Aamir  (m. Shubi [b. 10 May 1989, IT Engineer]; b. 15 Jun 1983; Senior IT Engineer)
               - Alik  (b. 22 Jul 2014; Student)
@@ -332,7 +336,7 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
               - Zara  (Student)
               - Zayed  (Student)
           - Khadeeja
-            - Afsath  (m. Hamsath [b. 2 Jun 1964, Retired Head Master]; b. 28 Feb 1971; Tailor)
+            - Hafsath  (m. Hamsath [b. 2 Jun 1964, Retired Head Master]; b. 28 Feb 1971; Tailor)
               - Sohan  (m. Najma [b. 3 Feb 1996, PhD Scholar]; b. 11 Nov 1990; Senior Software Engineer)
               - Adheena  (m. Mohammed Fasil [b. 22 May 1988, Business]; b. 10 Dec 1992; Psychiatric Social Worker)
                 - Ahammed Looth  (b. 26 Dec 2018; Student)
@@ -349,9 +353,13 @@ PEROOLI FAMILY — NELLIADI BEERAN MUSALIAR (common ancestor)
               - Mosus  (b. 19 Aug 2004; NIT Student, Calicut)
               - Eesa  (b. 29 May 2006; MBBS Student, TVM)
             - Reedha
-          - K.Abdullah
-            - Anna
-            - Ishan
+          - Kunhi Abdulla  (m. Selina AP [b. 2 May 1966, Homemaker]; b. 24 Jun 1959; Advocate)
+            - Henna  (m. Sherin Babu [b. 30 Apr 1980, Director]; b. 7 Sep 1986; Homemaker)
+              - Isha Sherin Babu  (b. 2 Jul 2012; Student)
+              - Airah Sherin Babu  (b. 8 Nov 2014; Student)
+              - Omer Mohammed  (b. 18 Feb 2021; Student)
+            - Ishan  (m. Shemnitha [b. 25 Feb 1996, Pedodontist]; b. 23 Oct 1988; Engineer)
+              - Aaron Rajab Abdulla Perooli  (b. 14 May 2022; Student)
           - Safiya  (m. Abdul Khader [b. 7 Jan 1947, Senior Executive, Wataniya Telecom]; b. 21 Jun 1959; Homemaker)
             - Aamir  (m. Shubi [b. 10 May 1989, IT Engineer]; b. 15 Jun 1983; Senior IT Engineer)
               - Alik  (b. 22 Jul 2014; Student)

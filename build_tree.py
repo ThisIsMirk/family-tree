@@ -74,11 +74,19 @@ BIO = {
     "muhammed_azeez": ("7 Nov 1996", "EEE Engineer"),
     "ayisha_aseez": ("21 Aug 2004", "Student (BDS)"),
     "ibrahim_aseez": ("21 Aug 2004", "Student (MBBS)"),
+    # Kunhi Abdulla's household
+    "kabdullah": ("24 Jun 1959", "Advocate"),
+    "henna": ("7 Sep 1986", "Homemaker"),
+    "ishan": ("23 Oct 1988", "Engineer"),
+    "isha": ("2 Jul 2012", "Student"),
+    "airah": ("8 Nov 2014", "Student"),
+    "omer": ("18 Feb 2021", "Student"),
+    "aaron": ("14 May 2022", "Student"),
     "reshma": ("10 Sep 1977", "Finance Manager, Carewell Clinic"),
     "fathwimath": ("29 Nov 2001", "BSD Student"),
     "mosus": ("19 Aug 2004", "NIT Student, Calicut"),
     "eesa": ("29 May 2006", "MBBS Student, TVM"),
-    "afsath": ("28 Feb 1971", "Tailor"),
+    "hafsath": ("28 Feb 1971", "Tailor"),
     "sohan": ("11 Nov 1990", "Senior Software Engineer"),
     "adheena": ("10 Dec 1992", "Psychiatric Social Worker"),
     "ahammed_looth": ("26 Dec 2018", "Student"),
@@ -116,8 +124,11 @@ SPOUSE_BIO = {
     "salima":       ("10 Apr 1967", "Sr. Facilities Officer"),       # Aseez Kanhirakoottathil
     "sajiya":       ("6 Sep 1988",  "Mechanical Engineer"),          # Muhammed Wasil
     "muhammed_azeez": ("2 Oct 2000", "Chemical Engineer"),           # Laamia Thaha
+    "kabdullah":    ("2 May 1966",  "Homemaker"),                    # Selina AP
+    "henna":        ("30 Apr 1980", "Director"),                     # Sherin Babu
+    "ishan":        ("25 Feb 1996", "Pedodontist"),                  # Shemnitha
     "reshma":       ("1 Apr 1968",  "Doctor"),                       # Mohammed Ashraf P.K
-    "afsath":       ("2 Jun 1964",  "Retired Head Master"),          # Hamsath Palakeel
+    "hafsath":      ("2 Jun 1964",  "Retired Head Master"),          # Hamsath Palakeel
     "sohan":        ("3 Feb 1996",  "PhD Scholar"),                  # Najma .K.K
     "adheena":      ("22 May 1988", "Business"),                     # Mohammed Fasil
     "noorjahan":    ("15 Apr 1959", "Business"),                     # Abdu Rahman Thekkatt
@@ -261,7 +272,7 @@ def adheena_kids(side):
     m=(side=="mother")
     return [D("Ahammed Looth","ahammed_looth",side, pic=("pics/ahammed_looth.jpeg" if m else None))]
 
-def afsath_kids(side):
+def hafsath_kids(side):
     m=(side=="mother")
     return [
         D("Sohan",   "sohan",   side, pic=("pics/sohan.jpeg" if m else None),
@@ -300,13 +311,32 @@ def salima_kids(side):
 
 def khadeeja_kids(side):
     return [
-        D("Afsath", "afsath", side, pic=("pics/afsath.jpeg" if side=="mother" else None),
-          spouse="Hamsath", spouse_pic="pics/hamsath_palakeel.jpeg", kids=afsath_kids(side)),
+        D("Hafsath", "hafsath", side, pic=("pics/afsath.jpeg" if side=="mother" else None),
+          spouse="Hamsath", spouse_pic="pics/hamsath_palakeel.jpeg", kids=hafsath_kids(side)),
         D("Salima", "salima", side, pic=("pics/salima.jpeg" if side=="mother" else None),
           spouse="Aseez Kanhirakoottathil", spouse_pic="pics/aseez_kanhirakoottathil.jpeg", kids=salima_kids(side)),
         D("Reshma", "reshma", side, pic=("pics/reshma.jpeg" if side=="mother" else None),
           spouse="Mohammed Ashraf", spouse_pic="pics/reshma_husband.jpeg", kids=reshma_kids(side)),
         D("Reedha", "reedha", side),
+    ]
+
+def henna_kids(side):
+    m=(side=="mother")
+    return [D("Isha Sherin Babu","isha",side, pic=("pics/isha.png" if m else None)),
+            D("Airah Sherin Babu","airah",side, pic=("pics/airah.png" if m else None)),
+            D("Omer Mohammed","omer",side, pic=("pics/omer.png" if m else None))]
+
+def ishan_kids(side):
+    m=(side=="mother")
+    return [D("Aaron Rajab Abdulla Perooli","aaron",side, pic=("pics/aaron.png" if m else None))]
+
+def kabdullah_kids(side):
+    m=(side=="mother")
+    return [
+        D("Henna","henna",side, pic=("pics/henna.png" if m else None),
+          spouse="Sherin Babu", spouse_pic="pics/sherin_babu.png", kids=henna_kids(side)),
+        D("Ishan","ishan",side, pic=("pics/ishan.png" if m else None),
+          spouse="Shemnitha", spouse_pic="pics/shemnitha.png", kids=ishan_kids(side)),
     ]
 
 def joined_children(side):
@@ -315,12 +345,14 @@ def joined_children(side):
        third time under their own father Nangeri Aboobacker — so each of those 4 shows up 3×."""
     fathima = D("Fathima", "fathima", side, star=True, spouse="Nangeri Aboobacker",
                 marriage=("fathima+nabacker" if side == "mother" else None),
+                pic=("pics/fathima.jpeg" if side == "mother" else None),
                 note=("Mummy ❤️" if side == "mother" else None),
                 kids=fathima_kids(side))
     return [
         fathima,
         D("Khadeeja",   "khadeeja",  side, kids=khadeeja_kids(side)),
-        D("K.Abdullah", "kabdullah", side, kids=[D("Anna","anna",side), D("Ishan","ishan",side)]),
+        D("Kunhi Abdulla", "kabdullah", side, pic=("pics/kunhi_abdulla.png" if side=="mother" else None),
+          spouse="Selina AP", spouse_pic="pics/selina.png", kids=kabdullah_kids(side)),
         D("Safiya",     "safiya2",   side, pic=("pics/safiya.jpg" if side=="mother" else None),
           spouse="Abdul Khader", spouse_pic="pics/abdul_khader.jpg", kids=safiya_kids(side)),
         D("Mumtaz",     "mumtaz",    side, pic=("pics/mumtaz.jpeg" if side=="mother" else None),
@@ -471,7 +503,7 @@ valiya_chekkan = P("Valiya Chekkan", spouse="Thithi", sheet="Father",
         ]),
         P("Khadisha", note="Nangeri Aboobacker's mother", kids=[
             P("Nangeri Aboobacker", spouse="Fathima", marriage="fathima+nabacker", color="#7eb3e8",
-              dob="28 Mar 1942", occ="Retired ACP, Kerala Police",
+              dob="28 Mar 1942", occ="Retired ACP, Kerala Police", pic="pics/nangeri_aboobacker.jpeg",
               note="Daddy ❤️ — m. Fathima. Their children appear here (Nangeri Aboobacker's side, light blue) and on the mother's side (pink under Fathima).",
               kids=fathima_kids("backer")),             # N.A. BACKER's side: Feroz/Sajith/Mujeeb/Hafis under their father
         ]),
