@@ -105,7 +105,7 @@ BIO = {
     "hamid": ("8 Jan 2019", "Student"),
     "houri": ("30 Apr 2025", "Toddler"),
     "suroor": ("11 Dec 1994", "Civil Engineer"),
-    "faheema_mariyom": ("20 Oct 2022", "Architect"),
+    "faheema_mariyom": ("20 Oct 2002", "Architect"),
     # Mumtaz's household
     "mumtaz": ("8 Apr 1966", "Homemaker"),
     "fahad": ("2 Apr 1986", "Entrepreneur"),
