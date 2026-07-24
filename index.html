@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Perooli Family Tree</title>
 <meta http-equiv="refresh" content="0; url=./webapp/" />
-<script>location.replace('./webapp/' + location.search + location.hash);</script>
+<script>
+  // Cache-bust the app shell: append a fresh token so phones always fetch the latest
+  // webapp/index.html (the app itself already loads tree-data.js + images version-busted).
+  var q = location.search ? location.search + '&' : '?';
+  location.replace('./webapp/' + q + 'v=' + Date.now() + location.hash);
+</script>
 <style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#f5efe4;color:#2b2118;padding:2rem}</style>
 </head>
 <body>
