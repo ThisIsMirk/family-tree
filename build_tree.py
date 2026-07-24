@@ -82,6 +82,10 @@ BIO = {
     "airah": ("8 Nov 2014", "Student"),
     "omer": ("18 Feb 2021", "Student"),
     "aaron": ("14 May 2022", "Student"),
+    "fareeda": ("7 Jan 1987", "Pharmacist"),
+    "sheza": ("14 Feb 2010", "Student"),
+    "nooh": ("8 Feb 2015", "Student"),
+    "daneen": ("15 Jul 2019", "Student"),
     "reshma": ("10 Sep 1977", "Finance Manager, Carewell Clinic"),
     "fathwimath": ("29 Nov 2001", "BSD Student"),
     "mosus": ("19 Aug 2004", "NIT Student, Calicut"),
@@ -127,6 +131,7 @@ SPOUSE_BIO = {
     "kabdullah":    ("2 May 1966",  "Homemaker"),                    # Selina AP
     "henna":        ("30 Apr 1980", "Director"),                     # Sherin Babu
     "ishan":        ("25 Feb 1996", "Pedodontist"),                  # Shemnitha
+    "fareeda":      ("15 Dec 1979", "Maintenance Engineer"),         # Rasheed VM
     "reshma":       ("1 Apr 1968",  "Doctor"),                       # Mohammed Ashraf P.K
     "hafsath":      ("2 Jun 1964",  "Retired Head Master"),          # Hamsath Palakeel
     "sohan":        ("3 Feb 1996",  "PhD Scholar"),                  # Najma .K.K
@@ -293,6 +298,11 @@ def mumtaz_kids(side):
           kids=[D("Noom Miraya Shijil","noom",side, pic=("pics/noom.jpeg" if m else None))]),
     ]
 
+def fareeda_kids(side):
+    return [D("Sheza Rasheed","sheza",side),      # no photos yet
+            D("Nooh Rasheed","nooh",side),
+            D("Daneen Khadeeja","daneen",side)]
+
 def sajiya_kids(side):
     m=(side=="mother")
     return [D("Tihami Wasil","tihami",side, pic=("pics/tihami.jpeg" if m else None)),
@@ -317,7 +327,8 @@ def khadeeja_kids(side):
           spouse="Aseez Kanhirakoottathil", spouse_pic="pics/aseez_kanhirakoottathil.jpeg", kids=salima_kids(side)),
         D("Reshma", "reshma", side, pic=("pics/reshma.jpeg" if side=="mother" else None),
           spouse="Mohammed Ashraf", spouse_pic="pics/reshma_husband.jpeg", kids=reshma_kids(side)),
-        D("Reedha", "reedha", side),
+        D("Fareeda", "fareeda", side, note="Nickname: Reedha",
+          spouse="Rasheed VM", kids=fareeda_kids(side)),
     ]
 
 def henna_kids(side):
