@@ -172,7 +172,7 @@ def feroz_kids(side):
     return [
         D("Adam",   "adam",   side, pic=("pics/Adam.jpeg"   if m else None)),
         D("Hessa",  "hessa",  side, pic=("pics/Hessa.jpeg"  if m else None)),
-        D("Selsha", "selsha", side, pic=("pics/Selsha.jpeg" if m else None)),
+        D("Selsha", "selsha", side, pic=("pics/selsha2.jpeg" if m else None)),
     ]
 
 def mujeeb_kids(side):
@@ -433,7 +433,7 @@ mother = P("Nelliadi Beeran Musaliar", [
                 P("Moideen Haji", kids=[
                     P("Delux Mammu"), P("Kunhabdullah"), P("A.Rahman"), P("Aysha"), P("Zainaba")]),
                 P("Ibrahim Musaliar", kids=[
-                    P("Aboobacker"), P("Mammed Musaliar"),
+                    P("Aboobacker"), P("Mammed Musaliar"), P("Aysha"),
                     P("Abdul Kader", kids=[P("Aamir"), P("Saabir"), P("Malu")]),
                     P("Abdu Rahman"),
                     P("Abdullah Kutty"), P("Kunhi Moideen"), P("Zainaba"), P("Safiya")]),
