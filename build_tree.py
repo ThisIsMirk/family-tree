@@ -77,7 +77,7 @@ BIO = {
     # Kunhi Abdulla's household
     "kabdullah": ("24 Jun 1959", "Advocate"),
     "henna": ("7 Sep 1986", "Homemaker"),
-    "ishan": ("23 Oct 1988", "Engineer"),
+    "ishan": ("23 Oct 1988", "Advocate"),
     "isha": ("2 Jul 2012", "Student"),
     "airah": ("8 Nov 2014", "Student"),
     "omer": ("18 Feb 2021", "Student"),
@@ -269,7 +269,8 @@ def safiya_kids(side):
 
 def reshma_kids(side):
     m=(side=="mother")
-    return [D("Fathwimath","fathwimath",side),   # no photo yet
+    return [D("Fathwimath","fathwimath",side, note="Nickname: Innashu",
+              pic=("pics/innashu.jpeg" if m else None)),
             D("Mosus","mosus",side, pic=("pics/mosus.jpeg" if m else None)),
             D("Eesa","eesa",side, pic=("pics/eesa.jpeg" if m else None))]
 
