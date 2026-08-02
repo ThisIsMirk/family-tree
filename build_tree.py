@@ -54,10 +54,10 @@ BIO = {
     "hafis": ("1 Jan 1973", "Engineer"),
     "zayan": ("2 Mar 2005", "Student"), "zayed": ("13 Dec 2007", "Student"),
     "zarif": ("28 May 2010", "Student"), "zaara": ("16 Aug 2012", "Student"),
-    "feroz": ("26 Jan 1967", "Doctor"),
-    "adam": (None, "Aditya Honda"),
-    "selsha": (None, "HR Manager"),
-    "hessa": (None, "Media Manager"),
+    "feroz": ("24 Jan 1967", "Doctor"),
+    "adam": ("12 Nov 1995", "Admin Manager, Adithya Honda"),
+    "selsha": ("28 Jun 1999", "HR Manager"),
+    "hessa": ("30 Sep 2002", "Graphic Designer"),
     # Safiya's household
     "safiya2": ("21 Jun 1959", "Homemaker"),
     "aamir": ("15 Jun 1983", "Senior IT Engineer"),
@@ -121,7 +121,7 @@ SPOUSE_BIO = {
     "fathima_sana": ("2 Aug 1990",  "Engineer"),                     # Shinu Azees
     "mujeeb":       ("24 Feb 1974", "Engineer, Malabar Group"),      # Husna Beegum .PP
     "hafis":        ("25 Oct 1979", "Doctor"),                       # Sonia Haris
-    "feroz":        (None,          "Director, Aditya Honda"),       # Praseena KK
+    "feroz":        ("14 Jul 1975", "Partner, Adithya Honda"),        # Praseena KK
     "safiya2":      ("7 Jan 1947",  "Senior Executive, Wataniya Telecom"),  # Abdul Khader
     "aamir":        ("10 May 1989", "IT Engineer"),                  # Shubi Amir
     "sabir":        ("2 Nov 1989",  "HR Executive"),                 # Farin Harris
@@ -170,9 +170,9 @@ def sajith_kids(side):
 def feroz_kids(side):
     m = (side == "mother")
     return [
-        D("Adam",   "adam",   side, pic=("pics/Adam.jpeg"   if m else None)),
-        D("Hessa",  "hessa",  side, pic=("pics/Hessa.jpeg"  if m else None)),
-        D("Selsha", "selsha", side, pic=("pics/selsha2.jpeg" if m else None)),
+        D("Adam",   "adam",   side, pic=("pics/adam2.jpeg"   if m else None)),   # 1995
+        D("Selsha", "selsha", side, pic=("pics/selsha2.jpeg" if m else None)),   # 1999
+        D("Hessa",  "hessa",  side, pic=("pics/hessa2.jpeg"  if m else None)),   # 2002
     ]
 
 def mujeeb_kids(side):
@@ -194,7 +194,8 @@ def hafis_kids(side):
 
 def fathima_kids(side):
     return [
-        D("Feroz",  "feroz",  side, spouse="Praseena", spouse_pic="pics/Praseena.jpeg", kids=feroz_kids(side)),
+        D("Feroz",  "feroz",  side, pic=("pics/feroz.jpeg" if side=="mother" else None),
+          spouse="Praseena", spouse_pic="pics/praseena2.jpeg", kids=feroz_kids(side)),
         D("Sajith", "sajith", side, star=True, pic=("pics/sajith.jpeg" if side=="mother" else None),
           spouse="Shaniba", spouse_pic="pics/shaniba.jpeg", kids=sajith_kids(side)),
         D("Mujeeb", "mujeeb", side, note="Listed as the original file's author",
@@ -300,9 +301,10 @@ def mumtaz_kids(side):
     ]
 
 def fareeda_kids(side):
-    return [D("Sheza Rasheed","sheza",side),      # no photos yet
-            D("Nooh Rasheed","nooh",side),
-            D("Daneen Khadeeja","daneen",side)]
+    m=(side=="mother")
+    return [D("Sheza Rasheed","sheza",side, pic=("pics/sheza.jpeg" if m else None)),
+            D("Nooh Rasheed","nooh",side, pic=("pics/nooh.jpeg" if m else None)),
+            D("Daneen Khadeeja","daneen",side, pic=("pics/daneen.jpeg" if m else None))]
 
 def sajiya_kids(side):
     m=(side=="mother")
@@ -329,7 +331,8 @@ def khadeeja_kids(side):
         D("Reshma", "reshma", side, pic=("pics/reshma.jpeg" if side=="mother" else None),
           spouse="Mohammed Ashraf", spouse_pic="pics/reshma_husband.jpeg", kids=reshma_kids(side)),
         D("Fareeda", "fareeda", side, note="Nickname: Reedha",
-          spouse="Rasheed VM", kids=fareeda_kids(side)),
+          pic=("pics/fareeda.jpeg" if side=="mother" else None),
+          spouse="Rasheed VM", spouse_pic="pics/rasheed.jpeg", kids=fareeda_kids(side)),
     ]
 
 def henna_kids(side):
@@ -362,7 +365,8 @@ def joined_children(side):
                 kids=fathima_kids(side))
     return [
         fathima,
-        D("Khadeeja",   "khadeeja",  side, kids=khadeeja_kids(side)),
+        D("Khadeeja",   "khadeeja",  side, pic=("pics/khadeeja.jpeg" if side=="mother" else None),
+          kids=khadeeja_kids(side)),
         D("Kunhi Abdulla", "kabdullah", side, pic=("pics/kunhi_abdulla.jpg" if side=="mother" else None),
           spouse="Selina AP", spouse_pic="pics/selina.jpg", kids=kabdullah_kids(side)),
         D("Safiya",     "safiya2",   side, pic=("pics/safiya.jpg" if side=="mother" else None),
