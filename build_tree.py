@@ -401,7 +401,11 @@ mother = P("Nelliadi Beeran Musaliar", [
                     P("Nissar"), P("Laila"), P("Iqbal"), P("Navas"), P("Anwer")]),
                 P("Kunhalima", conf="?", kids=[P("Vettippandi"), P("A.Rahman")]),
                 P("Assya", conf="?", kids=[
-                    P("Sharaf"), P("Kassim"), P("Hanifa"), P("Safiya"), P("Bushra")]),
+                    P("Sharaf"), P("Kassim"), P("Hanifa"),
+                    P("Safiya", kids=[
+                        P("Nissam", spouse="Fahna", kids=[
+                            P("Afnan"), P("Afshan"), P("Mohammad"), P("Adam")])]),
+                    P("Bushra")]),
                 P("Mahmoud", conf="?"),
                 P("Assu", conf="?"),
             ]),
